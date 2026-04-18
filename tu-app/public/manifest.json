@@ -1,0 +1,26 @@
+{
+  "name": "TU App — SMPIT Asy-Syadzili",
+  "short_name": "TU App",
+  "description": "Sistem Tata Usaha SMPIT Asy-Syadzili",
+  "start_url": "/dashboard",
+  "display": "standalone",
+  "background_color": "#171717",
+  "theme_color": "#3ecf8e",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [],
+  "categories": ["education", "productivity"]
+}

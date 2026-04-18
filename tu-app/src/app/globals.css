@@ -1,0 +1,260 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+/* ── LIGHT MODE ── */
+:root {
+  --radius: 0.5rem;
+  --background: #f8fafb;
+  --foreground: #171717;
+  --card: #ffffff;
+  --card-foreground: #171717;
+  --popover: #ffffff;
+  --popover-foreground: #171717;
+  --primary: #3ecf8e;
+  --primary-foreground: #0a0a0a;
+  --secondary: #f0f2f4;
+  --secondary-foreground: #2a2a2a;
+  --muted: #f0f2f4;
+  --muted-foreground: #6b7280;
+  --accent: #e8ecf0;
+  --accent-foreground: #2a2a2a;
+  --destructive: #ef4444;
+  --border: #e2e5e9;
+  --input: #e2e5e9;
+  --ring: #3ecf8e;
+  --chart-1: #3ecf8e;
+  --chart-2: #6366f1;
+  --chart-3: #a855f7;
+  --chart-4: #f59e0b;
+  --chart-5: #ef4444;
+  --sidebar: #ffffff;
+  --sidebar-foreground: #2a2a2a;
+  --sidebar-primary: #3ecf8e;
+  --sidebar-primary-foreground: #0a0a0a;
+  --sidebar-accent: #f0f2f4;
+  --sidebar-accent-foreground: #2a2a2a;
+  --sidebar-border: #e2e5e9;
+  --sidebar-ring: #3ecf8e;
+
+  /* Table specific */
+  --table-header-bg: #f0f2f4;
+  --table-row-alt: #fafbfc;
+  --table-row-hover: #f0f5f3;
+  --table-border: #e2e5e9;
+  --table-row-num: #9ca3af;
+}
+
+/* ── DARK MODE (Supabase Studio) ── */
+.dark {
+  --background: #171717;
+  --foreground: #ededed;
+  --card: #1c1c1c;
+  --card-foreground: #ededed;
+  --popover: #1c1c1c;
+  --popover-foreground: #ededed;
+  --primary: #3ecf8e;
+  --primary-foreground: #0a0a0a;
+  --secondary: #262626;
+  --secondary-foreground: #d4d4d4;
+  --muted: #262626;
+  --muted-foreground: #737373;
+  --accent: #2a2a2a;
+  --accent-foreground: #d4d4d4;
+  --destructive: #ef4444;
+  --border: #2e2e2e;
+  --input: #2e2e2e;
+  --ring: #3ecf8e;
+  --chart-1: #3ecf8e;
+  --chart-2: #818cf8;
+  --chart-3: #c084fc;
+  --chart-4: #fbbf24;
+  --chart-5: #f87171;
+  --sidebar: #1c1c1c;
+  --sidebar-foreground: #d4d4d4;
+  --sidebar-primary: #3ecf8e;
+  --sidebar-primary-foreground: #0a0a0a;
+  --sidebar-accent: #262626;
+  --sidebar-accent-foreground: #d4d4d4;
+  --sidebar-border: #2e2e2e;
+  --sidebar-ring: #3ecf8e;
+
+  /* Table specific */
+  --table-header-bg: #1c1c1c;
+  --table-row-alt: #1f1f1f;
+  --table-row-hover: #262626;
+  --table-border: #2e2e2e;
+  --table-row-num: #525252;
+}
+
+/* ── Animations ── */
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes slide-in-left {
+  from { opacity: 0; transform: translateX(-12px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes pulse-soft {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+.animate-fade-in { animation: fade-in 0.4s ease-out; }
+.animate-fade-in-up { animation: fade-in-up 0.4s ease-out; }
+.animate-slide-in-left { animation: slide-in-left 0.3s ease-out; }
+.animate-pulse-soft { animation: pulse-soft 2s ease-in-out infinite; }
+.animation-delay-100 { animation-delay: 100ms; animation-fill-mode: both; }
+.animation-delay-200 { animation-delay: 200ms; animation-fill-mode: both; }
+.animation-delay-300 { animation-delay: 300ms; animation-fill-mode: both; }
+.animation-delay-400 { animation-delay: 400ms; animation-fill-mode: both; }
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--muted-foreground); border-radius: 3px; opacity: 0.5; }
+::-webkit-scrollbar-thumb:hover { opacity: 0.8; }
+
+/* ── Supabase DataTable ── */
+.data-table-wrapper {
+  border: 1px solid var(--table-border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.data-table thead {
+  background: var(--table-header-bg);
+  border-bottom: 1px solid var(--table-border);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.data-table thead th {
+  padding: 8px 12px;
+  font-weight: 500;
+  font-size: 12px;
+  color: var(--muted-foreground);
+  text-align: left;
+  white-space: nowrap;
+  border-right: 1px solid var(--table-border);
+  user-select: none;
+}
+.data-table thead th:last-child { border-right: none; }
+.data-table tbody tr {
+  border-bottom: 1px solid var(--table-border);
+  transition: background-color 0.1s;
+}
+.data-table tbody tr:nth-child(even) {
+  background: var(--table-row-alt);
+}
+.data-table tbody tr:hover {
+  background: var(--table-row-hover);
+}
+.data-table tbody td {
+  padding: 6px 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-right: 1px solid var(--table-border);
+  max-width: 280px;
+}
+.data-table tbody td:last-child { border-right: none; }
+.data-table .row-num {
+  color: var(--table-row-num);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  width: 48px;
+  min-width: 48px;
+  text-align: center;
+  padding: 6px 8px;
+}
+.data-table .col-mono {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 12px;
+  letter-spacing: -0.02em;
+}
+.data-table .col-id {
+  color: var(--muted-foreground);
+  font-size: 11px;
+}
+
+/* ── Mobile card style ── */
+.mobile-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px;
+  background: var(--card);
+  transition: background-color 0.15s;
+}
+.mobile-card:active {
+  background: var(--accent);
+}
+
+/* ── Safe area for iOS notch ── */
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* ── Hide scrollbar but allow scroll ── */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+@layer base {
+  * { @apply border-border; }
+  body { @apply bg-background text-foreground; }
+}

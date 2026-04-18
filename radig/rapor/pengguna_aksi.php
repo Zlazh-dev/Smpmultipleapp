@@ -1,0 +1,812 @@
+<?php
+session_start();
+include 'koneksi.php';
+
+// Keamanan dasar: hanya admin yang boleh akses file ini
+if (!isset($_SESSION['role']) || $_SESSION['role'] != 'admin') { 
+    // Mengirim header 'Forbidden' dan menghentikan eksekusi
+    header('HTTP/1.0 403 Forbidden');
+    die("Akses ditolak."); 
+}
+
+$aksi = isset($_GET['aksi']) ? $_GET['aksi'] : '';
+
+// --- AKSI TAMBAH PENGGUNA ---
+if ($aksi == 'tambah') {
+    // Validasi input dasar
+    if (empty($_POST['nama_guru']) || empty($_POST['username']) || empty($_POST['password'])) {
+        $_SESSION['error'] = json_encode([
+            'icon' => 'warning',
+            'title' => 'Data Tidak Lengkap',
+            'html' => 'Nama, Username, dan Password wajib diisi.'
+        ]);
+        header("location:pengguna_tampil.php");
+        exit();
+    }
+
+    $nama = $_POST['nama_guru'];
+    $nip = !empty($_POST['nip']) ? $_POST['nip'] : null;
+    $username = $_POST['username'];
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+    $role = $_POST['role'];
+
+    try {
+        $query = "INSERT INTO guru (nama_guru, nip, username, password, role) VALUES (?, ?, ?, ?, ?)";
+        $stmt = mysqli_prepare($koneksi, $query);
+        mysqli_stmt_bind_param($stmt, "sssss", $nama, $nip, $username, $password, $role);
+        
+        if (mysqli_stmt_execute($stmt)) {
+            $_SESSION['pesan'] = json_encode([
+                'icon' => 'success',
+                'title' => 'Berhasil!',
+                'html' => 'Pengguna baru berhasil ditambahkan.'
+            ]);
+        } else {
+            // Ini mungkin tidak akan tereksekusi jika 'mysqli_report' aktif, tapi sebagai cadangan
+            $error_code = mysqli_stmt_errno($stmt);
+            if ($error_code == 1062) { // 1062 = Error duplicate entry
+                $_SESSION['error'] = json_encode([
+                    'icon' => 'error',
+                    'title' => 'Gagal',
+                    'html' => "Username '<b>" . htmlspecialchars($username) . "</b>' atau NIP sudah ada."
+                ]);
+            } else {
+                $_SESSION['error'] = json_encode([
+                    'icon' => 'error',
+                    'title' => 'Gagal',
+                    'html' => 'Gagal menambahkan pengguna: ' . htmlspecialchars(mysqli_stmt_error($stmt))
+                ]);
+            }
+        }
+    
+    } catch (mysqli_sql_exception $e) {
+        // [PERBAIKAN UTAMA] Menangkap 500 Error (jika execute() melempar exception)
+        if ($e->getCode() == 1062) { // 1062 = Error duplicate entry
+            $_SESSION['error'] = json_encode([
+                'icon' => 'error',
+                'title' => 'Gagal',
+                'html' => "Username '<b>" . htmlspecialchars($username) . "</b>' atau NIP sudah ada."
+            ]);
+        } else {
+            $_SESSION['error'] = json_encode([
+                'icon' => 'error',
+                'title' => 'Error Database',
+                'html' => 'Terjadi kesalahan teknis. Silakan coba lagi.<br><small>' . htmlspecialchars($e->getMessage()) . '</small>'
+            ]);
+        }
+    }
+    
+    header("location:pengguna_tampil.php");
+    exit();
+
+// --- AKSI UPDATE PENGGUNA ---
+} elseif ($aksi == 'update') {
+    // Validasi input dasar
+    if (empty($_POST['id_guru']) || empty($_POST['nama_guru']) || empty($_POST['username'])) {
+        $_SESSION['error'] = json_encode([
+            'icon' => 'warning',
+            'title' => 'Data Tidak Lengkap',
+            'html' => 'Data tidak lengkap untuk melakukan update.'
+        ]);
+        header("location:pengguna_tampil.php");
+        exit();
+    }
+
+    $id_guru = $_POST['id_guru'];
+    $nama = $_POST['nama_guru'];
+    $nip = !empty($_POST['nip']) ? $_POST['nip'] : null;
+    $username = $_POST['username'];
+    $role = $_POST['role'];
+    $penugasan_dipilih = isset($_POST['penugasan']) ? $_POST['penugasan'] : [];
+
+    // [PERBAIKAN] Mulai transaksi untuk memastikan semua query berhasil
+    mysqli_begin_transaction($koneksi);
+
+    try {
+        // 1. Update data utama di tabel guru
+        if (!empty($_POST['password'])) {
+            $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+            $query = "UPDATE guru SET nama_guru=?, nip=?, username=?, password=?, role=? WHERE id_guru=?";
+            $stmt = mysqli_prepare($koneksi, $query);
+            mysqli_stmt_bind_param($stmt, "sssssi", $nama, $nip, $username, $password, $role, $id_guru);
+        } else {
+            $query = "UPDATE guru SET nama_guru=?, nip=?, username=?, role=? WHERE id_guru=?";
+            $stmt = mysqli_prepare($koneksi, $query);
+            mysqli_stmt_bind_param($stmt, "ssssi", $nama, $nip, $username, $role, $id_guru);
+        }
+        mysqli_stmt_execute($stmt); // Ini bisa melempar exception
+
+        // 2. Ambil tahun ajaran aktif
+        $q_ta = mysqli_query($koneksi, "SELECT id_tahun_ajaran FROM tahun_ajaran WHERE status = 'Aktif' LIMIT 1");
+        $data_ta = mysqli_fetch_assoc($q_ta);
+        $id_tahun_ajaran = $data_ta ? $data_ta['id_tahun_ajaran'] : 0;
+
+        if ($id_tahun_ajaran == 0) {
+            // Jika tidak ada TA aktif, lempar error untuk di-rollback
+            throw new Exception("Tidak ada Tahun Ajaran aktif ditemukan.");
+        }
+
+        // 3. Hapus penugasan lama guru ini di tahun ajaran aktif
+        $stmt_delete = mysqli_prepare($koneksi, "DELETE FROM guru_mengajar WHERE id_guru = ? AND id_tahun_ajaran = ?");
+        mysqli_stmt_bind_param($stmt_delete, "ii", $id_guru, $id_tahun_ajaran);
+        mysqli_stmt_execute($stmt_delete);
+
+        // 4. Proses penugasan baru jika role-nya adalah 'guru'
+        if ($role == 'guru' && !empty($penugasan_dipilih)) {
+            $stmt_insert = mysqli_prepare($koneksi, "INSERT INTO guru_mengajar (id_guru, id_mapel, id_kelas, id_tahun_ajaran) VALUES (?, ?, ?, ?)");
+            foreach ($penugasan_dipilih as $id_mapel => $daftar_kelas) {
+                if (is_array($daftar_kelas)) {
+                    foreach ($daftar_kelas as $id_kelas) {
+                        mysqli_stmt_bind_param($stmt_insert, "iiii", $id_guru, $id_mapel, $id_kelas, $id_tahun_ajaran);
+                        mysqli_stmt_execute($stmt_insert);
+                    }
+                }
+            }
+        }
+
+        // Jika semua berhasil, commit transaksi
+        mysqli_commit($koneksi);
+        
+        $_SESSION['pesan'] = json_encode([
+            'icon' => 'success',
+            'title' => 'Berhasil!',
+            'html' => 'Data pengguna berhasil diperbarui.'
+        ]);
+
+    } catch (mysqli_sql_exception $e) {
+        // [PERBAIKAN UTAMA] Tangkap error 500 dan batalkan semua perubahan
+        mysqli_rollback($koneksi);
+        
+        if ($e->getCode() == 1062) { // 1062 = Error duplicate entry
+            $_SESSION['error'] = json_encode([
+                'icon' => 'error',
+                'title' => 'Gagal',
+                'html' => "Update gagal. Username '<b>" . htmlspecialchars($username) . "</b>' atau NIP sudah digunakan."
+            ]);
+        } else {
+            $_SESSION['error'] = json_encode([
+                'icon' => 'error',
+                'title' => 'Error Database',
+                'html' => 'Terjadi kesalahan teknis saat update. Perubahan dibatalkan.<br><small>' . htmlspecialchars($e->getMessage()) . '</small>'
+            ]);
+        }
+    } catch (Exception $e) {
+        // Menangkap error non-SQL (seperti "Tahun Ajaran tidak aktif")
+        mysqli_rollback($koneksi);
+        $_SESSION['error'] = json_encode([
+            'icon' => 'error',
+            'title' => 'Gagal Update',
+            'html' => htmlspecialchars($e->getMessage())
+        ]);
+    }
+
+    header("location:pengguna_tampil.php");
+    exit();
+
+
+// --- AKSI HAPUS PENGGUNA ---
+} elseif ($aksi == 'hapus') {
+    $id_guru = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+    if ($id_guru == 0) {
+        $_SESSION['error'] = json_encode([
+            'icon' => 'error',
+            'title' => 'ID Tidak Valid',
+            'html' => 'ID pengguna tidak valid untuk dihapus.'
+        ]);
+        header("location:pengguna_tampil.php");
+        exit();
+    }
+    
+    // Untuk mencegah admin menghapus akunnya sendiri
+    if ($id_guru == $_SESSION['id_guru']) {
+        $_SESSION['error'] = json_encode([
+            'icon' => 'warning',
+            'title' => 'Aksi Ditolak',
+            'html' => 'Anda tidak dapat menghapus akun Anda sendiri.'
+        ]);
+        header("location:pengguna_tampil.php");
+        exit();
+    }
+
+    // Hapus guru beserta data terkait dalam transaksi
+    mysqli_begin_transaction($koneksi);
+    try {
+        // === PENILAIAN cascade ===
+        $q = mysqli_prepare($koneksi, "DELETE FROM penilaian_detail_nilai WHERE id_penilaian IN (SELECT id_penilaian FROM penilaian WHERE id_guru = ?)");
+        mysqli_stmt_bind_param($q, "i", $id_guru); mysqli_stmt_execute($q); mysqli_stmt_close($q);
+
+        $q = mysqli_prepare($koneksi, "DELETE FROM penilaian_tp WHERE id_penilaian IN (SELECT id_penilaian FROM penilaian WHERE id_guru = ?)");
+        mysqli_stmt_bind_param($q, "i", $id_guru); mysqli_stmt_execute($q); mysqli_stmt_close($q);
+
+        $q = mysqli_prepare($koneksi, "DELETE FROM penilaian WHERE id_guru = ?");
+        mysqli_stmt_bind_param($q, "i", $id_guru); mysqli_stmt_execute($q); mysqli_stmt_close($q);
+
+        // === EKSTRAKURIKULER cascade (id_pembina NOT NULL → must DELETE) ===
+        // ekskul_kehadiran → via ekskul_peserta.id_peserta_ekskul
+        $q = mysqli_prepare($koneksi, "DELETE FROM ekskul_kehadiran WHERE id_peserta_ekskul IN (SELECT id_peserta_ekskul FROM ekskul_peserta WHERE id_ekskul IN (SELECT id_ekskul FROM ekstrakurikuler WHERE id_pembina = ?))");
+        mysqli_stmt_bind_param($q, "i", $id_guru); mysqli_stmt_execute($q); mysqli_stmt_close($q);
+
+        // ekskul_penilaian → via ekskul_peserta.id_peserta_ekskul
+        $q = mysqli_prepare($koneksi, "DELETE FROM ekskul_penilaian WHERE id_peserta_ekskul IN (SELECT id_peserta_ekskul FROM ekskul_peserta WHERE id_ekskul IN (SELECT id_ekskul FROM ekstrakurikuler WHERE id_pembina = ?))");
+        mysqli_stmt_bind_param($q, "i", $id_guru); mysqli_stmt_execute($q); mysqli_stmt_close($q);
+
+        // ekskul_peserta → via id_ekskul
+        $q = mysqli_prepare($koneksi, "DELETE FROM ekskul_peserta WHERE id_ekskul IN (SELECT id_ekskul FROM ekstrakurikuler WHERE id_pembina = ?)");
+        mysqli_stmt_bind_param($q, "i", $id_guru); mysqli_stmt_execute($q); mysqli_stmt_close($q);
+
+        // ekskul_tujuan → via id_ekskul
+        $q = mysqli_prepare($koneksi, "DELETE FROM ekskul_tujuan WHERE id_ekskul IN (SELECT id_ekskul FROM ekstrakurikuler WHERE id_pembina = ?)");
+        mysqli_stmt_bind_param($q, "i", $id_guru); mysqli_stmt_execute($q); mysqli_stmt_close($q);
+
+        // ekstrakurikuler itself
+        $q = mysqli_prepare($koneksi, "DELETE FROM ekstrakurikuler WHERE id_pembina = ?");
+        mysqli_stmt_bind_param($q, "i", $id_guru); mysqli_stmt_execute($q); mysqli_stmt_close($q);
+
+        // === Direct children (DELETE) ===
+        $q = mysqli_prepare($koneksi, "DELETE FROM catatan_guru_wali WHERE id_guru_wali = ?");
+        mysqli_stmt_bind_param($q, "i", $id_guru); mysqli_stmt_execute($q); mysqli_stmt_close($q);
+
+        $q = mysqli_prepare($koneksi, "DELETE FROM guru_mengajar WHERE id_guru = ?");
+        mysqli_stmt_bind_param($q, "i", $id_guru); mysqli_stmt_execute($q); mysqli_stmt_close($q);
+
+        $q = mysqli_prepare($koneksi, "DELETE FROM tujuan_pembelajaran WHERE id_guru_pembuat = ?");
+        mysqli_stmt_bind_param($q, "i", $id_guru); mysqli_stmt_execute($q); mysqli_stmt_close($q);
+
+        // kokurikuler_tim_penilai (composite PK: id_kegiatan, id_kelas, id_guru)
+        $q = mysqli_prepare($koneksi, "DELETE FROM kokurikuler_tim_penilai WHERE id_guru = ?");
+        mysqli_stmt_bind_param($q, "i", $id_guru); mysqli_stmt_execute($q); mysqli_stmt_close($q);
+
+        // === Optional references (SET NULL) ===
+        $q = mysqli_prepare($koneksi, "UPDATE kelas SET id_wali_kelas = NULL WHERE id_wali_kelas = ?");
+        mysqli_stmt_bind_param($q, "i", $id_guru); mysqli_stmt_execute($q); mysqli_stmt_close($q);
+
+        $q = mysqli_prepare($koneksi, "UPDATE siswa SET id_guru_wali = NULL WHERE id_guru_wali = ?");
+        mysqli_stmt_bind_param($q, "i", $id_guru); mysqli_stmt_execute($q); mysqli_stmt_close($q);
+
+        $q = mysqli_prepare($koneksi, "UPDATE kokurikuler_kegiatan SET id_koordinator = NULL WHERE id_koordinator = ?");
+        mysqli_stmt_bind_param($q, "i", $id_guru); mysqli_stmt_execute($q); mysqli_stmt_close($q);
+
+        $q = mysqli_prepare($koneksi, "UPDATE kokurikuler_asesmen SET id_guru_penilai = NULL WHERE id_guru_penilai = ?");
+        mysqli_stmt_bind_param($q, "i", $id_guru); mysqli_stmt_execute($q); mysqli_stmt_close($q);
+
+        // === Hapus guru ===
+        $stmt = mysqli_prepare($koneksi, "DELETE FROM guru WHERE id_guru = ?");
+        mysqli_stmt_bind_param($stmt, "i", $id_guru);
+        mysqli_stmt_execute($stmt);
+
+        mysqli_commit($koneksi);
+        $_SESSION['pesan'] = json_encode([
+            'icon' => 'success',
+            'title' => 'Berhasil',
+            'html' => 'Data pengguna dan semua data terkait berhasil dihapus.'
+        ]);
+    } catch (Exception $e) {
+        mysqli_rollback($koneksi);
+        $_SESSION['error'] = json_encode([
+            'icon' => 'error',
+            'title' => 'Gagal Menghapus',
+            'html' => 'Gagal menghapus pengguna: ' . htmlspecialchars($e->getMessage())
+        ]);
+    }
+    header("location:pengguna_tampil.php");
+    exit();
+
+// --- [BARU] AKSI HAPUS PENUGASAN TIDAK AKTIF (TUNGGAL) ---
+} elseif ($aksi == 'hapus_penugasan') {
+    $id_gm = isset($_GET['id_gm']) ? (int)$_GET['id_gm'] : 0;
+    $id_guru_redirect = isset($_GET['id_guru_redirect']) ? (int)$_GET['id_guru_redirect'] : 0;
+
+    if ($id_gm == 0 || $id_guru_redirect == 0) {
+        $_SESSION['error'] = json_encode([
+            'icon' => 'error',
+            'title' => 'ID Tidak Valid',
+            'html' => 'ID penugasan atau ID guru tidak valid.'
+        ]);
+        header("location:pengguna_tampil.php");
+        exit();
+    }
+
+    // Pastikan admin hanya menghapus penugasan yang memang milik guru tsb (keamanan tambahan)
+    $query = "DELETE FROM guru_mengajar WHERE id_guru_mengajar = ? AND id_guru = ?";
+    $stmt = mysqli_prepare($koneksi, $query);
+    mysqli_stmt_bind_param($stmt, "ii", $id_gm, $id_guru_redirect);
+    
+    if(mysqli_stmt_execute($stmt)){
+        if (mysqli_stmt_affected_rows($stmt) > 0) {
+            $_SESSION['pesan'] = json_encode([
+                'icon' => 'success',
+                'title' => 'Berhasil',
+                'html' => 'Penugasan di tahun ajaran tidak aktif berhasil dihapus.'
+            ]);
+        } else {
+            $_SESSION['error'] = json_encode([
+                'icon' => 'warning',
+                'title' => 'Gagal',
+                'html' => 'Gagal menghapus penugasan (data tidak ditemukan atau tidak cocok).'
+            ]);
+        }
+    } else {
+        $_SESSION['error'] = json_encode([
+            'icon' => 'error',
+            'title' => 'Gagal',
+            'html' => 'Gagal menghapus penugasan. Error: ' . htmlspecialchars(mysqli_stmt_error($stmt))
+        ]);
+    }
+    // Redirect kembali ke halaman edit guru
+    header("location:pengguna_edit.php?id=" . $id_guru_redirect);
+    exit();
+
+// --- AKSI HAPUS BANYAK PENGGUNA ---
+} elseif ($aksi == 'hapus_banyak') {
+    $user_ids = $_POST['user_ids'] ?? [];
+    
+    if (empty($user_ids)) {
+        $_SESSION['error'] = json_encode([
+            'icon' => 'warning',
+            'title' => 'Tidak Ada Data',
+            'html' => 'Tidak ada pengguna yang dipilih untuk dihapus.'
+        ]);
+        header("location:pengguna_tampil.php");
+        exit();
+    }
+
+    // Filter untuk memastikan admin tidak menghapus dirinya sendiri
+    $filtered_ids = array_filter($user_ids, function($id) {
+        return (int)$id != $_SESSION['id_guru'];
+    });
+
+    if (count($user_ids) > count($filtered_ids)) {
+        // Jika ada percobaan hapus diri sendiri, beri notifikasi
+        $_SESSION['error'] = json_encode([
+            'icon' => 'warning',
+            'title' => 'Aksi Ditolak',
+            'html' => 'Anda tidak dapat menghapus akun Anda sendiri dari daftar hapus banyak.'
+        ]);
+        // Jika *hanya* akun sendiri yang dipilih, hentikan
+        if (empty($filtered_ids)) {
+            header("location:pengguna_tampil.php");
+            exit();
+        }
+    }
+
+    // Ubah array ID menjadi string yang aman untuk query IN
+    $id_list = implode(',', array_map('intval', $filtered_ids));
+    
+    mysqli_begin_transaction($koneksi);
+    try {
+        // Hapus data anak terlebih dahulu
+        mysqli_query($koneksi, "DELETE FROM penilaian_detail_nilai WHERE id_penilaian IN (SELECT id_penilaian FROM penilaian WHERE id_guru IN ($id_list))");
+        mysqli_query($koneksi, "DELETE FROM penilaian_tp WHERE id_penilaian IN (SELECT id_penilaian FROM penilaian WHERE id_guru IN ($id_list))");
+        mysqli_query($koneksi, "DELETE FROM penilaian WHERE id_guru IN ($id_list)");
+        mysqli_query($koneksi, "DELETE FROM catatan_guru_wali WHERE id_guru_wali IN ($id_list)");
+        mysqli_query($koneksi, "DELETE FROM guru_mengajar WHERE id_guru IN ($id_list)");
+
+        mysqli_query($koneksi, "DELETE FROM guru WHERE id_guru IN ($id_list)");
+        $jumlah_terhapus = mysqli_affected_rows($koneksi);
+
+        mysqli_commit($koneksi);
+        $_SESSION['pesan'] = json_encode([
+            'icon' => 'success',
+            'title' => 'Berhasil',
+            'html' => "<b>$jumlah_terhapus</b> pengguna dan data terkait berhasil dihapus."
+        ]);
+    } catch (Exception $e) {
+        mysqli_rollback($koneksi);
+        $_SESSION['error'] = json_encode([
+            'icon' => 'error',
+            'title' => 'Gagal',
+            'html' => 'Gagal menghapus pengguna: ' . htmlspecialchars($e->getMessage())
+        ]);
+    }
+    header("location:pengguna_tampil.php");
+    exit();
+
+// --- AKSI EXPORT GURU ---
+} elseif ($aksi == 'export_guru') {
+    require 'vendor/autoload.php';
+    
+    // 1. Ambil Data Guru
+    $query = "SELECT nip, nama_guru, username, role, terakhir_login FROM guru ORDER BY nama_guru ASC";
+    $result = mysqli_query($koneksi, $query);
+
+    // 2. Buat Spreadsheet Baru MENGGUNAKAN FULLY QUALIFIED CLASS NAME
+    $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+    $sheet = $spreadsheet->getActiveSheet();
+    $sheet->setTitle('Data Guru & Admin');
+
+    // 3. Set Header
+    $headers = ['No', 'NIP', 'Nama Lengkap', 'Username', 'Role', 'Terakhir Login'];
+    $sheet->fromArray($headers, NULL, 'A1');
+    
+    // Style Header
+    $headerStyle = [
+        'font' => ['bold' => true, 'color' => ['rgb' => 'FFFFFF']],
+        'fill' => ['fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID, 'startColor' => ['rgb' => '4F81BD']],
+        'alignment' => ['horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER],
+    ];
+    $sheet->getStyle('A1:F1')->applyFromArray($headerStyle);
+
+    // 4. Isi Data
+    $row = 2;
+    $no = 1;
+    while($data = mysqli_fetch_assoc($result)) {
+        $sheet->setCellValue('A' . $row, $no++);
+        // Menggunakan konstanta dari namespace lengkap
+        $sheet->setCellValueExplicit('B' . $row, $data['nip'], \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING); 
+        $sheet->setCellValue('C' . $row, $data['nama_guru']);
+        $sheet->setCellValue('D' . $row, $data['username']);
+        $sheet->setCellValue('E' . $row, ucfirst($data['role']));
+        $sheet->setCellValue('F' . $row, $data['terakhir_login']);
+        $row++;
+    }
+
+    // Auto Size Column
+    foreach (range('A', 'F') as $col) {
+        $sheet->getColumnDimension($col)->setAutoSize(true);
+    }
+
+    // 5. Output File
+    $filename = "Data_Guru_Admin_" . date('Ymd_His') . ".xlsx";
+    header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    header('Content-Disposition: attachment;filename="' . $filename . '"');
+    header('Cache-Control: max-age=0');
+
+    // Menggunakan Writer dari namespace lengkap
+    $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+    $writer->save('php://output');
+    exit();
+
+// --- AKSI EXPORT SISWA ---
+} elseif ($aksi == 'export_siswa') {
+    require 'vendor/autoload.php';
+    
+    // 1. Ambil Data Siswa & Kelas LENGKAP
+    $query = "SELECT s.nisn, s.nis, s.nama_lengkap, s.jenis_kelamin, s.tempat_lahir, s.tanggal_lahir, 
+              s.nik, s.agama, s.alamat, s.telepon_siswa,
+              k.nama_kelas, 
+              s.status_siswa, s.username,
+              s.sekolah_asal, s.diterima_tanggal, s.anak_ke, s.status_dalam_keluarga,
+              s.nama_ayah, s.pekerjaan_ayah,
+              s.nama_ibu, s.pekerjaan_ibu,
+              s.nama_wali, s.pekerjaan_wali, s.alamat_wali, s.telepon_wali
+              FROM siswa s 
+              LEFT JOIN kelas k ON s.id_kelas = k.id_kelas 
+              ORDER BY k.nama_kelas ASC, s.nama_lengkap ASC";
+    $result = mysqli_query($koneksi, $query);
+
+    // 2. Buat Spreadsheet Baru
+    $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+    $sheet = $spreadsheet->getActiveSheet();
+    $sheet->setTitle('Data Siswa Lengkap');
+
+    // 3. Set Header (Dari A sampai Z)
+    $headers = [
+        'No', 'NISN', 'NIS', 'Nama Lengkap', 'L/P', 'Tempat Lahir', 'Tanggal Lahir', 
+        'NIK', 'Agama', 'Alamat', 'No. Telepon',
+        'Kelas', 'Status', 'Username',
+        'Sekolah Asal', 'Diterima Tanggal', 'Anak Ke', 'Status Keluarga',
+        'Nama Ayah', 'Pekerjaan Ayah', 
+        'Nama Ibu', 'Pekerjaan Ibu', 
+        'Nama Wali', 'Pekerjaan Wali', 'Alamat Wali', 'No. Telp Wali'
+    ];
+    $sheet->fromArray($headers, NULL, 'A1');
+    
+    // Style Header
+    $headerStyle = [
+        'font' => ['bold' => true, 'color' => ['rgb' => 'FFFFFF']],
+        'fill' => ['fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID, 'startColor' => ['rgb' => '198754']], // Warna hijau
+        'alignment' => ['horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER],
+    ];
+    $sheet->getStyle('A1:Z1')->applyFromArray($headerStyle);
+
+    // 4. Isi Data
+    $row = 2;
+    $no = 1;
+    while($data = mysqli_fetch_assoc($result)) {
+        $sheet->setCellValue('A' . $row, $no++);
+        $sheet->setCellValueExplicit('B' . $row, $data['nisn'], \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
+        $sheet->setCellValueExplicit('C' . $row, $data['nis'], \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
+        $sheet->setCellValue('D' . $row, $data['nama_lengkap']);
+        $sheet->setCellValue('E' . $row, $data['jenis_kelamin']);
+        $sheet->setCellValue('F' . $row, $data['tempat_lahir']);
+        $sheet->setCellValue('G' . $row, $data['tanggal_lahir']);
+        $sheet->setCellValueExplicit('H' . $row, $data['nik'], \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING); // NIK sebagai text
+        $sheet->setCellValue('I' . $row, $data['agama']);
+        $sheet->setCellValue('J' . $row, $data['alamat']);
+        $sheet->setCellValueExplicit('K' . $row, $data['telepon_siswa'], \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
+        $sheet->setCellValue('L' . $row, $data['nama_kelas'] ?? 'Belum Masuk Kelas');
+        $sheet->setCellValue('M' . $row, $data['status_siswa']);
+        $sheet->setCellValueExplicit('N' . $row, $data['username'], \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
+        $sheet->setCellValue('O' . $row, $data['sekolah_asal']);
+        $sheet->setCellValue('P' . $row, $data['diterima_tanggal']);
+        $sheet->setCellValue('Q' . $row, $data['anak_ke']);
+        $sheet->setCellValue('R' . $row, $data['status_dalam_keluarga']);
+        $sheet->setCellValue('S' . $row, $data['nama_ayah']);
+        $sheet->setCellValue('T' . $row, $data['pekerjaan_ayah']);
+        $sheet->setCellValue('U' . $row, $data['nama_ibu']);
+        $sheet->setCellValue('V' . $row, $data['pekerjaan_ibu']);
+        $sheet->setCellValue('W' . $row, $data['nama_wali']);
+        $sheet->setCellValue('X' . $row, $data['pekerjaan_wali']);
+        $sheet->setCellValue('Y' . $row, $data['alamat_wali']);
+        $sheet->setCellValueExplicit('Z' . $row, $data['telepon_wali'], \PhpOffice\PhpSpreadsheet\Cell\DataType::TYPE_STRING);
+        $row++;
+    }
+
+    // Auto Size Column
+    foreach (range('A', 'Z') as $col) {
+        $sheet->getColumnDimension($col)->setAutoSize(true);
+    }
+
+    // 5. Output File
+    $filename = "Data_Siswa_Lengkap_" . date('Ymd_His') . ".xlsx";
+    header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    header('Content-Disposition: attachment;filename="' . $filename . '"');
+    header('Cache-Control: max-age=0');
+
+    $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+    $writer->save('php://output');
+    exit();
+
+// --- AKSI IMPORT PENGGUNA (SIMPEL) ---
+} elseif ($aksi == 'import') {
+    require 'vendor/autoload.php';
+
+    $file_mimes = array('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    
+    if(isset($_FILES['file_pengguna']['name']) && in_array($_FILES['file_pengguna']['type'], $file_mimes)) {
+        
+        $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+        $spreadsheet = $reader->load($_FILES['file_pengguna']['tmp_name']);
+        $sheetData = $spreadsheet->getActiveSheet()->toArray();
+        
+        $berhasil = 0;
+        $gagal = 0;
+        $pesan_gagal = [];
+
+        $query = "INSERT IGNORE INTO guru (nip, nama_guru, username, password, role) VALUES (?, ?, ?, ?, ?)";
+        $stmt = mysqli_prepare($koneksi, $query);
+
+        for($i = 1; $i < count($sheetData); $i++) {
+            $nip = trim($sheetData[$i][0] ?? '');
+            $nama = trim($sheetData[$i][1] ?? '');
+            $username = trim($sheetData[$i][2] ?? '');
+            $role = strtolower(trim($sheetData[$i][3] ?? ''));
+            $password_excel = trim($sheetData[$i][4] ?? '');
+
+            if(empty($nama) || empty($username) || !in_array($role, ['admin', 'guru'])) {
+                $gagal++;
+                $pesan_gagal[] = "Baris " . ($i + 1) . ": Data tidak lengkap atau role tidak valid.";
+                continue;
+            }
+
+            $password_to_hash = !empty($password_excel) ? $password_excel : $username;
+            $password = password_hash($password_to_hash, PASSWORD_DEFAULT);
+            $nip_final = !empty($nip) ? $nip : null;
+            
+            mysqli_stmt_bind_param($stmt, "sssss", $nip_final, $nama, $username, $password, $role);
+            mysqli_stmt_execute($stmt);
+            
+            if(mysqli_stmt_affected_rows($stmt) > 0){
+                $berhasil++;
+            } else {
+                $gagal++;
+                $pesan_gagal[] = "Baris " . ($i + 1) . ": Username atau NIP mungkin sudah ada.";
+            }
+        }
+        
+        $html_report = "Proses import selesai.<br>Berhasil: <b>$berhasil</b><br>Gagal: <b>$gagal</b>";
+        if(!empty($pesan_gagal)) {
+            $html_report .= "<br><small>" . implode("<br>", array_slice($pesan_gagal, 0, 5)) . (count($pesan_gagal) > 5 ? "<br>...dan lainnya." : "") . "</small>";
+        }
+        
+        $_SESSION['pesan'] = json_encode([
+            'icon' => $gagal > 0 ? 'warning' : 'success',
+            'title' => 'Import Selesai',
+            'html' => $html_report
+        ]);
+
+    } else {
+        $_SESSION['error'] = json_encode([
+            'icon' => 'error',
+            'title' => 'Gagal Upload',
+            'html' => 'Gagal! Pastikan file yang Anda unggah adalah format .xlsx yang benar.'
+        ]);
+    }
+
+    header("location: pengguna_tampil.php");
+    exit();
+
+// --- AKSI IMPORT GURU & MENGAJAR (LENGKAP) ---
+} elseif ($aksi == 'import_mengajar') {
+    // Blok ini sudah menggunakan format JSON, jadi tidak perlu diubah
+    require 'vendor/autoload.php';
+
+    $file_mimes = array('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+    
+    if(!isset($_FILES['file_guru_mengajar']['name']) || !in_array($_FILES['file_guru_mengajar']['type'], $file_mimes)) {
+        $_SESSION['error'] = json_encode([
+            'icon' => 'error',
+            'title' => 'Gagal Upload',
+            'html' => 'Gagal! Pastikan file yang Anda unggah adalah format .xlsx yang benar.'
+        ]);
+        header("location: pengguna_tampil.php");
+        exit();
+    }
+
+    // 1. Ambil data penting dari DB
+    $q_ta = mysqli_query($koneksi, "SELECT id_tahun_ajaran FROM tahun_ajaran WHERE status = 'Aktif' LIMIT 1");
+    $id_tahun_ajaran_aktif = mysqli_fetch_assoc($q_ta)['id_tahun_ajaran'] ?? 0;
+
+    if ($id_tahun_ajaran_aktif == 0) {
+        $_SESSION['error'] = json_encode([
+            'icon' => 'error',
+            'title' => 'Gagal Import',
+            'html' => 'Gagal import: Tidak ada Tahun Ajaran yang berstatus \'Aktif\' di sistem.'
+        ]);
+        header("location: pengguna_tampil.php");
+        exit();
+    }
+
+    // 2. Buat cache Mapel (Kode Mapel -> id_mapel)
+    $mapel_cache = [];
+    $query_mapel = mysqli_query($koneksi, "SELECT id_mapel, kode_mapel FROM mata_pelajaran WHERE kode_mapel IS NOT NULL AND kode_mapel != ''");
+    while($m = mysqli_fetch_assoc($query_mapel)) {
+        $mapel_cache[strtoupper(trim($m['kode_mapel']))] = $m['id_mapel'];
+    }
+
+    // 3. Buat cache Kelas (Nama Kelas -> id_kelas) untuk TA Aktif
+    $kelas_cache = [];
+    $query_kelas = mysqli_query($koneksi, "SELECT id_kelas, nama_kelas FROM kelas WHERE id_tahun_ajaran = $id_tahun_ajaran_aktif");
+    while($k = mysqli_fetch_assoc($query_kelas)) {
+        $kelas_cache[strtoupper(trim($k['nama_kelas']))] = $k['id_kelas'];
+    }
+
+    $processed_gurus = [];
+    $guru_baru_dibuat = 0;
+    $penugasan_berhasil = 0;
+    $gagal_total = 0;
+    $pesan_error_detail = [];
+
+    $stmt_cek_guru = mysqli_prepare($koneksi, "SELECT id_guru FROM guru WHERE username = ?");
+    $stmt_insert_guru = mysqli_prepare($koneksi, "INSERT INTO guru (nip, nama_guru, username, password, role) VALUES (?, ?, ?, ?, ?)");
+    $stmt_insert_penugasan = mysqli_prepare($koneksi, "INSERT IGNORE INTO guru_mengajar (id_guru, id_mapel, id_kelas, id_tahun_ajaran) VALUES (?, ?, ?, ?)");
+
+    mysqli_begin_transaction($koneksi);
+
+    try {
+        $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+        $spreadsheet = $reader->load($_FILES['file_guru_mengajar']['tmp_name']);
+        $sheetData = $spreadsheet->getSheetByName('Import Guru & Mengajar')->toArray();
+
+        for($i = 1; $i < count($sheetData); $i++) {
+            $row = $sheetData[$i];
+            $baris_ke = $i + 1;
+
+            $username = trim($row[2] ?? '');
+            if (empty($username)) {
+                $gagal_total++;
+                $pesan_error_detail[] = "Baris $baris_ke: Username wajib diisi.";
+                continue;
+            }
+
+            $id_guru_to_assign = null;
+
+            if (isset($processed_gurus[$username])) {
+                $id_guru_to_assign = $processed_gurus[$username];
+            } else {
+                mysqli_stmt_bind_param($stmt_cek_guru, "s", $username);
+                mysqli_stmt_execute($stmt_cek_guru);
+                $result_guru = mysqli_stmt_get_result($stmt_cek_guru);
+                $data_guru = mysqli_fetch_assoc($result_guru);
+
+                if ($data_guru) {
+                    $id_guru_to_assign = $data_guru['id_guru'];
+                } else {
+                    $nip = !empty(trim($row[0] ?? '')) ? trim($row[0]) : null;
+                    $nama = trim($row[1] ?? '');
+                    $role = strtolower(trim($row[3] ?? ''));
+                    $password_excel = trim($row[4] ?? '');
+
+                    if (empty($nama) || !in_array($role, ['admin', 'guru'])) {
+                        $gagal_total++;
+                        $pesan_error_detail[] = "Baris $baris_ke: Data guru baru (Nama/Role) tidak lengkap/valid untuk username $username.";
+                        continue;
+                    }
+                    
+                    $password_to_hash = !empty($password_excel) ? $password_excel : $username;
+                    $password = password_hash($password_to_hash, PASSWORD_DEFAULT);
+
+                    mysqli_stmt_bind_param($stmt_insert_guru, "sssss", $nip, $nama, $username, $password, $role);
+                    if (mysqli_stmt_execute($stmt_insert_guru)) {
+                        $id_guru_to_assign = mysqli_insert_id($koneksi);
+                        $guru_baru_dibuat++;
+                    } else {
+                        $gagal_total++;
+                        $pesan_error_detail[] = "Baris $baris_ke: Gagal menyimpan guru baru $username (NIP mungkin duplikat?).";
+                        continue;
+                    }
+                }
+                $processed_gurus[$username] = $id_guru_to_assign;
+            }
+
+            $role_guru = strtolower(trim($row[3] ?? '')); 
+            if ($role_guru == 'guru') {
+                $kode_mapel = strtoupper(trim($row[5] ?? ''));
+                $nama_kelas = strtoupper(trim($row[6] ?? ''));
+
+                if (empty($kode_mapel) || empty($nama_kelas)) {
+                    $gagal_total++;
+                    $pesan_error_detail[] = "Baris $baris_ke: Kode Mapel & Nama Kelas wajib diisi untuk $username.";
+                    continue;
+                }
+
+                if (!isset($mapel_cache[$kode_mapel])) {
+                    $gagal_total++;
+                    $pesan_error_detail[] = "Baris $baris_ke: Kode Mapel '$kode_mapel' tidak ditemukan di database.";
+                    continue;
+                }
+                if (!isset($kelas_cache[$nama_kelas])) {
+                    $gagal_total++;
+                    $pesan_error_detail[] = "Baris $baris_ke: Nama Kelas '$nama_kelas' tidak ditemukan di Tahun Ajaran Aktif.";
+                    continue;
+                }
+
+                $id_mapel = $mapel_cache[$kode_mapel];
+                $id_kelas = $kelas_cache[$nama_kelas];
+
+                mysqli_stmt_bind_param($stmt_insert_penugasan, "iiii", $id_guru_to_assign, $id_mapel, $id_kelas, $id_tahun_ajaran_aktif);
+                mysqli_stmt_execute($stmt_insert_penugasan);
+                
+                if (mysqli_stmt_affected_rows($stmt_insert_penugasan) > 0) {
+                    $penugasan_berhasil++;
+                }
+            }
+        } 
+
+        if ($gagal_total > 0) {
+            mysqli_rollback($koneksi);
+            $html_errors = "Proses import GAGAL dan dibatalkan (Rollback).<br>Ditemukan $gagal_total error:<br><small><ul>";
+            foreach (array_slice($pesan_error_detail, 0, 10) as $err) {
+                $html_errors .= "<li>" . htmlspecialchars($err) . "</li>";
+            }
+            if(count($pesan_error_detail) > 10) $html_errors .= "<li>...dan lainnya.</li>";
+            $html_errors .= "</ul></small>Perbaiki file Excel Anda dan coba lagi.";
+            
+            $_SESSION['error'] = json_encode([
+                'icon' => 'error',
+                'title' => 'Import Gagal Total',
+                'html' => $html_errors
+            ]);
+
+        } else {
+            mysqli_commit($koneksi);
+            $html_success = "Proses import selesai.<br>";
+            $html_success .= "<b>$guru_baru_dibuat</b> guru baru berhasil dibuat.<br>";
+            $html_success .= "<b>$penugasan_berhasil</b> penugasan mengajar berhasil ditambahkan.";
+            
+            $_SESSION['pesan'] = json_encode([
+                'icon' => 'success',
+                'title' => 'Import Berhasil',
+                'html' => $html_success
+            ]);
+        }
+
+    } catch (Exception $e) {
+        mysqli_rollback($koneksi);
+        $_SESSION['error'] = json_encode([
+            'icon' => 'error',
+            'title' => 'Error Server',
+            'html' => "Terjadi error saat pemrosesan file: " . htmlspecialchars($e->getMessage())
+        ]);
+    }
+
+    header("location: pengguna_tampil.php");
+    exit();
+}
+
+// Jika tidak ada aksi yang cocok
+else {
+    header("location: dashboard.php");
+    exit();
+}
+?>

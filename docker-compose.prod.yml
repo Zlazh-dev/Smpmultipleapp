@@ -1,0 +1,139 @@
+# ==========================================================
+# SMPIT Asy-Syadzili — Production Docker Compose
+# ==========================================================
+# Deployment: Oracle Cloud VM + Cloudflare Tunnel
+#   portal.smpitasy-syadzili.sch.id → Portal (Next.js)
+#   radig.smpitasy-syadzili.sch.id  → RADIG (PHP/Apache)
+#   tu.smpitasy-syadzili.sch.id     → TU App (Next.js)
+#
+# Architecture:
+#   Cloudflare Tunnel → bare-metal Nginx (:80) → Docker containers
+#   Web profile (smpitasy-syadzili.sch.id) served by bare-metal nginx directly.
+#
+# Quick start:
+#   1. Copy .env.prod.example → .env
+#   2. Generate secrets: openssl rand -base64 32
+#   3. docker compose -f docker-compose.prod.yml up -d --build
+#   4. docker compose -f docker-compose.prod.yml exec portal npx prisma db push
+#   5. docker compose -f docker-compose.prod.yml exec tu-app npx prisma db push
+# ==========================================================
+
+services:
+  # ---- PostgreSQL (Portal) ----
+  postgres:
+    image: postgres:16-alpine
+    container_name: smpit-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./scripts/init-pg.sh:/docker-entrypoint-initdb.d/init-pg.sh:ro
+    # NO ports exposed — Docker network only
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - smpit-net
+
+  # ---- MySQL (RADIG only) ----
+  mysql:
+    image: mysql:8.0
+    container_name: smpit-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: raporsmp
+      MYSQL_USER: ${MYSQL_RADIG_USER}
+      MYSQL_PASSWORD: ${MYSQL_RADIG_PASSWORD}
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./radig/deepsync.sql:/docker-entrypoint-initdb.d/01-seed.sql:ro
+    # NO ports exposed — Docker network only
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - smpit-net
+
+  # ---- Portal (Next.js) ----
+  portal:
+    build:
+      context: ./portal
+      dockerfile: Dockerfile
+    container_name: smpit-portal
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: "postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/portal_smpit?schema=public"
+      NEXTAUTH_SECRET: ${NEXTAUTH_SECRET}
+      NEXTAUTH_URL: ${PORTAL_URL}
+      AUTH_TRUST_HOST: "true"
+      NEXT_PUBLIC_BASE_URL: ${PORTAL_URL}
+      NEXT_PUBLIC_TU_URL: ${TU_URL}
+      NEXT_PUBLIC_RADIG_URL: ${RADIG_URL}
+      SSO_JWT_SECRET: ${SSO_JWT_SECRET}
+    ports:
+      - "127.0.0.1:3000:3000"
+    networks:
+      - smpit-net
+
+  # ---- TU App (Next.js) ----
+  tu-app:
+    build:
+      context: ./tu-app
+      dockerfile: Dockerfile
+    container_name: smpit-tu
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: "postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/tu_smpit?schema=public"
+      NEXTAUTH_SECRET: ${NEXTAUTH_SECRET}
+      NEXTAUTH_URL: ${TU_URL}
+      AUTH_TRUST_HOST: "true"
+      TU_DEFAULT_PASSWORD: ${TU_DEFAULT_PASSWORD}
+      SSO_JWT_SECRET: ${SSO_JWT_SECRET}
+      NEXT_PUBLIC_PORTAL_URL: ${PORTAL_URL}
+    ports:
+      - "127.0.0.1:3001:3000"
+    networks:
+      - smpit-net
+
+  # ---- RADIG (PHP/Apache) ----
+  radig:
+    build:
+      context: ./radig
+      dockerfile: Dockerfile
+    container_name: smpit-radig
+    restart: unless-stopped
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      DB_HOST: mysql
+      DB_USER: ${MYSQL_RADIG_USER}
+      DB_PASS: ${MYSQL_RADIG_PASSWORD}
+      DB_NAME: raporsmp
+      SSO_JWT_SECRET: ${SSO_JWT_SECRET}
+      PORTAL_URL: ${PORTAL_URL}
+    ports:
+      - "127.0.0.1:8080:80"
+    networks:
+      - smpit-net
+
+volumes:
+  postgres_data:
+  mysql_data:
+
+networks:
+  smpit-net:
+    driver: bridge

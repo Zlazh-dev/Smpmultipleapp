@@ -1,0 +1,167 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum PegawaiRole {
+  KHUSUS
+  UMUM
+}
+
+enum PresensiStatus {
+  HADIR
+  IZIN
+  ALFA
+  SAKIT
+}
+
+enum ApprovalStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum DokumenKategori {
+  SK
+  SERTIFIKAT
+  PRIBADI
+  SURAT
+}
+
+model Pegawai {
+  id             String     @id @default(cuid())
+  nip            String     @unique
+  namaLengkap    String
+  jabatan        String
+  role           PegawaiRole @default(UMUM)
+  username       String     @unique
+  portalUserId   String?    @unique  // Links to Portal User.id (centralized identity)
+  noHp           String?
+  alamat         String?
+  skRiwayat      Json[]     // [{"noSK":"123/KS/2026","tanggal":"2026-01-01","jenis":"Pengangkatan"}]
+  kinerja        Json?      // e-Kinerja scores
+  presensi       Presensi[]
+  cuti           Cuti[]
+  dokumen        Dokumen[]
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+
+  @@index([nip])
+  @@index([jabatan])
+  @@index([portalUserId])
+}
+
+model Presensi {
+  id         String         @id @default(cuid())
+  pegawaiId  String
+  tanggal    DateTime
+  status     PresensiStatus
+  bukti      String?        // QR/photo URL
+  keterangan String?
+  jamDatang  DateTime?      // Check-in time
+  jamPulang  DateTime?      // Check-out time
+  pegawai    Pegawai        @relation(fields: [pegawaiId], references: [id], onDelete: Cascade)
+  createdAt  DateTime       @default(now())
+
+  @@unique([pegawaiId, tanggal])
+  @@index([tanggal])
+}
+
+model Cuti {
+  id             String         @id @default(cuid())
+  pegawaiId      String
+  jenisCuti      String         // Tahunan/Sakit/Melahirkan
+  tanggalMulai   DateTime
+  tanggalSelesai DateTime
+  lamaHari       Int
+  alasan         String
+  status         ApprovalStatus @default(PENDING)
+  approverTu     String?
+  approverKs     String?
+  dokBukti       String?        // Upload bukti
+  pegawai        Pegawai        @relation(fields: [pegawaiId], references: [id], onDelete: Cascade)
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  @@index([pegawaiId])
+  @@index([status])
+}
+
+model Dokumen {
+  id         String          @id @default(cuid())
+  pegawaiId  String?
+  kategori   DokumenKategori
+  namaAsli   String
+  namaFile   String          // S3 key
+  ukuran     Int             // bytes
+  mimeType   String
+  pathS3     String
+  uploadedBy String
+  pegawai    Pegawai?        @relation(fields: [pegawaiId], references: [id], onDelete: SetNull)
+  createdAt  DateTime        @default(now())
+
+  @@index([kategori])
+  @@index([pegawaiId])
+}
+
+enum TemplateCategory {
+  SURAT_IZIN
+  LAPORAN_KEHADIRAN
+  SK
+  SURAT_TUGAS
+  CUSTOM
+}
+
+model PrintTemplate {
+  id         String           @id @default(cuid())
+  nama       String
+  kategori   TemplateCategory
+  deskripsi  String?
+  canvasData Json             // Full editor state (elements, dimensions, etc.)
+  isActive   Boolean          @default(false) // Only one active per category
+  createdBy  String
+  createdAt  DateTime         @default(now())
+  updatedAt  DateTime         @updatedAt
+
+  @@index([kategori])
+}
+
+model GeofenceSettings {
+  id         String   @id @default("default")
+  latitude   Float    @default(-7.2575)   // Default: approximate school location
+  longitude  Float    @default(112.7521)
+  radius     Int      @default(200)       // meters
+  namaLokasi String   @default("SMPIT Asy-Syadzili")
+  jamMasuk   String   @default("07:00")
+  jamPulang  String   @default("16:00")
+  isActive   Boolean  @default(true)
+  updatedAt  DateTime @updatedAt
+}
+
+model ProfilSekolah {
+  id              String   @id @default("default")
+  namaSekolah     String   @default("SMPIT Asy-Syadzili")
+  npsn            String   @default("")
+  alamat          String   @default("")
+  kelurahan       String   @default("")
+  kecamatan       String   @default("")
+  kabupaten       String   @default("")
+  provinsi        String   @default("")
+  kodePos         String   @default("")
+  telepon         String   @default("")
+  email           String   @default("")
+  website         String   @default("")
+  statusSekolah   String   @default("Swasta")     // Negeri / Swasta
+  tahunBerdiri    String   @default("")
+  akreditasi      String   @default("")            // A / B / C / Belum
+  namaKepalaSekolah String @default("")
+  nipKepalaSekolah  String @default("")
+  latitude        Float    @default(-7.2575)
+  longitude       Float    @default(112.7521)
+  logo            String?                          // Base64 or file path
+  updatedAt       DateTime @updatedAt
+}

@@ -1,0 +1,147 @@
+"use client";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
+import {
+  LayoutDashboard,
+  Users,
+  ClipboardCheck,
+  CalendarOff,
+  FolderOpen,
+  Building2,
+  Moon,
+  Sun,
+  ExternalLink,
+  Printer,
+  Settings,
+  LogOut,
+} from "lucide-react";
+import { useTheme } from "next-themes";
+import { signOut } from "next-auth/react";
+
+const allNavItems = [
+  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard, roles: ["UMUM", "KHUSUS"] },
+  { href: "/pegawai", label: "Pegawai", icon: Users, roles: ["KHUSUS"] },
+  { href: "/presensi", label: "Presensi", icon: ClipboardCheck, roles: ["UMUM", "KHUSUS"] },
+  { href: "/cuti", label: "Cuti", icon: CalendarOff, roles: ["UMUM", "KHUSUS"] },
+  { href: "/cetak", label: "Cetak Surat", icon: Printer, roles: ["KHUSUS"] },
+  { href: "/efiling", label: "e-Filing", icon: FolderOpen, roles: ["UMUM", "KHUSUS"] },
+];
+
+interface AppSidebarProps {
+  role: string;
+}
+
+export function AppSidebar({ role }: AppSidebarProps) {
+  const pathname = usePathname();
+  const { theme, setTheme } = useTheme();
+
+  const navItems = allNavItems.filter((item) => item.roles.includes(role));
+
+  return (
+    <aside className="flex h-screen w-60 flex-col border-r border-border/40 bg-sidebar backdrop-blur-sm">
+      {/* Header */}
+      <div className="flex items-center gap-3 px-4 py-5 border-b border-sidebar-border">
+        <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 shadow-lg shadow-blue-500/25">
+          <Building2 className="h-5 w-5 text-white" />
+        </div>
+        <div>
+          <span className="text-sm font-bold tracking-tight block text-sidebar-foreground">
+            Tata Usaha
+          </span>
+          <span className="text-[10px] text-muted-foreground leading-none">
+            SMPIT Asy-Syadzili
+          </span>
+        </div>
+      </div>
+
+      {/* Navigation */}
+      <nav className="flex-1 p-3 space-y-1 overflow-y-auto">
+        <p className="px-3 mb-2 text-[10px] font-semibold text-muted-foreground uppercase tracking-widest">
+          Menu
+        </p>
+        {navItems.map((item) => {
+          const isActive = pathname === item.href || pathname.startsWith(item.href + "/");
+          return (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={cn(
+                "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200",
+                isActive
+                  ? "bg-sidebar-accent text-sidebar-accent-foreground shadow-sm"
+                  : "text-muted-foreground hover:bg-sidebar-accent/50 hover:text-sidebar-foreground"
+              )}
+            >
+              <item.icon className={cn("h-4 w-4", isActive && "text-sidebar-primary")} />
+              {item.label}
+              {item.label === "Cuti" && (
+                <span className="ml-auto flex h-5 min-w-5 items-center justify-center rounded-full bg-amber-500/15 px-1.5 text-[10px] font-semibold text-amber-500">
+                  3
+                </span>
+              )}
+            </Link>
+          );
+        })}
+
+        <Separator className="my-3" />
+
+        <p className="px-3 mb-2 text-[10px] font-semibold text-muted-foreground uppercase tracking-widest">
+          Lainnya
+        </p>
+
+        {role === "KHUSUS" && (
+          <Link
+            href="/setting"
+            className={cn(
+              "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200",
+              pathname.startsWith("/setting")
+                ? "bg-sidebar-accent text-sidebar-accent-foreground shadow-sm"
+                : "text-muted-foreground hover:bg-sidebar-accent/50 hover:text-sidebar-foreground"
+            )}
+          >
+            <Settings className={cn("h-4 w-4", pathname.startsWith("/setting") && "text-sidebar-primary")} />
+            Setting
+          </Link>
+        )}
+
+        <a
+          href={process.env.NEXT_PUBLIC_PORTAL_URL || "/"}
+          className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-muted-foreground hover:bg-sidebar-accent/50 hover:text-sidebar-foreground transition-all"
+        >
+          <ExternalLink className="h-4 w-4" />
+          Portal
+        </a>
+      </nav>
+
+      {/* Footer */}
+      <div className="border-t border-sidebar-border p-3 space-y-1">
+        <Button
+          variant="ghost"
+          size="sm"
+          className="w-full justify-start text-muted-foreground cursor-pointer"
+          onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+        >
+          {theme === "dark" ? (
+            <Sun className="mr-2 h-4 w-4" />
+          ) : (
+            <Moon className="mr-2 h-4 w-4" />
+          )}
+          {theme === "dark" ? "Mode Terang" : "Mode Gelap"}
+        </Button>
+        <Button
+          variant="ghost"
+          size="sm"
+          className="w-full justify-start text-red-500 hover:text-red-600 hover:bg-red-500/10 cursor-pointer"
+          onClick={() => signOut({ callbackUrl: process.env.NEXT_PUBLIC_PORTAL_URL || "http://portal.localhost/login" })}
+        >
+          <LogOut className="mr-2 h-4 w-4" />
+          Keluar
+        </Button>
+      </div>
+    </aside>
+  );
+}

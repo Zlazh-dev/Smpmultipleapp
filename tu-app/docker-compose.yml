@@ -1,0 +1,48 @@
+services:
+  postgres-tu:
+    image: postgres:16-alpine
+    container_name: smpit-postgres-tu
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_TU_USER:-tu_user}
+      POSTGRES_PASSWORD: ${POSTGRES_TU_PASSWORD:-tu_secure_password_2026}
+      POSTGRES_DB: ${POSTGRES_TU_DB:-tu_sekolahasy}
+    volumes:
+      - postgres_tu_data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_TU_USER:-tu_user}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - tu-network
+
+  tu-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: smpit-tu-app
+    restart: unless-stopped
+    depends_on:
+      postgres-tu:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: "postgresql://${POSTGRES_TU_USER:-tu_user}:${POSTGRES_TU_PASSWORD:-tu_secure_password_2026}@postgres-tu:5432/${POSTGRES_TU_DB:-tu_sekolahasy}?schema=public"
+      PORTAL_JWT_SECRET: ${PORTAL_JWT_SECRET:-change-me}
+      NEXTAUTH_SECRET: ${PORTAL_JWT_SECRET:-change-me}
+      NEXT_PUBLIC_PORTAL_URL: ${NEXT_PUBLIC_PORTAL_URL:-http://portal.sekolahasy.com}
+      NEXT_PUBLIC_APP_NAME: "TU App"
+    ports:
+      - "3001:3000"
+    networks:
+      - tu-network
+
+volumes:
+  postgres_tu_data:
+    driver: local
+
+networks:
+  tu-network:
+    driver: bridge

@@ -1,0 +1,1361 @@
+[07-Sep-2025 13:07:34 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function mysqli_stmt_bind_bind_param() in /home/u1444233/public_html/rapor/walikelas_pindah_siswa.php:30
+Stack trace:
+#0 {main}
+  thrown in /home/u1444233/public_html/rapor/walikelas_pindah_siswa.php on line 30
+[07-Sep-2025 17:51:59 Asia/Jakarta] PHP Deprecated:  Function strftime() is deprecated in /home/u1444233/public_html/rapor/leger_pdf.php on line 46
+[07-Sep-2025 18:03:33 Asia/Jakarta] PHP Deprecated:  Function strftime() is deprecated in /home/u1444233/public_html/rapor/leger_pdf.php on line 46
+[07-Sep-2025 18:03:58 Asia/Jakarta] PHP Warning:  Undefined array key "alamat" in /home/u1444233/public_html/rapor/rapor_pdf.php on line 175
+[07-Sep-2025 18:03:58 Asia/Jakarta] PHP Warning:  Undefined array key "alamat" in /home/u1444233/public_html/rapor/rapor_pdf.php on line 197
+[07-Sep-2025 22:28:17 Asia/Jakarta] PHP Fatal error:  Uncaught TypeError: Cannot access offset of type string on string in /home/u1444233/public_html/rapor/pembina_penilaian_aksi.php:38
+Stack trace:
+#0 {main}
+  thrown in /home/u1444233/public_html/rapor/pembina_penilaian_aksi.php on line 38
+[07-Sep-2025 22:31:27 Asia/Jakarta] PHP Warning:  Undefined array key "alamat" in /home/u1444233/public_html/rapor/rapor_pdf.php on line 175
+[07-Sep-2025 22:31:27 Asia/Jakarta] PHP Warning:  Undefined array key "alamat" in /home/u1444233/public_html/rapor/rapor_pdf.php on line 197
+[08-Sep-2025 01:21:49 Asia/Jakarta] PHP Warning:  Undefined array key "alamat" in /home/u1444233/public_html/rapor/parts/rapor_pdf_body.php on line 165
+[08-Sep-2025 01:21:49 Asia/Jakarta] PHP Warning:  Undefined array key "alamat" in /home/u1444233/public_html/rapor/parts/rapor_pdf_body.php on line 187
+[08-Sep-2025 01:21:49 Asia/Jakarta] PHP Warning:  Undefined array key "alamat" in /home/u1444233/public_html/rapor/parts/rapor_pdf_body.php on line 165
+[08-Sep-2025 01:21:49 Asia/Jakarta] PHP Warning:  Undefined array key "alamat" in /home/u1444233/public_html/rapor/parts/rapor_pdf_body.php on line 187
+[08-Sep-2025 01:23:49 Asia/Jakarta] PHP Warning:  Undefined variable $siswa in /home/u1444233/public_html/rapor/parts/rapor_identitas_body.php on line 61
+[08-Sep-2025 01:23:49 Asia/Jakarta] PHP Warning:  Trying to access array offset on null in /home/u1444233/public_html/rapor/parts/rapor_identitas_body.php on line 61
+[08-Sep-2025 01:23:49 Asia/Jakarta] PHP Warning:  Undefined variable $siswa in /home/u1444233/public_html/rapor/parts/rapor_identitas_body.php on line 61
+[08-Sep-2025 01:23:49 Asia/Jakarta] PHP Warning:  Trying to access array offset on null in /home/u1444233/public_html/rapor/parts/rapor_identitas_body.php on line 61
+[08-Sep-2025 05:33:40 Asia/Jakarta] PHP Deprecated:  Function strftime() is deprecated in /home/u1444233/public_html/rapor/leger_pdf.php on line 46
+[08-Sep-2025 06:17:39 Asia/Jakarta] PHP Warning:  Undefined array key "jabatan_kepsek" in /home/u1444233/public_html/rapor/cetak_mutasi.php on line 126
+[08-Sep-2025 06:17:39 Asia/Jakarta] PHP Warning:  Undefined array key "jabatan_kepsek" in /home/u1444233/public_html/rapor/cetak_mutasi.php on line 126
+[08-Sep-2025 06:17:39 Asia/Jakarta] PHP Warning:  Undefined array key "jabatan_kepsek" in /home/u1444233/public_html/rapor/cetak_mutasi.php on line 126
+[08-Sep-2025 12:13:50 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'p.id_tp' in 'ON' in /home/u1444233/public_html/rapor/penilaian_tampil.php:114
+Stack trace:
+#0 /home/u1444233/public_html/rapor/penilaian_tampil.php(114): mysqli_prepare()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 114
+[08-Sep-2025 12:17:32 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'p.id_tp' in 'ON' in /home/u1444233/public_html/rapor/penilaian_tampil.php:114
+Stack trace:
+#0 /home/u1444233/public_html/rapor/penilaian_tampil.php(114): mysqli_prepare()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 114
+[08-Sep-2025 12:17:57 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'p.id_tp' in 'ON' in /home/u1444233/public_html/rapor/penilaian_tampil.php:114
+Stack trace:
+#0 /home/u1444233/public_html/rapor/penilaian_tampil.php(114): mysqli_prepare()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 114
+[08-Sep-2025 12:18:20 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'p.id_tp' in 'ON' in /home/u1444233/public_html/rapor/penilaian_tampil.php:114
+Stack trace:
+#0 /home/u1444233/public_html/rapor/penilaian_tampil.php(114): mysqli_prepare()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 114
+[08-Sep-2025 12:18:27 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'p.id_tp' in 'ON' in /home/u1444233/public_html/rapor/penilaian_tampil.php:114
+Stack trace:
+#0 /home/u1444233/public_html/rapor/penilaian_tampil.php(114): mysqli_prepare()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 114
+[08-Sep-2025 12:19:29 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'p.id_tp' in 'ON' in /home/u1444233/public_html/rapor/penilaian_tampil.php:114
+Stack trace:
+#0 /home/u1444233/public_html/rapor/penilaian_tampil.php(114): mysqli_prepare()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 114
+[08-Sep-2025 12:20:09 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'p.id_tp' in 'ON' in /home/u1444233/public_html/rapor/penilaian_tampil.php:114
+Stack trace:
+#0 /home/u1444233/public_html/rapor/penilaian_tampil.php(114): mysqli_prepare()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 114
+[08-Sep-2025 12:21:07 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'p.id_tp' in 'ON' in /home/u1444233/public_html/rapor/penilaian_tampil.php:117
+Stack trace:
+#0 /home/u1444233/public_html/rapor/penilaian_tampil.php(117): mysqli_prepare()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 117
+[08-Sep-2025 12:25:22 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'id_tp' in 'INSERT INTO' in /home/u1444233/public_html/rapor/penilaian_aksi.php:62
+Stack trace:
+#0 /home/u1444233/public_html/rapor/penilaian_aksi.php(62): mysqli_prepare()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/penilaian_aksi.php on line 62
+[08-Sep-2025 12:27:01 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'id_tp' in 'INSERT INTO' in /home/u1444233/public_html/rapor/penilaian_aksi.php:62
+Stack trace:
+#0 /home/u1444233/public_html/rapor/penilaian_aksi.php(62): mysqli_prepare()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/penilaian_aksi.php on line 62
+[08-Sep-2025 12:27:40 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'id_tp' in 'INSERT INTO' in /home/u1444233/public_html/rapor/penilaian_aksi.php:62
+Stack trace:
+#0 /home/u1444233/public_html/rapor/penilaian_aksi.php(62): mysqli_prepare()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/penilaian_aksi.php on line 62
+[08-Sep-2025 12:27:50 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'p.id_tp' in 'ON' in /home/u1444233/public_html/rapor/penilaian_tampil.php:114
+Stack trace:
+#0 /home/u1444233/public_html/rapor/penilaian_tampil.php(114): mysqli_prepare()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 114
+[08-Sep-2025 12:30:46 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'p.id_tp' in 'ON' in /home/u1444233/public_html/rapor/penilaian_tampil.php:114
+Stack trace:
+#0 /home/u1444233/public_html/rapor/penilaian_tampil.php(114): mysqli_prepare()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 114
+[08-Sep-2025 12:31:19 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'id_tp' in 'INSERT INTO' in /home/u1444233/public_html/rapor/penilaian_aksi.php:62
+Stack trace:
+#0 /home/u1444233/public_html/rapor/penilaian_aksi.php(62): mysqli_prepare()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/penilaian_aksi.php on line 62
+[08-Sep-2025 12:31:55 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'id_tp' in 'INSERT INTO' in /home/u1444233/public_html/rapor/penilaian_aksi.php:62
+Stack trace:
+#0 /home/u1444233/public_html/rapor/penilaian_aksi.php(62): mysqli_prepare()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/penilaian_aksi.php on line 62
+[08-Sep-2025 12:33:56 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'id_tp' in 'INSERT INTO' in /home/u1444233/public_html/rapor/penilaian_aksi.php:65
+Stack trace:
+#0 /home/u1444233/public_html/rapor/penilaian_aksi.php(65): mysqli_prepare()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/penilaian_aksi.php on line 65
+[08-Sep-2025 12:35:36 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Cannot add or update a child row: a foreign key constraint fails (`u1444233_rapor`.`penilaian_tp`, CONSTRAINT `penilaian_tp_ibfk_2` FOREIGN KEY (`id_tp`) REFERENCES `tujuan_pembelajaran` (`id_tp`) ON DELETE CASCADE) in /home/u1444233/public_html/rapor/penilaian_aksi.php:83
+Stack trace:
+#0 /home/u1444233/public_html/rapor/penilaian_aksi.php(83): mysqli_stmt_execute()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/penilaian_aksi.php on line 83
+[08-Sep-2025 12:35:58 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'id_tp' in 'INSERT INTO' in /home/u1444233/public_html/rapor/penilaian_aksi.php:65
+Stack trace:
+#0 /home/u1444233/public_html/rapor/penilaian_aksi.php(65): mysqli_prepare()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/penilaian_aksi.php on line 65
+[08-Sep-2025 12:39:18 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Cannot add or update a child row: a foreign key constraint fails (`u1444233_rapor`.`penilaian_tp`, CONSTRAINT `penilaian_tp_ibfk_2` FOREIGN KEY (`id_tp`) REFERENCES `tujuan_pembelajaran` (`id_tp`) ON DELETE CASCADE) in /home/u1444233/public_html/rapor/penilaian_aksi.php:80
+Stack trace:
+#0 /home/u1444233/public_html/rapor/penilaian_aksi.php(80): mysqli_stmt_execute()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/penilaian_aksi.php on line 80
+[08-Sep-2025 12:39:43 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Cannot add or update a child row: a foreign key constraint fails (`u1444233_rapor`.`penilaian_tp`, CONSTRAINT `penilaian_tp_ibfk_2` FOREIGN KEY (`id_tp`) REFERENCES `tujuan_pembelajaran` (`id_tp`) ON DELETE CASCADE) in /home/u1444233/public_html/rapor/penilaian_aksi.php:83
+Stack trace:
+#0 /home/u1444233/public_html/rapor/penilaian_aksi.php(83): mysqli_stmt_execute()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/penilaian_aksi.php on line 83
+[08-Sep-2025 14:53:17 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'p.id_tp' in 'SELECT' in /home/u1444233/public_html/rapor/walikelas_proses_rapor.php:39
+Stack trace:
+#0 /home/u1444233/public_html/rapor/walikelas_proses_rapor.php(39): mysqli_prepare()
+#1 /home/u1444233/public_html/rapor/walikelas_proses_rapor.php(212): hitungDataRaporSiswa()
+#2 {main}
+  thrown in /home/u1444233/public_html/rapor/walikelas_proses_rapor.php on line 39
+[08-Sep-2025 14:53:24 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'p.id_tp' in 'SELECT' in /home/u1444233/public_html/rapor/walikelas_proses_rapor.php:39
+Stack trace:
+#0 /home/u1444233/public_html/rapor/walikelas_proses_rapor.php(39): mysqli_prepare()
+#1 /home/u1444233/public_html/rapor/walikelas_proses_rapor.php(212): hitungDataRaporSiswa()
+#2 {main}
+  thrown in /home/u1444233/public_html/rapor/walikelas_proses_rapor.php on line 39
+[08-Sep-2025 14:57:40 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Subquery returns more than 1 row in /home/u1444233/public_html/rapor/admin_progres_penilaian.php:147
+Stack trace:
+#0 /home/u1444233/public_html/rapor/admin_progres_penilaian.php(147): mysqli_stmt_get_result()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/admin_progres_penilaian.php on line 147
+[10-Sep-2025 06:09:23 Asia/Jakarta] PHP Deprecated:  Function strftime() is deprecated in /home/u1444233/public_html/rapor/leger_pdf.php on line 46
+[10-Sep-2025 12:09:16 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'urutan' in 'ORDER BY' in /home/u1444233/public_html/rapor/kokurikuler_input.php:114
+Stack trace:
+#0 /home/u1444233/public_html/rapor/kokurikuler_input.php(114): mysqli_prepare()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/kokurikuler_input.php on line 114
+[10-Sep-2025 12:09:19 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'urutan' in 'ORDER BY' in /home/u1444233/public_html/rapor/kokurikuler_input.php:114
+Stack trace:
+#0 /home/u1444233/public_html/rapor/kokurikuler_input.php(114): mysqli_prepare()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/kokurikuler_input.php on line 114
+[10-Sep-2025 12:09:22 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'urutan' in 'ORDER BY' in /home/u1444233/public_html/rapor/kokurikuler_input.php:114
+Stack trace:
+#0 /home/u1444233/public_html/rapor/kokurikuler_input.php(114): mysqli_prepare()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/kokurikuler_input.php on line 114
+[10-Sep-2025 12:09:22 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'urutan' in 'ORDER BY' in /home/u1444233/public_html/rapor/kokurikuler_input.php:114
+Stack trace:
+#0 /home/u1444233/public_html/rapor/kokurikuler_input.php(114): mysqli_prepare()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/kokurikuler_input.php on line 114
+[10-Sep-2025 12:09:24 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'urutan' in 'ORDER BY' in /home/u1444233/public_html/rapor/kokurikuler_input.php:114
+Stack trace:
+#0 /home/u1444233/public_html/rapor/kokurikuler_input.php(114): mysqli_prepare()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/kokurikuler_input.php on line 114
+[10-Sep-2025 12:09:29 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'urutan' in 'ORDER BY' in /home/u1444233/public_html/rapor/kokurikuler_input.php:114
+Stack trace:
+#0 /home/u1444233/public_html/rapor/kokurikuler_input.php(114): mysqli_prepare()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/kokurikuler_input.php on line 114
+[10-Sep-2025 12:09:32 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'urutan' in 'ORDER BY' in /home/u1444233/public_html/rapor/kokurikuler_input.php:114
+Stack trace:
+#0 /home/u1444233/public_html/rapor/kokurikuler_input.php(114): mysqli_prepare()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/kokurikuler_input.php on line 114
+[10-Sep-2025 12:13:26 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'urutan' in 'ORDER BY' in /home/u1444233/public_html/rapor/kokurikuler_input.php:109
+Stack trace:
+#0 /home/u1444233/public_html/rapor/kokurikuler_input.php(109): mysqli_prepare()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/kokurikuler_input.php on line 109
+[10-Sep-2025 12:13:28 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'urutan' in 'ORDER BY' in /home/u1444233/public_html/rapor/kokurikuler_input.php:109
+Stack trace:
+#0 /home/u1444233/public_html/rapor/kokurikuler_input.php(109): mysqli_prepare()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/kokurikuler_input.php on line 109
+[10-Sep-2025 12:13:30 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'urutan' in 'ORDER BY' in /home/u1444233/public_html/rapor/kokurikuler_input.php:109
+Stack trace:
+#0 /home/u1444233/public_html/rapor/kokurikuler_input.php(109): mysqli_prepare()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/kokurikuler_input.php on line 109
+[10-Sep-2025 12:13:31 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'urutan' in 'ORDER BY' in /home/u1444233/public_html/rapor/kokurikuler_input.php:109
+Stack trace:
+#0 /home/u1444233/public_html/rapor/kokurikuler_input.php(109): mysqli_prepare()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/kokurikuler_input.php on line 109
+[10-Sep-2025 12:13:39 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'urutan' in 'ORDER BY' in /home/u1444233/public_html/rapor/kokurikuler_input.php:109
+Stack trace:
+#0 /home/u1444233/public_html/rapor/kokurikuler_input.php(109): mysqli_prepare()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/kokurikuler_input.php on line 109
+[10-Sep-2025 12:14:17 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'urutan' in 'ORDER BY' in /home/u1444233/public_html/rapor/kokurikuler_input.php:109
+Stack trace:
+#0 /home/u1444233/public_html/rapor/kokurikuler_input.php(109): mysqli_prepare()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/kokurikuler_input.php on line 109
+[10-Sep-2025 12:14:21 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'urutan' in 'ORDER BY' in /home/u1444233/public_html/rapor/kokurikuler_input.php:109
+Stack trace:
+#0 /home/u1444233/public_html/rapor/kokurikuler_input.php(109): mysqli_prepare()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/kokurikuler_input.php on line 109
+[10-Sep-2025 12:14:34 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'urutan' in 'ORDER BY' in /home/u1444233/public_html/rapor/kokurikuler_input.php:109
+Stack trace:
+#0 /home/u1444233/public_html/rapor/kokurikuler_input.php(109): mysqli_prepare()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/kokurikuler_input.php on line 109
+[10-Sep-2025 14:01:02 Asia/Jakarta] PHP Deprecated:  Function strftime() is deprecated in /home/u1444233/public_html/rapor/leger_pdf.php on line 46
+[10-Sep-2025 14:08:43 Asia/Jakarta] PHP Deprecated:  Function strftime() is deprecated in /home/u1444233/public_html/rapor/leger_pdf.php on line 65
+[10-Sep-2025 14:08:43 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class "Dompdf\Options" not found in /home/u1444233/public_html/rapor/leger_pdf.php:217
+Stack trace:
+#0 {main}
+  thrown in /home/u1444233/public_html/rapor/leger_pdf.php on line 217
+[10-Sep-2025 14:09:06 Asia/Jakarta] PHP Deprecated:  Function strftime() is deprecated in /home/u1444233/public_html/rapor/leger_pdf.php on line 46
+[10-Sep-2025 14:11:55 Asia/Jakarta] PHP Deprecated:  Function strftime() is deprecated in /home/u1444233/public_html/rapor/leger_pdf.php on line 89
+[10-Sep-2025 14:15:34 Asia/Jakarta] PHP Deprecated:  Function strftime() is deprecated in /home/u1444233/public_html/rapor/leger_pdf.php on line 89
+[10-Sep-2025 14:15:34 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class "Dompdf\Options" not found in /home/u1444233/public_html/rapor/leger_pdf.php:245
+Stack trace:
+#0 {main}
+  thrown in /home/u1444233/public_html/rapor/leger_pdf.php on line 245
+[10-Sep-2025 14:15:51 Asia/Jakarta] PHP Deprecated:  Function strftime() is deprecated in /home/u1444233/public_html/rapor/leger_pdf.php on line 89
+[10-Sep-2025 14:21:03 Asia/Jakarta] PHP Deprecated:  Function strftime() is deprecated in /home/u1444233/public_html/rapor/leger_pdf.php on line 78
+[10-Sep-2025 14:24:13 Asia/Jakarta] PHP Deprecated:  Function strftime() is deprecated in /home/u1444233/public_html/rapor/leger_pdf.php on line 78
+[10-Sep-2025 14:24:13 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Class "Dompdf\Options" not found in /home/u1444233/public_html/rapor/leger_pdf.php:229
+Stack trace:
+#0 {main}
+  thrown in /home/u1444233/public_html/rapor/leger_pdf.php on line 229
+[10-Sep-2025 14:24:35 Asia/Jakarta] PHP Deprecated:  Function strftime() is deprecated in /home/u1444233/public_html/rapor/leger_pdf.php on line 78
+[10-Sep-2025 22:07:39 Asia/Jakarta] PHP Deprecated:  Function strftime() is deprecated in /home/u1444233/public_html/rapor/leger_pdf.php on line 78
+[10-Sep-2025 23:41:09 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function escapeshellarg() in /home/u1444233/public_html/rapor/pengaturan_aksi.php:134
+Stack trace:
+#0 {main}
+  thrown in /home/u1444233/public_html/rapor/pengaturan_aksi.php on line 134
+[10-Sep-2025 23:44:50 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function escapeshellarg() in /home/u1444233/public_html/rapor/pengaturan_aksi.php:137
+Stack trace:
+#0 {main}
+  thrown in /home/u1444233/public_html/rapor/pengaturan_aksi.php on line 137
+[10-Sep-2025 23:58:54 Asia/Jakarta] PHP Fatal error:  Uncaught Error: Call to undefined function escapeshellarg() in /home/u1444233/public_html/rapor/pengaturan_aksi.php:137
+Stack trace:
+#0 {main}
+  thrown in /home/u1444233/public_html/rapor/pengaturan_aksi.php on line 137
+[11-Sep-2025 10:00:01 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Cannot delete or update a parent row: a foreign key constraint fails (`u1444233_rapor`.`rapor_detail_akademik`, CONSTRAINT `rapor_detail_akademik_ibfk_1` FOREIGN KEY (`id_rapor`) REFERENCES `rapor` (`id_rapor`)) in /home/u1444233/public_html/rapor/walikelas_pindah_siswa.php:66
+Stack trace:
+#0 /home/u1444233/public_html/rapor/walikelas_pindah_siswa.php(66): mysqli_stmt_execute()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/walikelas_pindah_siswa.php on line 66
+[11-Sep-2025 10:00:09 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Cannot delete or update a parent row: a foreign key constraint fails (`u1444233_rapor`.`rapor_detail_akademik`, CONSTRAINT `rapor_detail_akademik_ibfk_1` FOREIGN KEY (`id_rapor`) REFERENCES `rapor` (`id_rapor`)) in /home/u1444233/public_html/rapor/walikelas_pindah_siswa.php:66
+Stack trace:
+#0 /home/u1444233/public_html/rapor/walikelas_pindah_siswa.php(66): mysqli_stmt_execute()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/walikelas_pindah_siswa.php on line 66
+[11-Sep-2025 10:00:16 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Cannot delete or update a parent row: a foreign key constraint fails (`u1444233_rapor`.`rapor_detail_akademik`, CONSTRAINT `rapor_detail_akademik_ibfk_1` FOREIGN KEY (`id_rapor`) REFERENCES `rapor` (`id_rapor`)) in /home/u1444233/public_html/rapor/walikelas_pindah_siswa.php:66
+Stack trace:
+#0 /home/u1444233/public_html/rapor/walikelas_pindah_siswa.php(66): mysqli_stmt_execute()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/walikelas_pindah_siswa.php on line 66
+[11-Sep-2025 13:11:06 Asia/Jakarta] PHP Warning:  Undefined array key "username" in /home/u1444233/public_html/rapor/proses_login.php on line 7
+[11-Sep-2025 13:11:06 Asia/Jakarta] PHP Warning:  Undefined array key "password" in /home/u1444233/public_html/rapor/proses_login.php on line 8
+[11-Sep-2025 14:54:49 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 364
+[11-Sep-2025 18:24:38 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 364
+[11-Sep-2025 18:25:45 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 364
+[11-Sep-2025 20:02:18 Asia/Jakarta] PHP Warning:  Undefined array key "id_guru" in /home/u1444233/public_html/rapor/pengguna_tampil.php on line 82
+[11-Sep-2025 21:41:09 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 364
+[12-Sep-2025 17:56:51 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 364
+[12-Sep-2025 19:36:02 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 410
+[12-Sep-2025 19:59:51 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 410
+[12-Sep-2025 20:08:23 Asia/Jakarta] PHP Warning:  Undefined variable $total_kelas_unik in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 107
+[12-Sep-2025 20:08:23 Asia/Jakarta] PHP Fatal error:  Uncaught TypeError: count(): Argument #1 ($value) must be of type Countable|array, null given in /home/u1444233/public_html/rapor/penilaian_tampil.php:107
+Stack trace:
+#0 {main}
+  thrown in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 107
+[12-Sep-2025 20:08:28 Asia/Jakarta] PHP Warning:  Undefined variable $total_kelas_unik in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 107
+[12-Sep-2025 20:08:28 Asia/Jakarta] PHP Fatal error:  Uncaught TypeError: count(): Argument #1 ($value) must be of type Countable|array, null given in /home/u1444233/public_html/rapor/penilaian_tampil.php:107
+Stack trace:
+#0 {main}
+  thrown in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 107
+[12-Sep-2025 20:09:29 Asia/Jakarta] PHP Warning:  Undefined variable $total_kelas_unik in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 107
+[12-Sep-2025 20:09:29 Asia/Jakarta] PHP Fatal error:  Uncaught TypeError: count(): Argument #1 ($value) must be of type Countable|array, null given in /home/u1444233/public_html/rapor/penilaian_tampil.php:107
+Stack trace:
+#0 {main}
+  thrown in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 107
+[12-Sep-2025 20:25:01 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 412
+[12-Sep-2025 20:25:08 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 412
+[24-Oct-2025 07:30:11 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/raporsd/penilaian_tampil.php on line 443
+[24-Oct-2025 09:50:56 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Duplicate entry '-' for key 'nip' in /home/u1444233/public_html/raporsd/pengguna_aksi.php:33
+Stack trace:
+#0 /home/u1444233/public_html/raporsd/pengguna_aksi.php(33): mysqli_stmt_execute()
+#1 {main}
+  thrown in /home/u1444233/public_html/raporsd/pengguna_aksi.php on line 33
+[24-Oct-2025 10:37:00 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/raporsd/penilaian_tampil.php on line 443
+[24-Oct-2025 10:40:51 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/raporsd/penilaian_tampil.php on line 443
+[24-Oct-2025 10:42:26 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/raporsd/penilaian_tampil.php on line 443
+[24-Oct-2025 10:43:19 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/raporsd/penilaian_tampil.php on line 443
+[24-Oct-2025 10:48:14 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/raporsd/penilaian_tampil.php on line 443
+[24-Oct-2025 10:49:22 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/raporsd/penilaian_tampil.php on line 443
+[24-Oct-2025 10:49:33 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/raporsd/penilaian_tampil.php on line 443
+[24-Oct-2025 10:56:16 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/raporsd/penilaian_tampil.php on line 443
+[24-Oct-2025 10:57:12 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/raporsd/penilaian_tampil.php on line 443
+[24-Oct-2025 13:13:09 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/raporsd/penilaian_tampil.php on line 443
+[24-Oct-2025 13:15:53 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/raporsd/penilaian_tampil.php on line 443
+[24-Oct-2025 13:17:48 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/raporsd/penilaian_tampil.php on line 443
+[24-Oct-2025 13:18:12 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/raporsd/penilaian_tampil.php on line 443
+[24-Oct-2025 13:19:17 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/raporsd/penilaian_tampil.php on line 443
+[24-Oct-2025 13:19:49 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/raporsd/penilaian_tampil.php on line 443
+[24-Oct-2025 13:21:39 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/raporsd/penilaian_tampil.php on line 443
+[24-Oct-2025 13:23:31 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/raporsd/penilaian_tampil.php on line 443
+[24-Oct-2025 13:23:44 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/raporsd/penilaian_tampil.php on line 443
+[24-Oct-2025 13:25:03 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/raporsd/penilaian_tampil.php on line 443
+[24-Oct-2025 13:25:19 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/raporsd/penilaian_tampil.php on line 443
+[24-Oct-2025 13:26:35 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/raporsd/penilaian_tampil.php on line 443
+[24-Oct-2025 13:27:35 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/raporsd/penilaian_tampil.php on line 443
+[24-Oct-2025 13:28:27 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/raporsd/penilaian_tampil.php on line 443
+[24-Oct-2025 13:30:32 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/raporsd/penilaian_tampil.php on line 443
+[24-Oct-2025 13:33:04 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/raporsd/penilaian_tampil.php on line 443
+[24-Oct-2025 13:33:15 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/raporsd/penilaian_tampil.php on line 443
+[24-Oct-2025 13:34:54 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/raporsd/penilaian_tampil.php on line 443
+[24-Oct-2025 13:35:04 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/raporsd/penilaian_tampil.php on line 443
+[24-Oct-2025 13:36:04 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/raporsd/penilaian_tampil.php on line 443
+[24-Oct-2025 13:36:30 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/raporsd/penilaian_tampil.php on line 443
+[24-Oct-2025 16:36:19 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/raporsd/penilaian_tampil.php on line 443
+[24-Oct-2025 20:23:05 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Cannot delete or update a parent row: a foreign key constraint fails (`u1444233_raporsd`.`kelas`, CONSTRAINT `kelas_ibfk_1` FOREIGN KEY (`id_wali_kelas`) REFERENCES `guru` (`id_guru`)) in /home/u1444233/public_html/raporsd/pengguna_aksi.php:123
+Stack trace:
+#0 /home/u1444233/public_html/raporsd/pengguna_aksi.php(123): mysqli_stmt_execute()
+#1 {main}
+  thrown in /home/u1444233/public_html/raporsd/pengguna_aksi.php on line 123
+[24-Oct-2025 20:23:08 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Cannot delete or update a parent row: a foreign key constraint fails (`u1444233_raporsd`.`kelas`, CONSTRAINT `kelas_ibfk_1` FOREIGN KEY (`id_wali_kelas`) REFERENCES `guru` (`id_guru`)) in /home/u1444233/public_html/raporsd/pengguna_aksi.php:123
+Stack trace:
+#0 /home/u1444233/public_html/raporsd/pengguna_aksi.php(123): mysqli_stmt_execute()
+#1 {main}
+  thrown in /home/u1444233/public_html/raporsd/pengguna_aksi.php on line 123
+[24-Oct-2025 20:28:16 Asia/Jakarta] Error deleting user ID 2: Cannot delete or update a parent row: a foreign key constraint fails (`u1444233_raporsd`.`kelas`, CONSTRAINT `kelas_ibfk_1` FOREIGN KEY (`id_wali_kelas`) REFERENCES `guru` (`id_guru`))
+[24-Oct-2025 20:32:06 Asia/Jakarta] Error deleting user ID 2: Cannot delete or update a parent row: a foreign key constraint fails (`u1444233_raporsd`.`kelas`, CONSTRAINT `kelas_ibfk_1` FOREIGN KEY (`id_wali_kelas`) REFERENCES `guru` (`id_guru`))
+[24-Oct-2025 20:32:27 Asia/Jakarta] Error deleting user ID 2: Cannot delete or update a parent row: a foreign key constraint fails (`u1444233_raporsd`.`kelas`, CONSTRAINT `kelas_ibfk_1` FOREIGN KEY (`id_wali_kelas`) REFERENCES `guru` (`id_guru`))
+[24-Oct-2025 20:44:05 Asia/Jakarta] Error deleting user ID 2: Cannot delete or update a parent row: a foreign key constraint fails (`u1444233_raporsd`.`kelas`, CONSTRAINT `kelas_ibfk_1` FOREIGN KEY (`id_wali_kelas`) REFERENCES `guru` (`id_guru`))
+[24-Oct-2025 21:11:10 Asia/Jakarta] [rapor_pdf] File watermark tidak ditemukan/terbaca: /home/u1444233/public_html/rapor/uploads/watermark_1761313355.png
+[24-Oct-2025 22:14:00 Asia/Jakarta] [Watermark OK] Berhasil konversi base64 untuk: watermark_1761313355.png
+[24-Oct-2025 22:14:00 Asia/Jakarta] [Dompdf Chroot] Diatur ke: /home/u1444233/public_html/raporsd
+[24-Oct-2025 22:14:08 Asia/Jakarta] PHP Warning:  Undefined variable $file_name_identifier in /home/u1444233/public_html/raporsd/rapor_pdf.php on line 478
+[24-Oct-2025 22:28:45 Asia/Jakarta] [rapor_pdf Watermark Error] File tidak ditemukan/terbaca: /home/u1444233/public_html/rapor/uploads/watermark_1761313355.png
+[24-Oct-2025 22:30:22 Asia/Jakarta] [rapor_pdf Watermark Error] File tidak ditemukan/terbaca: /home/u1444233/public_html/rapor/uploads/watermark_1761313355.png
+[24-Oct-2025 22:33:23 Asia/Jakarta] [rapor_pdf Watermark Error] File tidak ditemukan/terbaca: /home/u1444233/public_html/rapor/uploads/watermark_1761313355.png
+[24-Oct-2025 22:33:23 Asia/Jakarta] PHP Warning:  Undefined variable $logo_full_path in /home/u1444233/public_html/raporsd/rapor_pdf.php on line 239
+[24-Oct-2025 22:34:26 Asia/Jakarta] [rapor_pdf Watermark Error] File tidak ditemukan/terbaca: /home/u1444233/public_html/rapor/uploads/watermark_1761313355.png
+[24-Oct-2025 23:21:30 Asia/Jakarta] Error deleting user ID 2: Cannot delete or update a parent row: a foreign key constraint fails (`u1444233_raporsd`.`kelas`, CONSTRAINT `kelas_ibfk_1` FOREIGN KEY (`id_wali_kelas`) REFERENCES `guru` (`id_guru`))
+[24-Oct-2025 23:31:52 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/raporsd/penilaian_tampil.php on line 443
+[24-Oct-2025 23:32:09 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/raporsd/penilaian_tampil.php on line 443
+[24-Oct-2025 23:44:14 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/raporsd/penilaian_tampil.php on line 443
+[25-Oct-2025 00:00:42 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/raporsd/penilaian_tampil.php on line 443
+[25-Oct-2025 00:07:59 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/raporsd/penilaian_tampil.php on line 443
+[24-Oct-2025 23:15:26 UTC] PHP Parse error:  syntax error, unexpected identifier "bi", expecting "," or ";" in /home/u1444233/public_html/raporsd/pengguna_tampil.php on line 460
+[25-Oct-2025 06:37:37 Asia/Jakarta] Error deleting user ID 2: Cannot delete or update a parent row: a foreign key constraint fails (`u1444233_raporsd`.`kelas`, CONSTRAINT `kelas_ibfk_1` FOREIGN KEY (`id_wali_kelas`) REFERENCES `guru` (`id_guru`))
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Undefined variable $sekolah_cover in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 46
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Trying to access array offset on null in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 46
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Undefined variable $jenjang_sekolah_cover in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 94
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 94
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Undefined variable $sekolah_cover in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 46
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Trying to access array offset on null in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 46
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Undefined variable $jenjang_sekolah_cover in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 94
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 94
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Undefined variable $sekolah_cover in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 46
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Trying to access array offset on null in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 46
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Undefined variable $jenjang_sekolah_cover in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 94
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 94
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Undefined variable $sekolah_cover in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 46
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Trying to access array offset on null in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 46
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Undefined variable $jenjang_sekolah_cover in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 94
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 94
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Undefined variable $sekolah_cover in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 46
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Trying to access array offset on null in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 46
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Undefined variable $jenjang_sekolah_cover in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 94
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 94
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Undefined variable $sekolah_cover in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 46
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Trying to access array offset on null in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 46
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Undefined variable $jenjang_sekolah_cover in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 94
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 94
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Undefined variable $sekolah_cover in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 46
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Trying to access array offset on null in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 46
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Undefined variable $jenjang_sekolah_cover in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 94
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 94
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Undefined variable $sekolah_cover in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 46
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Trying to access array offset on null in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 46
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Undefined variable $jenjang_sekolah_cover in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 94
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 94
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Undefined variable $sekolah_cover in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 46
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Trying to access array offset on null in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 46
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Undefined variable $jenjang_sekolah_cover in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 94
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 94
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Undefined variable $sekolah_cover in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 46
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Trying to access array offset on null in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 46
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Undefined variable $jenjang_sekolah_cover in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 94
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 94
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Undefined variable $sekolah_cover in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 46
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Trying to access array offset on null in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 46
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Undefined variable $jenjang_sekolah_cover in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 94
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 94
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Undefined variable $sekolah_cover in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 46
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Trying to access array offset on null in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 46
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Undefined variable $jenjang_sekolah_cover in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 94
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 94
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Undefined variable $sekolah_cover in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 46
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Trying to access array offset on null in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 46
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Undefined variable $jenjang_sekolah_cover in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 94
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 94
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Undefined variable $sekolah_cover in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 46
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Trying to access array offset on null in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 46
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Undefined variable $jenjang_sekolah_cover in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 94
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 94
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Undefined variable $sekolah_cover in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 46
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Trying to access array offset on null in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 46
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Undefined variable $jenjang_sekolah_cover in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 94
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 94
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Undefined variable $sekolah_cover in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 46
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Trying to access array offset on null in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 46
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Undefined variable $jenjang_sekolah_cover in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 94
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 94
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Undefined variable $sekolah_cover in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 46
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Trying to access array offset on null in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 46
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Undefined variable $jenjang_sekolah_cover in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 94
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 94
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Undefined variable $sekolah_cover in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 46
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Trying to access array offset on null in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 46
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Undefined variable $jenjang_sekolah_cover in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 94
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 94
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Undefined variable $sekolah_cover in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 46
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Trying to access array offset on null in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 46
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Undefined variable $jenjang_sekolah_cover in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 94
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 94
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Undefined variable $sekolah_cover in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 46
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Trying to access array offset on null in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 46
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Undefined variable $jenjang_sekolah_cover in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 94
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 94
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Undefined variable $sekolah_cover in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 46
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Trying to access array offset on null in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 46
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Undefined variable $jenjang_sekolah_cover in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 94
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 94
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Undefined variable $sekolah_cover in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 46
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Trying to access array offset on null in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 46
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Undefined variable $jenjang_sekolah_cover in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 94
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 94
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Undefined variable $sekolah_cover in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 46
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Trying to access array offset on null in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 46
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Warning:  Undefined variable $jenjang_sekolah_cover in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 94
+[06-Nov-2025 01:47:55 Asia/Jakarta] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 94
+[06-Nov-2025 08:28:11 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'k.id_koordinator' in 'ON' in /home/u1444233/public_html/rapor/kokurikuler_tampil.php:20
+Stack trace:
+#0 /home/u1444233/public_html/rapor/kokurikuler_tampil.php(20): mysqli_query()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/kokurikuler_tampil.php on line 20
+[06-Nov-2025 08:28:19 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'k.id_koordinator' in 'ON' in /home/u1444233/public_html/rapor/kokurikuler_tampil.php:20
+Stack trace:
+#0 /home/u1444233/public_html/rapor/kokurikuler_tampil.php(20): mysqli_query()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/kokurikuler_tampil.php on line 20
+[06-Nov-2025 08:29:09 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'k.id_koordinator' in 'ON' in /home/u1444233/public_html/rapor/kokurikuler_tampil.php:20
+Stack trace:
+#0 /home/u1444233/public_html/rapor/kokurikuler_tampil.php(20): mysqli_query()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/kokurikuler_tampil.php on line 20
+[06-Nov-2025 08:29:14 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'k.id_koordinator' in 'ON' in /home/u1444233/public_html/rapor/kokurikuler_tampil.php:20
+Stack trace:
+#0 /home/u1444233/public_html/rapor/kokurikuler_tampil.php(20): mysqli_query()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/kokurikuler_tampil.php on line 20
+[06-Nov-2025 08:29:20 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'k.id_koordinator' in 'ON' in /home/u1444233/public_html/rapor/kokurikuler_tampil.php:20
+Stack trace:
+#0 /home/u1444233/public_html/rapor/kokurikuler_tampil.php(20): mysqli_query()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/kokurikuler_tampil.php on line 20
+[10-Nov-2025 10:11:47 Asia/Jakarta] PHP Warning:  Undefined variable $is_last_page in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 50
+[10-Nov-2025 10:15:06 Asia/Jakarta] PHP Warning:  Undefined variable $is_last_page in /home/u1444233/public_html/rapor/parts/rapor_cover_body.php on line 50
+[10-Nov-2025 10:22:40 Asia/Jakarta] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in /home/u1444233/public_html/rapor/parts/rapor_identitas_body.php on line 81
+[10-Nov-2025 10:42:59 Asia/Jakarta] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in /home/u1444233/public_html/rapor/parts/rapor_identitas_body.php on line 81
+[11-Nov-2025 08:10:55 Asia/Jakarta] PHP Warning:  Undefined array key "id_kelas_sebelumnya" in /home/u1444233/public_html/rapor/siswa_aksi.php on line 49
+[11-Nov-2025 08:10:55 Asia/Jakarta] PHP Warning:  Undefined array key "status_siswa" in /home/u1444233/public_html/rapor/siswa_aksi.php on line 66
+[11-Nov-2025 08:10:55 Asia/Jakarta] PHP Warning:  Undefined array key "jk" in /home/u1444233/public_html/rapor/siswa_aksi.php on line 69
+[11-Nov-2025 08:10:55 Asia/Jakarta] PHP Warning:  Undefined array key "tempat_lahir" in /home/u1444233/public_html/rapor/siswa_aksi.php on line 70
+[11-Nov-2025 08:10:55 Asia/Jakarta] PHP Warning:  Undefined array key "nik" in /home/u1444233/public_html/rapor/siswa_aksi.php on line 72
+[11-Nov-2025 08:10:55 Asia/Jakarta] PHP Warning:  Undefined array key "agama" in /home/u1444233/public_html/rapor/siswa_aksi.php on line 73
+[11-Nov-2025 08:10:55 Asia/Jakarta] PHP Warning:  Undefined array key "alamat" in /home/u1444233/public_html/rapor/siswa_aksi.php on line 74
+[11-Nov-2025 08:10:55 Asia/Jakarta] PHP Warning:  Undefined array key "sekolah_asal" in /home/u1444233/public_html/rapor/siswa_aksi.php on line 75
+[11-Nov-2025 08:10:55 Asia/Jakarta] PHP Warning:  Undefined array key "anak_ke" in /home/u1444233/public_html/rapor/siswa_aksi.php on line 77
+[11-Nov-2025 08:10:55 Asia/Jakarta] PHP Warning:  Undefined array key "status_keluarga" in /home/u1444233/public_html/rapor/siswa_aksi.php on line 78
+[11-Nov-2025 08:10:55 Asia/Jakarta] PHP Warning:  Undefined array key "telepon_siswa" in /home/u1444233/public_html/rapor/siswa_aksi.php on line 79
+[11-Nov-2025 08:10:55 Asia/Jakarta] PHP Warning:  Undefined array key "nama_ayah" in /home/u1444233/public_html/rapor/siswa_aksi.php on line 82
+[11-Nov-2025 08:10:55 Asia/Jakarta] PHP Warning:  Undefined array key "pekerjaan_ayah" in /home/u1444233/public_html/rapor/siswa_aksi.php on line 83
+[11-Nov-2025 08:10:55 Asia/Jakarta] PHP Warning:  Undefined array key "nama_ibu" in /home/u1444233/public_html/rapor/siswa_aksi.php on line 84
+[11-Nov-2025 08:10:55 Asia/Jakarta] PHP Warning:  Undefined array key "pekerjaan_ibu" in /home/u1444233/public_html/rapor/siswa_aksi.php on line 85
+[11-Nov-2025 08:10:55 Asia/Jakarta] PHP Warning:  Undefined array key "nama_wali" in /home/u1444233/public_html/rapor/siswa_aksi.php on line 86
+[11-Nov-2025 08:10:55 Asia/Jakarta] PHP Warning:  Undefined array key "alamat_wali" in /home/u1444233/public_html/rapor/siswa_aksi.php on line 87
+[11-Nov-2025 08:10:55 Asia/Jakarta] PHP Warning:  Undefined array key "telepon_wali" in /home/u1444233/public_html/rapor/siswa_aksi.php on line 88
+[11-Nov-2025 08:10:55 Asia/Jakarta] PHP Warning:  Undefined array key "pekerjaan_wali" in /home/u1444233/public_html/rapor/siswa_aksi.php on line 89
+[11-Nov-2025 08:10:55 Asia/Jakarta] PHP Fatal error:  Uncaught ArgumentCountError: The number of elements in the type definition string must match the number of bind variables in /home/u1444233/public_html/rapor/siswa_aksi.php:99
+Stack trace:
+#0 /home/u1444233/public_html/rapor/siswa_aksi.php(99): mysqli_stmt_bind_param()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/siswa_aksi.php on line 99
+[11-Nov-2025 08:14:57 Asia/Jakarta] PHP Warning:  Undefined array key "id_kelas_sebelumnya" in /home/u1444233/public_html/rapor/siswa_aksi.php on line 52
+[11-Nov-2025 08:14:57 Asia/Jakarta] PHP Warning:  Undefined array key "status_siswa" in /home/u1444233/public_html/rapor/siswa_aksi.php on line 69
+[11-Nov-2025 08:14:57 Asia/Jakarta] PHP Warning:  Undefined array key "jk" in /home/u1444233/public_html/rapor/siswa_aksi.php on line 72
+[11-Nov-2025 08:14:57 Asia/Jakarta] PHP Warning:  Undefined array key "tempat_lahir" in /home/u1444233/public_html/rapor/siswa_aksi.php on line 73
+[11-Nov-2025 08:14:57 Asia/Jakarta] PHP Warning:  Undefined array key "nik" in /home/u1444233/public_html/rapor/siswa_aksi.php on line 75
+[11-Nov-2025 08:14:57 Asia/Jakarta] PHP Warning:  Undefined array key "agama" in /home/u1444233/public_html/rapor/siswa_aksi.php on line 76
+[11-Nov-2025 08:14:57 Asia/Jakarta] PHP Warning:  Undefined array key "alamat" in /home/u1444233/public_html/rapor/siswa_aksi.php on line 77
+[11-Nov-2025 08:14:57 Asia/Jakarta] PHP Warning:  Undefined array key "sekolah_asal" in /home/u1444233/public_html/rapor/siswa_aksi.php on line 78
+[11-Nov-2025 08:14:57 Asia/Jakarta] PHP Warning:  Undefined array key "anak_ke" in /home/u1444233/public_html/rapor/siswa_aksi.php on line 80
+[11-Nov-2025 08:14:57 Asia/Jakarta] PHP Warning:  Undefined array key "status_keluarga" in /home/u1444233/public_html/rapor/siswa_aksi.php on line 81
+[11-Nov-2025 08:14:57 Asia/Jakarta] PHP Warning:  Undefined array key "telepon_siswa" in /home/u1444233/public_html/rapor/siswa_aksi.php on line 82
+[11-Nov-2025 08:14:57 Asia/Jakarta] PHP Warning:  Undefined array key "nama_ayah" in /home/u1444233/public_html/rapor/siswa_aksi.php on line 85
+[11-Nov-2025 08:14:57 Asia/Jakarta] PHP Warning:  Undefined array key "pekerjaan_ayah" in /home/u1444233/public_html/rapor/siswa_aksi.php on line 86
+[11-Nov-2025 08:14:57 Asia/Jakarta] PHP Warning:  Undefined array key "nama_ibu" in /home/u1444233/public_html/rapor/siswa_aksi.php on line 87
+[11-Nov-2025 08:14:57 Asia/Jakarta] PHP Warning:  Undefined array key "pekerjaan_ibu" in /home/u1444233/public_html/rapor/siswa_aksi.php on line 88
+[11-Nov-2025 08:14:57 Asia/Jakarta] PHP Warning:  Undefined array key "nama_wali" in /home/u1444233/public_html/rapor/siswa_aksi.php on line 89
+[11-Nov-2025 08:14:57 Asia/Jakarta] PHP Warning:  Undefined array key "alamat_wali" in /home/u1444233/public_html/rapor/siswa_aksi.php on line 90
+[11-Nov-2025 08:14:57 Asia/Jakarta] PHP Warning:  Undefined array key "telepon_wali" in /home/u1444233/public_html/rapor/siswa_aksi.php on line 91
+[11-Nov-2025 08:14:57 Asia/Jakarta] PHP Warning:  Undefined array key "pekerjaan_wali" in /home/u1444233/public_html/rapor/siswa_aksi.php on line 92
+[11-Nov-2025 08:14:57 Asia/Jakarta] PHP Fatal error:  Uncaught ArgumentCountError: The number of elements in the type definition string must match the number of bind variables in /home/u1444233/public_html/rapor/siswa_aksi.php:102
+Stack trace:
+#0 /home/u1444233/public_html/rapor/siswa_aksi.php(102): mysqli_stmt_bind_param()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/siswa_aksi.php on line 102
+[11-Nov-2025 10:19:24 Asia/Jakarta] PHP Warning:  Undefined array key "role" in /home/u1444233/public_html/rapor/walikelas_aksi.php on line 10
+[11-Nov-2025 10:19:41 Asia/Jakarta] PHP Warning:  Undefined array key "role" in /home/u1444233/public_html/rapor/walikelas_aksi.php on line 10
+[11-Nov-2025 10:19:51 Asia/Jakarta] PHP Warning:  Undefined array key "role" in /home/u1444233/public_html/rapor/walikelas_aksi.php on line 10
+[11-Nov-2025 10:24:01 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[11-Nov-2025 10:29:30 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[14-Nov-2025 11:02:01 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[14-Nov-2025 11:03:52 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[14-Nov-2025 11:04:34 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[14-Nov-2025 11:05:07 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[14-Nov-2025 11:05:51 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[14-Nov-2025 11:05:51 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[14-Nov-2025 11:09:21 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[14-Nov-2025 11:09:41 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[14-Nov-2025 11:10:07 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[14-Nov-2025 11:10:29 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[14-Nov-2025 11:10:49 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[14-Nov-2025 11:11:18 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[14-Nov-2025 11:11:37 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[14-Nov-2025 11:12:47 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[14-Nov-2025 11:13:12 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[14-Nov-2025 11:13:38 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[14-Nov-2025 11:14:13 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[14-Nov-2025 11:14:47 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[14-Nov-2025 11:15:06 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[14-Nov-2025 11:16:14 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[14-Nov-2025 11:16:32 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[14-Nov-2025 11:16:54 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[14-Nov-2025 11:17:09 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[14-Nov-2025 11:17:25 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[14-Nov-2025 11:17:48 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[14-Nov-2025 11:19:59 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[14-Nov-2025 11:20:12 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[14-Nov-2025 11:20:59 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[14-Nov-2025 11:24:43 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[14-Nov-2025 11:25:33 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[14-Nov-2025 11:25:52 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[14-Nov-2025 11:26:44 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[14-Nov-2025 14:16:12 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[14-Nov-2025 14:16:17 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[14-Nov-2025 14:16:37 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[14-Nov-2025 14:16:57 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[14-Nov-2025 14:53:03 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[14-Nov-2025 14:53:45 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[14-Nov-2025 14:54:29 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[14-Nov-2025 14:55:59 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[14-Nov-2025 14:57:45 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[14-Nov-2025 15:00:10 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[14-Nov-2025 15:00:38 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[14-Nov-2025 15:02:36 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[14-Nov-2025 15:03:26 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[14-Nov-2025 16:51:07 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[14-Nov-2025 16:51:36 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[14-Nov-2025 16:52:05 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[14-Nov-2025 16:52:33 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[14-Nov-2025 16:52:51 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[14-Nov-2025 16:53:07 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[14-Nov-2025 17:23:42 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[14-Nov-2025 17:23:51 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[14-Nov-2025 17:28:42 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[14-Nov-2025 17:29:42 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[14-Nov-2025 17:59:55 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[14-Nov-2025 18:00:09 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[14-Nov-2025 18:21:01 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[14-Nov-2025 18:21:14 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[14-Nov-2025 18:21:32 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[14-Nov-2025 18:37:05 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[14-Nov-2025 18:37:19 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 18:14:06 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 18:19:20 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 18:20:45 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 18:22:20 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 18:23:36 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 18:24:35 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 18:25:23 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 18:26:39 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 18:32:36 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 18:35:47 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 18:39:15 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 18:44:57 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 18:48:03 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 18:55:54 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 18:56:54 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 18:59:54 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 19:01:13 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 19:02:21 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 19:04:07 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 19:04:59 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 19:05:55 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 19:06:42 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 19:07:04 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 19:11:37 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 19:15:43 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 19:20:14 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 19:23:36 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 19:28:02 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 19:34:12 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 19:34:59 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 19:35:33 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 19:36:34 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 19:39:31 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 19:40:05 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 19:42:36 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 19:46:58 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 19:47:26 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 19:49:04 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 19:50:42 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 19:51:17 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 19:52:18 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 19:53:18 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 19:55:55 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 19:56:33 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 19:58:06 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 19:58:29 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 20:02:57 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 20:04:30 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 20:05:04 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 20:06:13 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 20:06:58 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 20:52:29 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 20:55:04 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 20:58:05 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 21:04:43 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 21:07:33 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 21:10:06 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 21:12:51 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 21:16:43 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 21:18:59 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 21:23:33 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 21:24:18 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 21:38:31 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 21:40:03 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 21:41:01 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 21:42:25 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 21:43:36 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 21:44:41 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 21:45:36 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 21:46:32 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 21:47:04 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 21:47:26 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 21:50:02 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 21:50:30 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 21:50:46 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 21:55:45 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 21:57:43 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 21:59:58 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[15-Nov-2025 22:00:49 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 488
+[16-Nov-2025 06:36:35 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 06:36:42 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 06:37:01 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 06:37:47 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 06:37:57 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 12:49:46 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 13:24:13 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 13:26:49 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 13:28:24 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 13:29:35 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 13:31:34 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 13:33:52 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 13:47:38 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 14:12:55 Asia/Jakarta] PHP Warning:  Undefined array key "role" in /home/u1444233/public_html/rapor/penilaian_aksi.php on line 9
+[16-Nov-2025 14:13:30 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 14:15:25 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 14:15:50 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 14:32:13 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 14:32:34 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 14:32:59 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 14:44:02 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 14:44:40 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 14:44:50 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 14:45:09 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 14:45:15 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 14:45:19 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 14:45:35 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 14:56:41 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 15:01:48 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 15:02:06 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 15:02:38 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 15:03:26 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 15:03:34 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 15:04:20 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 15:05:02 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 15:05:56 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 15:10:49 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 15:12:39 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 15:13:25 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 15:19:15 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 15:19:31 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 15:24:05 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 15:24:48 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 15:30:32 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 15:33:14 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 15:34:01 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 15:34:12 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 15:34:17 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 15:37:23 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 15:38:07 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 15:40:11 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 15:40:55 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 15:41:39 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 15:42:06 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 15:42:48 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 15:43:40 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 15:44:27 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 15:44:59 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 15:45:25 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 15:45:25 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 15:45:52 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 15:47:52 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 15:48:15 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 15:48:48 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 15:49:08 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 15:49:33 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 15:49:50 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 15:50:54 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 15:51:20 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 15:52:04 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 15:52:19 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 15:52:57 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 15:53:45 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 15:57:55 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 15:59:04 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 15:59:30 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 16:01:38 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 16:05:45 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 16:06:50 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 16:09:27 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 16:12:54 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[16-Nov-2025 16:16:32 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[18-Nov-2025 08:08:17 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[18-Nov-2025 08:13:24 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[18-Nov-2025 08:14:04 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[18-Nov-2025 08:20:07 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[18-Nov-2025 08:21:30 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[18-Nov-2025 08:23:49 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[18-Nov-2025 08:27:09 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[18-Nov-2025 08:29:03 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[18-Nov-2025 08:34:38 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[18-Nov-2025 08:35:38 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[18-Nov-2025 08:37:01 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[18-Nov-2025 08:38:08 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[18-Nov-2025 08:41:29 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[18-Nov-2025 08:42:50 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[18-Nov-2025 08:44:59 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[18-Nov-2025 08:51:29 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[18-Nov-2025 08:52:07 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[18-Nov-2025 08:52:52 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[18-Nov-2025 08:53:18 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[18-Nov-2025 08:53:39 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[18-Nov-2025 08:55:06 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[18-Nov-2025 08:55:34 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[18-Nov-2025 16:22:57 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[18-Nov-2025 16:23:07 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[18-Nov-2025 16:33:04 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[18-Nov-2025 16:33:18 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[18-Nov-2025 16:36:11 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[18-Nov-2025 16:36:24 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[19-Nov-2025 09:34:56 Asia/Jakarta] PHP Warning:  Undefined array key "role" in /home/u1444233/public_html/rapor/walikelas_aksi.php on line 10
+[20-Nov-2025 13:03:39 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[20-Nov-2025 13:05:38 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[20-Nov-2025 13:09:24 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[20-Nov-2025 13:36:44 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[20-Nov-2025 13:57:48 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[25-Nov-2025 05:35:30 UTC] PHP Parse error:  syntax error, unexpected token "use" in /home/u1444233/public_html/rapor/pengguna_aksi.php on line 335
+[25-Nov-2025 05:35:33 UTC] PHP Parse error:  syntax error, unexpected token "use" in /home/u1444233/public_html/rapor/pengguna_aksi.php on line 335
+[26-Nov-2025 08:39:15 Asia/Jakarta] PHP Warning:  Undefined array key "id_guru" in /home/u1444233/public_html/rapor/header.php on line 17
+[26-Nov-2025 08:39:15 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1 in /home/u1444233/public_html/rapor/header.php:18
+Stack trace:
+#0 /home/u1444233/public_html/rapor/header.php(18): mysqli_query()
+#1 /home/u1444233/public_html/rapor/dashboard.php(4): include('/home/u1444233/...')
+#2 {main}
+  thrown in /home/u1444233/public_html/rapor/header.php on line 18
+[26-Nov-2025 08:39:23 Asia/Jakarta] PHP Warning:  Undefined array key "id_guru" in /home/u1444233/public_html/rapor/header.php on line 17
+[26-Nov-2025 08:39:23 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1 in /home/u1444233/public_html/rapor/header.php:18
+Stack trace:
+#0 /home/u1444233/public_html/rapor/header.php(18): mysqli_query()
+#1 /home/u1444233/public_html/rapor/dashboard.php(4): include('/home/u1444233/...')
+#2 {main}
+  thrown in /home/u1444233/public_html/rapor/header.php on line 18
+[26-Nov-2025 14:44:42 Asia/Jakarta] PHP Warning:  Undefined array key "id_guru" in /home/u1444233/public_html/rapor/header.php on line 17
+[26-Nov-2025 14:44:42 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1 in /home/u1444233/public_html/rapor/header.php:18
+Stack trace:
+#0 /home/u1444233/public_html/rapor/header.php(18): mysqli_query()
+#1 /home/u1444233/public_html/rapor/dashboard.php(4): include('/home/u1444233/...')
+#2 {main}
+  thrown in /home/u1444233/public_html/rapor/header.php on line 18
+[26-Nov-2025 14:44:44 Asia/Jakarta] PHP Warning:  Undefined array key "id_guru" in /home/u1444233/public_html/rapor/header.php on line 17
+[26-Nov-2025 14:44:44 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1 in /home/u1444233/public_html/rapor/header.php:18
+Stack trace:
+#0 /home/u1444233/public_html/rapor/header.php(18): mysqli_query()
+#1 /home/u1444233/public_html/rapor/dashboard.php(4): include('/home/u1444233/...')
+#2 {main}
+  thrown in /home/u1444233/public_html/rapor/header.php on line 18
+[26-Nov-2025 14:44:48 Asia/Jakarta] PHP Warning:  Undefined array key "id_guru" in /home/u1444233/public_html/rapor/header.php on line 17
+[26-Nov-2025 14:44:48 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1 in /home/u1444233/public_html/rapor/header.php:18
+Stack trace:
+#0 /home/u1444233/public_html/rapor/header.php(18): mysqli_query()
+#1 /home/u1444233/public_html/rapor/dashboard.php(4): include('/home/u1444233/...')
+#2 {main}
+  thrown in /home/u1444233/public_html/rapor/header.php on line 18
+[26-Nov-2025 14:44:50 Asia/Jakarta] PHP Warning:  Undefined array key "id_guru" in /home/u1444233/public_html/rapor/header.php on line 17
+[26-Nov-2025 14:44:50 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1 in /home/u1444233/public_html/rapor/header.php:18
+Stack trace:
+#0 /home/u1444233/public_html/rapor/header.php(18): mysqli_query()
+#1 /home/u1444233/public_html/rapor/dashboard.php(4): include('/home/u1444233/...')
+#2 {main}
+  thrown in /home/u1444233/public_html/rapor/header.php on line 18
+[26-Nov-2025 14:44:53 Asia/Jakarta] PHP Warning:  Undefined array key "id_guru" in /home/u1444233/public_html/rapor/header.php on line 17
+[26-Nov-2025 14:44:53 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1 in /home/u1444233/public_html/rapor/header.php:18
+Stack trace:
+#0 /home/u1444233/public_html/rapor/header.php(18): mysqli_query()
+#1 /home/u1444233/public_html/rapor/dashboard.php(4): include('/home/u1444233/...')
+#2 {main}
+  thrown in /home/u1444233/public_html/rapor/header.php on line 18
+[26-Nov-2025 14:44:56 Asia/Jakarta] PHP Warning:  Undefined array key "id_guru" in /home/u1444233/public_html/rapor/header.php on line 17
+[26-Nov-2025 14:44:56 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1 in /home/u1444233/public_html/rapor/header.php:18
+Stack trace:
+#0 /home/u1444233/public_html/rapor/header.php(18): mysqli_query()
+#1 /home/u1444233/public_html/rapor/dashboard.php(4): include('/home/u1444233/...')
+#2 {main}
+  thrown in /home/u1444233/public_html/rapor/header.php on line 18
+[26-Nov-2025 14:44:57 Asia/Jakarta] PHP Warning:  Undefined array key "id_guru" in /home/u1444233/public_html/rapor/header.php on line 17
+[26-Nov-2025 14:44:57 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1 in /home/u1444233/public_html/rapor/header.php:18
+Stack trace:
+#0 /home/u1444233/public_html/rapor/header.php(18): mysqli_query()
+#1 /home/u1444233/public_html/rapor/dashboard.php(4): include('/home/u1444233/...')
+#2 {main}
+  thrown in /home/u1444233/public_html/rapor/header.php on line 18
+[26-Nov-2025 14:44:57 Asia/Jakarta] PHP Warning:  Undefined array key "id_guru" in /home/u1444233/public_html/rapor/header.php on line 17
+[26-Nov-2025 14:44:57 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1 in /home/u1444233/public_html/rapor/header.php:18
+Stack trace:
+#0 /home/u1444233/public_html/rapor/header.php(18): mysqli_query()
+#1 /home/u1444233/public_html/rapor/dashboard.php(4): include('/home/u1444233/...')
+#2 {main}
+  thrown in /home/u1444233/public_html/rapor/header.php on line 18
+[26-Nov-2025 14:44:57 Asia/Jakarta] PHP Warning:  Undefined array key "id_guru" in /home/u1444233/public_html/rapor/header.php on line 17
+[26-Nov-2025 14:44:57 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1 in /home/u1444233/public_html/rapor/header.php:18
+Stack trace:
+#0 /home/u1444233/public_html/rapor/header.php(18): mysqli_query()
+#1 /home/u1444233/public_html/rapor/dashboard.php(4): include('/home/u1444233/...')
+#2 {main}
+  thrown in /home/u1444233/public_html/rapor/header.php on line 18
+[26-Nov-2025 14:44:57 Asia/Jakarta] PHP Warning:  Undefined array key "id_guru" in /home/u1444233/public_html/rapor/header.php on line 17
+[26-Nov-2025 14:44:57 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1 in /home/u1444233/public_html/rapor/header.php:18
+Stack trace:
+#0 /home/u1444233/public_html/rapor/header.php(18): mysqli_query()
+#1 /home/u1444233/public_html/rapor/dashboard.php(4): include('/home/u1444233/...')
+#2 {main}
+  thrown in /home/u1444233/public_html/rapor/header.php on line 18
+[26-Nov-2025 14:44:57 Asia/Jakarta] PHP Warning:  Undefined array key "id_guru" in /home/u1444233/public_html/rapor/header.php on line 17
+[26-Nov-2025 14:44:57 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1 in /home/u1444233/public_html/rapor/header.php:18
+Stack trace:
+#0 /home/u1444233/public_html/rapor/header.php(18): mysqli_query()
+#1 /home/u1444233/public_html/rapor/dashboard.php(4): include('/home/u1444233/...')
+#2 {main}
+  thrown in /home/u1444233/public_html/rapor/header.php on line 18
+[26-Nov-2025 14:44:57 Asia/Jakarta] PHP Warning:  Undefined array key "id_guru" in /home/u1444233/public_html/rapor/header.php on line 17
+[26-Nov-2025 14:44:57 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1 in /home/u1444233/public_html/rapor/header.php:18
+Stack trace:
+#0 /home/u1444233/public_html/rapor/header.php(18): mysqli_query()
+#1 /home/u1444233/public_html/rapor/dashboard.php(4): include('/home/u1444233/...')
+#2 {main}
+  thrown in /home/u1444233/public_html/rapor/header.php on line 18
+[26-Nov-2025 14:44:58 Asia/Jakarta] PHP Warning:  Undefined array key "id_guru" in /home/u1444233/public_html/rapor/header.php on line 17
+[26-Nov-2025 14:44:58 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1 in /home/u1444233/public_html/rapor/header.php:18
+Stack trace:
+#0 /home/u1444233/public_html/rapor/header.php(18): mysqli_query()
+#1 /home/u1444233/public_html/rapor/dashboard.php(4): include('/home/u1444233/...')
+#2 {main}
+  thrown in /home/u1444233/public_html/rapor/header.php on line 18
+[26-Nov-2025 14:44:58 Asia/Jakarta] PHP Warning:  Undefined array key "id_guru" in /home/u1444233/public_html/rapor/header.php on line 17
+[26-Nov-2025 14:44:58 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1 in /home/u1444233/public_html/rapor/header.php:18
+Stack trace:
+#0 /home/u1444233/public_html/rapor/header.php(18): mysqli_query()
+#1 /home/u1444233/public_html/rapor/dashboard.php(4): include('/home/u1444233/...')
+#2 {main}
+  thrown in /home/u1444233/public_html/rapor/header.php on line 18
+[26-Nov-2025 14:44:58 Asia/Jakarta] PHP Warning:  Undefined array key "id_guru" in /home/u1444233/public_html/rapor/header.php on line 17
+[26-Nov-2025 14:44:58 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1 in /home/u1444233/public_html/rapor/header.php:18
+Stack trace:
+#0 /home/u1444233/public_html/rapor/header.php(18): mysqli_query()
+#1 /home/u1444233/public_html/rapor/dashboard.php(4): include('/home/u1444233/...')
+#2 {main}
+  thrown in /home/u1444233/public_html/rapor/header.php on line 18
+[26-Nov-2025 14:44:58 Asia/Jakarta] PHP Warning:  Undefined array key "id_guru" in /home/u1444233/public_html/rapor/header.php on line 17
+[26-Nov-2025 14:44:58 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1 in /home/u1444233/public_html/rapor/header.php:18
+Stack trace:
+#0 /home/u1444233/public_html/rapor/header.php(18): mysqli_query()
+#1 /home/u1444233/public_html/rapor/dashboard.php(4): include('/home/u1444233/...')
+#2 {main}
+  thrown in /home/u1444233/public_html/rapor/header.php on line 18
+[26-Nov-2025 14:44:58 Asia/Jakarta] PHP Warning:  Undefined array key "id_guru" in /home/u1444233/public_html/rapor/header.php on line 17
+[26-Nov-2025 14:44:58 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1 in /home/u1444233/public_html/rapor/header.php:18
+Stack trace:
+#0 /home/u1444233/public_html/rapor/header.php(18): mysqli_query()
+#1 /home/u1444233/public_html/rapor/dashboard.php(4): include('/home/u1444233/...')
+#2 {main}
+  thrown in /home/u1444233/public_html/rapor/header.php on line 18
+[26-Nov-2025 14:44:58 Asia/Jakarta] PHP Warning:  Undefined array key "id_guru" in /home/u1444233/public_html/rapor/header.php on line 17
+[26-Nov-2025 14:44:58 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1 in /home/u1444233/public_html/rapor/header.php:18
+Stack trace:
+#0 /home/u1444233/public_html/rapor/header.php(18): mysqli_query()
+#1 /home/u1444233/public_html/rapor/dashboard.php(4): include('/home/u1444233/...')
+#2 {main}
+  thrown in /home/u1444233/public_html/rapor/header.php on line 18
+[26-Nov-2025 14:44:59 Asia/Jakarta] PHP Warning:  Undefined array key "id_guru" in /home/u1444233/public_html/rapor/header.php on line 17
+[26-Nov-2025 14:44:59 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1 in /home/u1444233/public_html/rapor/header.php:18
+Stack trace:
+#0 /home/u1444233/public_html/rapor/header.php(18): mysqli_query()
+#1 /home/u1444233/public_html/rapor/dashboard.php(4): include('/home/u1444233/...')
+#2 {main}
+  thrown in /home/u1444233/public_html/rapor/header.php on line 18
+[26-Nov-2025 14:44:59 Asia/Jakarta] PHP Warning:  Undefined array key "id_guru" in /home/u1444233/public_html/rapor/header.php on line 17
+[26-Nov-2025 14:44:59 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1 in /home/u1444233/public_html/rapor/header.php:18
+Stack trace:
+#0 /home/u1444233/public_html/rapor/header.php(18): mysqli_query()
+#1 /home/u1444233/public_html/rapor/dashboard.php(4): include('/home/u1444233/...')
+#2 {main}
+  thrown in /home/u1444233/public_html/rapor/header.php on line 18
+[26-Nov-2025 15:08:13 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[26-Nov-2025 15:08:41 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[26-Nov-2025 15:18:05 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[26-Nov-2025 15:19:20 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[26-Nov-2025 15:19:38 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[26-Nov-2025 15:34:42 Asia/Jakarta] PHP Warning:  Undefined array key "id_guru" in /home/u1444233/public_html/rapor/header.php on line 17
+[26-Nov-2025 15:34:42 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1 in /home/u1444233/public_html/rapor/header.php:18
+Stack trace:
+#0 /home/u1444233/public_html/rapor/header.php(18): mysqli_query()
+#1 /home/u1444233/public_html/rapor/dashboard.php(4): include('/home/u1444233/...')
+#2 {main}
+  thrown in /home/u1444233/public_html/rapor/header.php on line 18
+[26-Nov-2025 15:34:44 Asia/Jakarta] PHP Warning:  Undefined array key "id_guru" in /home/u1444233/public_html/rapor/header.php on line 17
+[26-Nov-2025 15:34:44 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1 in /home/u1444233/public_html/rapor/header.php:18
+Stack trace:
+#0 /home/u1444233/public_html/rapor/header.php(18): mysqli_query()
+#1 /home/u1444233/public_html/rapor/dashboard.php(4): include('/home/u1444233/...')
+#2 {main}
+  thrown in /home/u1444233/public_html/rapor/header.php on line 18
+[26-Nov-2025 15:34:48 Asia/Jakarta] PHP Warning:  Undefined array key "id_guru" in /home/u1444233/public_html/rapor/header.php on line 17
+[26-Nov-2025 15:34:48 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1 in /home/u1444233/public_html/rapor/header.php:18
+Stack trace:
+#0 /home/u1444233/public_html/rapor/header.php(18): mysqli_query()
+#1 /home/u1444233/public_html/rapor/dashboard.php(4): include('/home/u1444233/...')
+#2 {main}
+  thrown in /home/u1444233/public_html/rapor/header.php on line 18
+[27-Nov-2025 07:10:28 Asia/Jakarta] PHP Warning:  Undefined array key "id_guru" in /home/u1444233/public_html/rapor/header.php on line 17
+[27-Nov-2025 07:10:28 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1 in /home/u1444233/public_html/rapor/header.php:18
+Stack trace:
+#0 /home/u1444233/public_html/rapor/header.php(18): mysqli_query()
+#1 /home/u1444233/public_html/rapor/dashboard.php(4): include('/home/u1444233/...')
+#2 {main}
+  thrown in /home/u1444233/public_html/rapor/header.php on line 18
+[27-Nov-2025 08:04:19 Asia/Jakarta] PHP Warning:  Undefined array key "id_guru" in /home/u1444233/public_html/rapor/header.php on line 17
+[27-Nov-2025 08:04:19 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1 in /home/u1444233/public_html/rapor/header.php:18
+Stack trace:
+#0 /home/u1444233/public_html/rapor/header.php(18): mysqli_query()
+#1 /home/u1444233/public_html/rapor/dashboard.php(4): include('/home/u1444233/...')
+#2 {main}
+  thrown in /home/u1444233/public_html/rapor/header.php on line 18
+[27-Nov-2025 08:05:13 Asia/Jakarta] PHP Warning:  Undefined array key "id_guru" in /home/u1444233/public_html/rapor/header.php on line 17
+[27-Nov-2025 08:05:13 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1 in /home/u1444233/public_html/rapor/header.php:18
+Stack trace:
+#0 /home/u1444233/public_html/rapor/header.php(18): mysqli_query()
+#1 /home/u1444233/public_html/rapor/dashboard.php(4): include('/home/u1444233/...')
+#2 {main}
+  thrown in /home/u1444233/public_html/rapor/header.php on line 18
+[27-Nov-2025 08:52:29 Asia/Jakarta] PHP Warning:  Undefined array key "id_guru" in /home/u1444233/public_html/rapor/header.php on line 17
+[27-Nov-2025 08:52:29 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1 in /home/u1444233/public_html/rapor/header.php:18
+Stack trace:
+#0 /home/u1444233/public_html/rapor/header.php(18): mysqli_query()
+#1 /home/u1444233/public_html/rapor/dashboard.php(4): include('/home/u1444233/...')
+#2 {main}
+  thrown in /home/u1444233/public_html/rapor/header.php on line 18
+[27-Nov-2025 08:54:44 Asia/Jakarta] PHP Warning:  Undefined array key "id_guru" in /home/u1444233/public_html/rapor/header.php on line 17
+[27-Nov-2025 08:54:44 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1 in /home/u1444233/public_html/rapor/header.php:18
+Stack trace:
+#0 /home/u1444233/public_html/rapor/header.php(18): mysqli_query()
+#1 /home/u1444233/public_html/rapor/dashboard.php(4): include('/home/u1444233/...')
+#2 {main}
+  thrown in /home/u1444233/public_html/rapor/header.php on line 18
+[27-Nov-2025 09:38:43 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[27-Nov-2025 09:39:08 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[27-Nov-2025 09:39:22 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[27-Nov-2025 09:39:33 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[27-Nov-2025 09:41:26 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[27-Nov-2025 09:42:17 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[27-Nov-2025 09:45:31 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[27-Nov-2025 09:49:50 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[27-Nov-2025 09:51:33 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[27-Nov-2025 09:53:19 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[27-Nov-2025 09:53:57 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[27-Nov-2025 09:54:12 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[27-Nov-2025 09:54:53 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[27-Nov-2025 09:59:34 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[27-Nov-2025 10:00:13 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[27-Nov-2025 10:03:03 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[27-Nov-2025 10:03:35 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[27-Nov-2025 10:05:34 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[27-Nov-2025 10:06:04 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[27-Nov-2025 10:06:36 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[27-Nov-2025 10:06:56 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[27-Nov-2025 10:07:11 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[27-Nov-2025 10:07:34 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[27-Nov-2025 10:08:36 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[27-Nov-2025 10:08:54 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[27-Nov-2025 10:09:08 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[27-Nov-2025 10:09:43 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[27-Nov-2025 10:52:47 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[27-Nov-2025 10:58:08 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[27-Nov-2025 11:00:04 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[27-Nov-2025 11:00:46 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[27-Nov-2025 11:01:14 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[27-Nov-2025 11:01:47 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[27-Nov-2025 11:02:07 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[27-Nov-2025 11:02:31 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[27-Nov-2025 11:02:56 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[27-Nov-2025 11:03:29 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[27-Nov-2025 11:03:46 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[27-Nov-2025 11:04:07 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[27-Nov-2025 11:04:17 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[27-Nov-2025 12:00:53 Asia/Jakarta] PHP Warning:  Undefined array key "role" in /home/u1444233/public_html/rapor/penilaian_aksi.php on line 12
+[28-Nov-2025 10:43:03 Asia/Jakarta] PHP Warning:  Undefined array key "id_guru" in /home/u1444233/public_html/rapor/header.php on line 17
+[28-Nov-2025 10:43:03 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1 in /home/u1444233/public_html/rapor/header.php:18
+Stack trace:
+#0 /home/u1444233/public_html/rapor/header.php(18): mysqli_query()
+#1 /home/u1444233/public_html/rapor/dashboard.php(4): include('/home/u1444233/...')
+#2 {main}
+  thrown in /home/u1444233/public_html/rapor/header.php on line 18
+[28-Nov-2025 10:44:23 Asia/Jakarta] PHP Warning:  Undefined array key "id_guru" in /home/u1444233/public_html/rapor/header.php on line 17
+[28-Nov-2025 10:44:23 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1 in /home/u1444233/public_html/rapor/header.php:18
+Stack trace:
+#0 /home/u1444233/public_html/rapor/header.php(18): mysqli_query()
+#1 /home/u1444233/public_html/rapor/dashboard.php(4): include('/home/u1444233/...')
+#2 {main}
+  thrown in /home/u1444233/public_html/rapor/header.php on line 18
+[30-Nov-2025 18:44:52 Asia/Jakarta] PHP Warning:  Undefined array key "id_guru" in /home/u1444233/public_html/rapor/header.php on line 17
+[30-Nov-2025 18:44:52 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1 in /home/u1444233/public_html/rapor/header.php:18
+Stack trace:
+#0 /home/u1444233/public_html/rapor/header.php(18): mysqli_query()
+#1 /home/u1444233/public_html/rapor/dashboard.php(4): include('/home/u1444233/...')
+#2 {main}
+  thrown in /home/u1444233/public_html/rapor/header.php on line 18
+[30-Nov-2025 18:44:53 Asia/Jakarta] PHP Warning:  Undefined array key "id_guru" in /home/u1444233/public_html/rapor/header.php on line 17
+[30-Nov-2025 18:44:53 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1 in /home/u1444233/public_html/rapor/header.php:18
+Stack trace:
+#0 /home/u1444233/public_html/rapor/header.php(18): mysqli_query()
+#1 /home/u1444233/public_html/rapor/dashboard.php(4): include('/home/u1444233/...')
+#2 {main}
+  thrown in /home/u1444233/public_html/rapor/header.php on line 18
+[30-Nov-2025 18:45:17 Asia/Jakarta] PHP Warning:  Undefined array key "id_guru" in /home/u1444233/public_html/rapor/header.php on line 17
+[30-Nov-2025 18:45:17 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 1 in /home/u1444233/public_html/rapor/header.php:18
+Stack trace:
+#0 /home/u1444233/public_html/rapor/header.php(18): mysqli_query()
+#1 /home/u1444233/public_html/rapor/dashboard.php(4): include('/home/u1444233/...')
+#2 {main}
+  thrown in /home/u1444233/public_html/rapor/header.php on line 18
+[01-Dec-2025 17:01:06 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[01-Dec-2025 17:06:56 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[01-Dec-2025 17:14:44 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[01-Dec-2025 17:15:43 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[01-Dec-2025 17:17:24 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[01-Dec-2025 17:18:19 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[01-Dec-2025 17:20:05 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[01-Dec-2025 17:20:20 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[01-Dec-2025 17:21:47 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[01-Dec-2025 17:22:05 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[01-Dec-2025 17:22:56 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[01-Dec-2025 17:26:49 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[01-Dec-2025 17:27:56 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[01-Dec-2025 17:32:06 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[02-Dec-2025 08:35:03 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[02-Dec-2025 09:02:11 Asia/Jakarta] PHP Warning:  Undefined variable $penugasan_by_mapel in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 542
+[02-Dec-2025 09:36:14 Asia/Jakarta] PHP Warning:  Undefined variable $kkm in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 597
+[02-Dec-2025 09:36:22 Asia/Jakarta] PHP Warning:  Undefined variable $kkm in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 597
+[02-Dec-2025 09:36:32 Asia/Jakarta] PHP Warning:  Undefined variable $kkm in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 597
+[02-Dec-2025 09:38:36 Asia/Jakarta] PHP Warning:  Undefined variable $kkm in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 597
+[02-Dec-2025 09:39:33 Asia/Jakarta] PHP Warning:  Undefined variable $kkm in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 599
+[02-Dec-2025 09:39:38 Asia/Jakarta] PHP Warning:  Undefined variable $kkm in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 599
+[02-Dec-2025 09:39:49 Asia/Jakarta] PHP Warning:  Undefined variable $kkm in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 599
+[02-Dec-2025 09:40:10 Asia/Jakarta] PHP Warning:  Undefined variable $kkm in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 599
+[04-Dec-2025 23:13:01 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'u1444233_rapor.kokurikuler_kelas_terlibat' doesn't exist in /home/u1444233/public_html/rapor/kokurikuler_edit.php:90
+Stack trace:
+#0 /home/u1444233/public_html/rapor/kokurikuler_edit.php(90): mysqli_prepare()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/kokurikuler_edit.php on line 90
+[04-Dec-2025 23:13:10 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'u1444233_rapor.kokurikuler_kelas_terlibat' doesn't exist in /home/u1444233/public_html/rapor/kokurikuler_edit.php:90
+Stack trace:
+#0 /home/u1444233/public_html/rapor/kokurikuler_edit.php(90): mysqli_prepare()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/kokurikuler_edit.php on line 90
+[05-Dec-2025 11:56:29 Asia/Jakarta] PHP Warning:  Undefined array key "role" in /home/u1444233/public_html/rapor/penilaian_aksi.php on line 12
+[05-Dec-2025 13:59:23 Asia/Jakarta] PHP Warning:  Undefined array key "role" in /home/u1444233/public_html/rapor/penilaian_aksi.php on line 12
+[06-Dec-2025 05:15:12 Asia/Jakarta] PHP Deprecated:  htmlspecialchars(): Passing null to parameter #1 ($string) of type string is deprecated in /home/u1444233/public_html/rapor/parts/rapor_identitas_body.php on line 81
+[06-Dec-2025 06:26:26 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'tingkat' in 'SELECT' in /home/u1444233/public_html/rapor/walikelas_proses_rapor.php:30
+Stack trace:
+#0 /home/u1444233/public_html/rapor/walikelas_proses_rapor.php(30): mysqli_prepare()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/walikelas_proses_rapor.php on line 30
+[06-Dec-2025 06:26:35 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'tingkat' in 'SELECT' in /home/u1444233/public_html/rapor/walikelas_proses_rapor.php:30
+Stack trace:
+#0 /home/u1444233/public_html/rapor/walikelas_proses_rapor.php(30): mysqli_prepare()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/walikelas_proses_rapor.php on line 30
+[06-Dec-2025 06:27:08 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'tingkat' in 'SELECT' in /home/u1444233/public_html/rapor/walikelas_proses_rapor.php:34
+Stack trace:
+#0 /home/u1444233/public_html/rapor/walikelas_proses_rapor.php(34): mysqli_prepare()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/walikelas_proses_rapor.php on line 34
+[06-Dec-2025 22:51:20 Asia/Jakarta] PHP Warning:  Undefined array key "relevant_siswa_count" in /home/u1444233/public_html/rapor/walikelas_proses_rapor.php on line 446
+[07-Dec-2025 01:44:10 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '>id_siswa = ? AND p.id_mapel = ? AND p.id_kelas = ? AND p.semester = ? 
+    ...' at line 7 in /home/u1444233/public_html/rapor/penilaian_tampil.php:312
+Stack trace:
+#0 /home/u1444233/public_html/rapor/penilaian_tampil.php(312): mysqli_prepare()
+#1 /home/u1444233/public_html/rapor/penilaian_tampil.php(686): hitungDataRaporSiswa()
+#2 {main}
+  thrown in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 312
+[07-Dec-2025 01:44:27 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '>id_siswa = ? AND p.id_mapel = ? AND p.id_kelas = ? AND p.semester = ? 
+    ...' at line 7 in /home/u1444233/public_html/rapor/penilaian_tampil.php:312
+Stack trace:
+#0 /home/u1444233/public_html/rapor/penilaian_tampil.php(312): mysqli_prepare()
+#1 /home/u1444233/public_html/rapor/penilaian_tampil.php(686): hitungDataRaporSiswa()
+#2 {main}
+  thrown in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 312
+[07-Dec-2025 01:44:33 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '>id_mapel = mp.id_mapel
+                JOIN kelas k ON gm->id_kelas = k.id_...' at line 3 in /home/u1444233/public_html/rapor/penilaian_tampil.php:170
+Stack trace:
+#0 /home/u1444233/public_html/rapor/penilaian_tampil.php(170): mysqli_prepare()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 170
+[07-Dec-2025 01:44:45 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '>id_mapel = mp.id_mapel
+                JOIN kelas k ON gm->id_kelas = k.id_...' at line 3 in /home/u1444233/public_html/rapor/penilaian_tampil.php:170
+Stack trace:
+#0 /home/u1444233/public_html/rapor/penilaian_tampil.php(170): mysqli_prepare()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/penilaian_tampil.php on line 170
+[07-Dec-2025 01:50:26 Asia/Jakarta] PHP Deprecated:  trim(): Passing null to parameter #1 ($string) of type string is deprecated in /home/u1444233/public_html/rapor/rapor_pdf.php on line 271
+[07-Dec-2025 01:50:37 Asia/Jakarta] PHP Deprecated:  trim(): Passing null to parameter #1 ($string) of type string is deprecated in /home/u1444233/public_html/rapor/rapor_pdf.php on line 271
+[07-Dec-2025 01:50:58 Asia/Jakarta] PHP Deprecated:  trim(): Passing null to parameter #1 ($string) of type string is deprecated in /home/u1444233/public_html/rapor/rapor_pdf.php on line 271
+[07-Dec-2025 01:52:31 Asia/Jakarta] PHP Deprecated:  trim(): Passing null to parameter #1 ($string) of type string is deprecated in /home/u1444233/public_html/rapor/rapor_pdf.php on line 271
+[07-Dec-2025 01:54:00 Asia/Jakarta] PHP Deprecated:  trim(): Passing null to parameter #1 ($string) of type string is deprecated in /home/u1444233/public_html/rapor/rapor_pdf.php on line 286
+[07-Dec-2025 01:54:10 Asia/Jakarta] PHP Deprecated:  trim(): Passing null to parameter #1 ($string) of type string is deprecated in /home/u1444233/public_html/rapor/rapor_pdf.php on line 286
+[07-Dec-2025 02:36:52 Asia/Jakarta] PHP Deprecated:  trim(): Passing null to parameter #1 ($string) of type string is deprecated in /home/u1444233/public_html/rapor/rapor_pdf.php on line 286
+[07-Dec-2025 02:36:58 Asia/Jakarta] PHP Deprecated:  trim(): Passing null to parameter #1 ($string) of type string is deprecated in /home/u1444233/public_html/rapor/rapor_pdf.php on line 286
+[07-Dec-2025 05:30:58 Asia/Jakarta] PHP Warning:  Undefined array key "role" in /home/u1444233/public_html/rapor/walikelas_aksi.php on line 10
+[08-Dec-2025 07:50:10 Asia/Jakarta] PHP Warning:  Undefined variable $clean_desc in /home/u1444233/public_html/rapor/walikelas_aksi.php on line 128
+[08-Dec-2025 19:47:46 Asia/Jakarta] PHP Warning:  Undefined array key "role" in /home/u1444233/public_html/rapor/penilaian_excel_template_batch.php on line 12
+[08-Dec-2025 19:47:49 Asia/Jakarta] PHP Warning:  Undefined array key "role" in /home/u1444233/public_html/rapor/penilaian_excel_template_batch.php on line 12
+[09-Dec-2025 05:18:52 Asia/Jakarta] PHP Warning:  Undefined variable $clean_desc in /home/u1444233/public_html/rapor/walikelas_aksi.php on line 128
+[09-Dec-2025 18:16:23 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '1=sudah dibaca'' at line 1 in /home/u1444233/public_html/rapor/pengaturan_backup_tampil.php:92
+Stack trace:
+#0 /home/u1444233/public_html/rapor/pengaturan_backup_tampil.php(92): mysqli->query()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/pengaturan_backup_tampil.php on line 92
+[10-Dec-2025 09:39:02 Asia/Jakarta] PHP Warning:  Undefined variable $clean_desc in /home/u1444233/public_html/rapor/walikelas_aksi.php on line 128
+[10-Dec-2025 09:41:48 Asia/Jakarta] PHP Warning:  Undefined variable $clean_desc in /home/u1444233/public_html/rapor/walikelas_aksi.php on line 128
+[11-Dec-2025 19:04:32 Asia/Jakarta] PHP Warning:  Undefined variable $clean_desc in /home/u1444233/public_html/rapor/walikelas_aksi.php on line 128
+[11-Dec-2025 20:30:10 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 's.fase' in 'SELECT' in /home/u1444233/public_html/rapor/rapor_cetak_massal.php:423
+Stack trace:
+#0 /home/u1444233/public_html/rapor/rapor_cetak_massal.php(423): mysqli_prepare()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/rapor_cetak_massal.php on line 423
+[11-Dec-2025 20:57:39 Asia/Jakarta] PHP Fatal error:  Cannot redeclare tanggal_indo() (previously declared in /home/u1444233/public_html/rapor/rapor_cetak_massal.php:36) in /home/u1444233/public_html/rapor/parts/rapor_pdf_body.php on line 36
+[11-Dec-2025 14:10:06 UTC] PHP Warning:  Undefined variable $koneksi in /home/u1444233/public_html/rapor/rapor_cetak_massal.php on line 14
+[11-Dec-2025 14:10:06 UTC] PHP Fatal error:  Uncaught TypeError: mysqli_prepare(): Argument #1 ($mysql) must be of type mysqli, null given in /home/u1444233/public_html/rapor/rapor_cetak_massal.php:14
+Stack trace:
+#0 /home/u1444233/public_html/rapor/rapor_cetak_massal.php(14): mysqli_prepare()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/rapor_cetak_massal.php on line 14
+[11-Dec-2025 14:10:08 UTC] PHP Warning:  Undefined variable $koneksi in /home/u1444233/public_html/rapor/rapor_cetak_massal.php on line 14
+[11-Dec-2025 14:10:08 UTC] PHP Fatal error:  Uncaught TypeError: mysqli_prepare(): Argument #1 ($mysql) must be of type mysqli, null given in /home/u1444233/public_html/rapor/rapor_cetak_massal.php:14
+Stack trace:
+#0 /home/u1444233/public_html/rapor/rapor_cetak_massal.php(14): mysqli_prepare()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/rapor_cetak_massal.php on line 14
+[12-Dec-2025 17:53:55 Asia/Jakarta] PHP Warning:  Undefined array key "role" in /home/u1444233/public_html/rapor/penilaian_aksi.php on line 12
+[13-Dec-2025 23:20:22 Asia/Jakarta] PHP Warning:  Undefined variable $clean_desc in /home/u1444233/public_html/rapor/walikelas_aksi.php on line 128
+[14-Dec-2025 01:02:49 Asia/Jakarta] PHP Warning:  Undefined array key "id_kelas" in /home/u1444233/public_html/rapor/kokurikuler_aksi.php on line 225
+[14-Dec-2025 01:08:49 Asia/Jakarta] PHP Warning:  Undefined array key "id_kelas" in /home/u1444233/public_html/rapor/kokurikuler_aksi.php on line 225
+[14-Dec-2025 01:11:06 Asia/Jakarta] PHP Warning:  Undefined array key "id_kelas" in /home/u1444233/public_html/rapor/kokurikuler_aksi.php on line 225
+[15-Dec-2025 08:29:43 Asia/Jakarta] PHP Warning:  Undefined array key "id_kelas" in /home/u1444233/public_html/rapor/kokurikuler_aksi.php on line 225
+[15-Dec-2025 08:34:20 Asia/Jakarta] PHP Warning:  Undefined array key "id_kelas" in /home/u1444233/public_html/rapor/kokurikuler_aksi.php on line 225
+[15-Dec-2025 11:04:06 Asia/Jakarta] Database Error: Cannot add or update a child row: a foreign key constraint fails (`u1444233_rapor`.`ekskul_kehadiran`, CONSTRAINT `ekskul_kehadiran_ibfk_1` FOREIGN KEY (`id_peserta_ekskul`) REFERENCES `ekskul_peserta` (`id_peserta_ekskul`) ON DELETE CASCADE)
+[15-Dec-2025 11:53:24 Asia/Jakarta] PHP Warning:  Undefined array key "id_kelas" in /home/u1444233/public_html/rapor/kokurikuler_aksi.php on line 225
+[16-Dec-2025 07:36:26 Asia/Jakarta] PHP Warning:  Undefined array key "id_kelas" in /home/u1444233/public_html/rapor/kokurikuler_aksi.php on line 225
+[16-Dec-2025 08:01:43 Asia/Jakarta] PHP Warning:  Undefined array key "id_kelas" in /home/u1444233/public_html/rapor/kokurikuler_aksi.php on line 225
+[16-Dec-2025 12:15:53 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'tingkat' in 'ORDER BY' in /home/u1444233/public_html/rapor/walikelas_edit_siswa.php:25
+Stack trace:
+#0 /home/u1444233/public_html/rapor/walikelas_edit_siswa.php(25): mysqli_query()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/walikelas_edit_siswa.php on line 25
+[16-Dec-2025 12:16:30 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'tingkat' in 'ORDER BY' in /home/u1444233/public_html/rapor/walikelas_edit_siswa.php:27
+Stack trace:
+#0 /home/u1444233/public_html/rapor/walikelas_edit_siswa.php(27): mysqli_query()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/walikelas_edit_siswa.php on line 27
+[16-Dec-2025 12:23:44 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'tingkat' in 'ORDER BY' in /home/u1444233/public_html/rapor/walikelas_edit_siswa.php:40
+Stack trace:
+#0 /home/u1444233/public_html/rapor/walikelas_edit_siswa.php(40): mysqli_query()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/walikelas_edit_siswa.php on line 40
+[16-Dec-2025 12:26:18 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'k.id_guru_wali' in 'WHERE' in /home/u1444233/public_html/rapor/walikelas_edit_siswa.php:57
+Stack trace:
+#0 /home/u1444233/public_html/rapor/walikelas_edit_siswa.php(57): mysqli_prepare()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/walikelas_edit_siswa.php on line 57
+[16-Dec-2025 13:10:18 Asia/Jakarta] PHP Warning:  Undefined array key "username" in /home/u1444233/public_html/rapor/proses_login.php on line 7
+[16-Dec-2025 13:10:18 Asia/Jakarta] PHP Warning:  Undefined array key "password" in /home/u1444233/public_html/rapor/proses_login.php on line 8
+[17-Dec-2025 07:10:48 Asia/Jakarta] PHP Warning:  Undefined array key "role" in /home/u1444233/public_html/rapor/walikelas_aksi.php on line 10
+[17-Dec-2025 07:10:57 Asia/Jakarta] PHP Warning:  Undefined array key "role" in /home/u1444233/public_html/rapor/walikelas_aksi.php on line 10
+[17-Dec-2025 07:21:23 Asia/Jakarta] PHP Fatal error:  Uncaught ArgumentCountError: strpos() expects at least 2 arguments, 1 given in /home/u1444233/public_html/rapor/walikelas_aksi.php:230
+Stack trace:
+#0 /home/u1444233/public_html/rapor/walikelas_aksi.php(230): strpos()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/walikelas_aksi.php on line 230
+[17-Dec-2025 07:21:43 Asia/Jakarta] PHP Fatal error:  Uncaught ArgumentCountError: strpos() expects at least 2 arguments, 1 given in /home/u1444233/public_html/rapor/walikelas_aksi.php:230
+Stack trace:
+#0 /home/u1444233/public_html/rapor/walikelas_aksi.php(230): strpos()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/walikelas_aksi.php on line 230
+[17-Dec-2025 07:21:55 Asia/Jakarta] PHP Fatal error:  Uncaught ArgumentCountError: strpos() expects at least 2 arguments, 1 given in /home/u1444233/public_html/rapor/walikelas_aksi.php:230
+Stack trace:
+#0 /home/u1444233/public_html/rapor/walikelas_aksi.php(230): strpos()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/walikelas_aksi.php on line 230
+[17-Dec-2025 07:22:27 Asia/Jakarta] PHP Fatal error:  Uncaught ArgumentCountError: strpos() expects at least 2 arguments, 1 given in /home/u1444233/public_html/rapor/walikelas_aksi.php:230
+Stack trace:
+#0 /home/u1444233/public_html/rapor/walikelas_aksi.php(230): strpos()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/walikelas_aksi.php on line 230
+[17-Dec-2025 07:22:36 Asia/Jakarta] PHP Fatal error:  Uncaught ArgumentCountError: strpos() expects at least 2 arguments, 1 given in /home/u1444233/public_html/rapor/walikelas_aksi.php:230
+Stack trace:
+#0 /home/u1444233/public_html/rapor/walikelas_aksi.php(230): strpos()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/walikelas_aksi.php on line 230
+[17-Dec-2025 07:23:28 Asia/Jakarta] PHP Fatal error:  Uncaught ArgumentCountError: strpos() expects at least 2 arguments, 1 given in /home/u1444233/public_html/rapor/walikelas_aksi.php:232
+Stack trace:
+#0 /home/u1444233/public_html/rapor/walikelas_aksi.php(232): strpos()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/walikelas_aksi.php on line 232
+[17-Dec-2025 07:23:32 Asia/Jakarta] PHP Fatal error:  Uncaught ArgumentCountError: strpos() expects at least 2 arguments, 1 given in /home/u1444233/public_html/rapor/walikelas_aksi.php:232
+Stack trace:
+#0 /home/u1444233/public_html/rapor/walikelas_aksi.php(232): strpos()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/walikelas_aksi.php on line 232
+[17-Dec-2025 07:23:33 Asia/Jakarta] PHP Fatal error:  Uncaught ArgumentCountError: strpos() expects at least 2 arguments, 1 given in /home/u1444233/public_html/rapor/walikelas_aksi.php:232
+Stack trace:
+#0 /home/u1444233/public_html/rapor/walikelas_aksi.php(232): strpos()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/walikelas_aksi.php on line 232
+[17-Dec-2025 07:23:39 Asia/Jakarta] PHP Fatal error:  Uncaught ArgumentCountError: strpos() expects at least 2 arguments, 1 given in /home/u1444233/public_html/rapor/walikelas_aksi.php:232
+Stack trace:
+#0 /home/u1444233/public_html/rapor/walikelas_aksi.php(232): strpos()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/walikelas_aksi.php on line 232
+[17-Dec-2025 07:28:30 Asia/Jakarta] PHP Fatal error:  Uncaught ArgumentCountError: strpos() expects at least 2 arguments, 1 given in /home/u1444233/public_html/rapor/walikelas_aksi.php:232
+Stack trace:
+#0 /home/u1444233/public_html/rapor/walikelas_aksi.php(232): strpos()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/walikelas_aksi.php on line 232
+[17-Dec-2025 07:28:53 Asia/Jakarta] PHP Fatal error:  Uncaught ArgumentCountError: strpos() expects at least 2 arguments, 1 given in /home/u1444233/public_html/rapor/walikelas_aksi.php:232
+Stack trace:
+#0 /home/u1444233/public_html/rapor/walikelas_aksi.php(232): strpos()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/walikelas_aksi.php on line 232
+[17-Dec-2025 07:29:19 Asia/Jakarta] PHP Fatal error:  Uncaught ArgumentCountError: strpos() expects at least 2 arguments, 1 given in /home/u1444233/public_html/rapor/walikelas_aksi.php:232
+Stack trace:
+#0 /home/u1444233/public_html/rapor/walikelas_aksi.php(232): strpos()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/walikelas_aksi.php on line 232
+[17-Dec-2025 07:29:42 Asia/Jakarta] PHP Fatal error:  Uncaught ArgumentCountError: strpos() expects at least 2 arguments, 1 given in /home/u1444233/public_html/rapor/walikelas_aksi.php:232
+Stack trace:
+#0 /home/u1444233/public_html/rapor/walikelas_aksi.php(232): strpos()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/walikelas_aksi.php on line 232
+[17-Dec-2025 07:29:47 Asia/Jakarta] PHP Fatal error:  Uncaught ArgumentCountError: strpos() expects at least 2 arguments, 1 given in /home/u1444233/public_html/rapor/walikelas_aksi.php:232
+Stack trace:
+#0 /home/u1444233/public_html/rapor/walikelas_aksi.php(232): strpos()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/walikelas_aksi.php on line 232
+[17-Dec-2025 18:11:31 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'c.id_guru' in 'ON' in /home/u1444233/public_html/rapor/dashboard_siswa.php:51
+Stack trace:
+#0 /home/u1444233/public_html/rapor/dashboard_siswa.php(51): mysqli_query()
+#1 /home/u1444233/public_html/rapor/dashboard.php(16): include('/home/u1444233/...')
+#2 {main}
+  thrown in /home/u1444233/public_html/rapor/dashboard_siswa.php on line 51
+[17-Dec-2025 18:12:47 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'c.id_guru' in 'ON' in /home/u1444233/public_html/rapor/dashboard_siswa.php:54
+Stack trace:
+#0 /home/u1444233/public_html/rapor/dashboard_siswa.php(54): mysqli_query()
+#1 /home/u1444233/public_html/rapor/dashboard.php(16): include('/home/u1444233/...')
+#2 {main}
+  thrown in /home/u1444233/public_html/rapor/dashboard_siswa.php on line 54
+[17-Dec-2025 18:14:43 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'u1444233_rapor.ekskul_siswa' doesn't exist in /home/u1444233/public_html/rapor/dashboard_siswa.php:63
+Stack trace:
+#0 /home/u1444233/public_html/rapor/dashboard_siswa.php(63): mysqli_prepare()
+#1 /home/u1444233/public_html/rapor/dashboard.php(16): include('/home/u1444233/...')
+#2 {main}
+  thrown in /home/u1444233/public_html/rapor/dashboard_siswa.php on line 63
+[17-Dec-2025 18:15:28 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'u1444233_rapor.ekskul_siswa' doesn't exist in /home/u1444233/public_html/rapor/dashboard_siswa.php:63
+Stack trace:
+#0 /home/u1444233/public_html/rapor/dashboard_siswa.php(63): mysqli_prepare()
+#1 /home/u1444233/public_html/rapor/dashboard.php(16): include('/home/u1444233/...')
+#2 {main}
+  thrown in /home/u1444233/public_html/rapor/dashboard_siswa.php on line 63
+[17-Dec-2025 18:15:43 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'u1444233_rapor.ekskul_siswa' doesn't exist in /home/u1444233/public_html/rapor/dashboard_siswa.php:66
+Stack trace:
+#0 /home/u1444233/public_html/rapor/dashboard_siswa.php(66): mysqli_prepare()
+#1 /home/u1444233/public_html/rapor/dashboard.php(16): include('/home/u1444233/...')
+#2 {main}
+  thrown in /home/u1444233/public_html/rapor/dashboard_siswa.php on line 66
+[17-Dec-2025 18:17:08 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'u1444233_rapor.detil_ekskul' doesn't exist in /home/u1444233/public_html/rapor/dashboard_siswa.php:64
+Stack trace:
+#0 /home/u1444233/public_html/rapor/dashboard_siswa.php(64): mysqli_prepare()
+#1 /home/u1444233/public_html/rapor/dashboard.php(16): include('/home/u1444233/...')
+#2 {main}
+  thrown in /home/u1444233/public_html/rapor/dashboard_siswa.php on line 64
+[19-Dec-2025 02:56:02 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'mp.kelompok' in 'SELECT' in /home/u1444233/public_html/rapor/mapel_tampil.php:89
+Stack trace:
+#0 /home/u1444233/public_html/rapor/mapel_tampil.php(89): mysqli_query()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/mapel_tampil.php on line 89
+[19-Dec-2025 02:56:20 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'mp.kelompok' in 'SELECT' in /home/u1444233/public_html/rapor/mapel_tampil.php:89
+Stack trace:
+#0 /home/u1444233/public_html/rapor/mapel_tampil.php(89): mysqli_query()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/mapel_tampil.php on line 89
+[19-Dec-2025 02:57:10 Asia/Jakarta] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'mp.kelompok' in 'SELECT' in /home/u1444233/public_html/rapor/mapel_tampil.php:92
+Stack trace:
+#0 /home/u1444233/public_html/rapor/mapel_tampil.php(92): mysqli_query()
+#1 {main}
+  thrown in /home/u1444233/public_html/rapor/mapel_tampil.php on line 92
