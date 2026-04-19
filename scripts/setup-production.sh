@@ -26,7 +26,8 @@ MYSQL_ROOT_PW=$(openssl rand -base64 16 | tr -d '/+=' | head -c 20)
 MYSQL_RADIG_PW=$(openssl rand -base64 16 | tr -d '/+=' | head -c 20)
 
 # --- Create .env ---
-cd ~/Smpmultipleapp
+SCRIPT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+cd "$SCRIPT_DIR"
 cat > .env << EOF
 # Auto-generated $(date)
 NEXTAUTH_SECRET=${NEXTAUTH_SECRET}
