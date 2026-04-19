@@ -1,0 +1,30 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  TU
+  RADIG
+  Guru
+  WaliSantri
+}
+
+model User {
+  id             String   @id @default(cuid())
+  username       String   @unique
+  name           String?
+  hashedPassword String
+  role           Role
+  nip            String?  @unique
+  image          String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([role])
+  @@index([username])
+}
