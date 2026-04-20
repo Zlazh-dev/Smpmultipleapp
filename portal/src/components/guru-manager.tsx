@@ -181,19 +181,19 @@ export function GuruManager({ initialUsers }: { initialUsers: User[] }) {
   return (
     <div className="flex flex-col h-full">
       {/* Toolbar */}
-      <div className="flex items-center gap-2 px-4 py-2.5 border-b border-border/40 bg-card/30">
-        <div className="flex items-center gap-2 flex-1">
-          <div className="relative">
+      <div className="flex items-center gap-2 px-3 sm:px-4 py-2.5 border-b border-border/40 bg-card/30 flex-wrap">
+        <div className="flex items-center gap-2 flex-1 min-w-0">
+          <div className="relative flex-1 sm:flex-none">
             <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
             <Input
               placeholder="Cari..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="h-8 w-56 pl-8 text-sm bg-transparent border-border/50"
+              className="h-8 w-full sm:w-56 pl-8 text-sm bg-transparent border-border/50"
             />
           </div>
           <Select value={roleFilter} onValueChange={(v) => setRoleFilter(v ?? "all")}>
-            <SelectTrigger className="h-8 w-32 text-sm border-border/50">
+            <SelectTrigger className="h-8 w-24 sm:w-32 text-sm border-border/50 shrink-0">
               <SelectValue placeholder="Filter" />
             </SelectTrigger>
             <SelectContent>
@@ -205,7 +205,7 @@ export function GuruManager({ initialUsers }: { initialUsers: User[] }) {
           </Select>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 shrink-0">
           <Button
             variant="outline"
             size="sm"
@@ -214,7 +214,7 @@ export function GuruManager({ initialUsers }: { initialUsers: User[] }) {
             disabled={syncing}
           >
             <RefreshCw className={`h-3.5 w-3.5 ${syncing ? "animate-spin" : ""}`} />
-            Sync
+            <span className="hidden sm:inline">Sync</span>
           </Button>
           <Button
             size="sm"
@@ -222,13 +222,13 @@ export function GuruManager({ initialUsers }: { initialUsers: User[] }) {
             onClick={() => { resetForm(); setSheetTab("add"); setImportResult(null); setSheetOpen(true); }}
           >
             <Plus className="h-3.5 w-3.5" />
-            Insert
+            <span className="hidden sm:inline">Insert</span>
           </Button>
         </div>
       </div>
 
-      {/* Table */}
-      <div className="flex-1 overflow-auto">
+      {/* Desktop Table */}
+      <div className="flex-1 overflow-auto hidden sm:block">
         <table className="w-full text-sm">
           <thead className="sticky top-0 bg-card/80 backdrop-blur-sm z-10">
             <tr className="border-b border-border/40">
@@ -246,13 +246,13 @@ export function GuruManager({ initialUsers }: { initialUsers: User[] }) {
               <th className="text-left px-4 py-2.5 text-xs font-medium text-muted-foreground">
                 username <span className="opacity-40">text</span>
               </th>
-              <th className="text-left px-4 py-2.5 text-xs font-medium text-muted-foreground hidden sm:table-cell">
+              <th className="text-left px-4 py-2.5 text-xs font-medium text-muted-foreground hidden md:table-cell">
                 nip <span className="opacity-40">text</span>
               </th>
               <th className="text-left px-4 py-2.5 text-xs font-medium text-muted-foreground">
                 role <span className="opacity-40">enum</span>
               </th>
-              <th className="text-left px-4 py-2.5 text-xs font-medium text-muted-foreground hidden sm:table-cell">
+              <th className="text-left px-4 py-2.5 text-xs font-medium text-muted-foreground hidden md:table-cell">
                 status <span className="opacity-40">bool</span>
               </th>
               <th className="w-20 px-4 py-2.5"></th>
@@ -283,13 +283,13 @@ export function GuruManager({ initialUsers }: { initialUsers: User[] }) {
                     </td>
                     <td className="px-4 py-2 font-medium">{u.name || "\u2014"}</td>
                     <td className="px-4 py-2 font-mono text-muted-foreground">{u.username}</td>
-                    <td className="px-4 py-2 font-mono text-muted-foreground hidden sm:table-cell">{u.nip || "\u2014"}</td>
+                    <td className="px-4 py-2 font-mono text-muted-foreground hidden md:table-cell">{u.nip || "\u2014"}</td>
                     <td className="px-4 py-2">
                       <span className={`inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${rb.color}`}>
                         {rb.label}
                       </span>
                     </td>
-                    <td className="px-4 py-2 hidden sm:table-cell">
+                    <td className="px-4 py-2 hidden md:table-cell">
                       {u.isActive ? (
                         <span className="inline-flex items-center gap-1 text-xs text-emerald-600">
                           <CheckCircle2 className="h-3 w-3" /> Aktif
@@ -329,10 +329,68 @@ export function GuruManager({ initialUsers }: { initialUsers: User[] }) {
         </table>
       </div>
 
+      {/* Mobile Cards */}
+      <div className="flex-1 overflow-auto sm:hidden">
+        {filtered.length === 0 ? (
+          <div className="text-center py-16 text-muted-foreground text-sm">
+            {search ? "Tidak ada hasil" : "Belum ada data"}
+          </div>
+        ) : (
+          <div className="divide-y divide-border/20">
+            {filtered.map((u) => {
+              const rb = roleBadge[u.role] || roleBadge.Guru;
+              return (
+                <div key={u.id} className="flex items-center gap-3 px-3 py-2.5 active:bg-muted/30">
+                  <input
+                    type="checkbox"
+                    checked={selected.has(u.id)}
+                    onChange={() => toggleOne(u.id)}
+                    className="rounded border-border/50 accent-emerald-600 shrink-0"
+                  />
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-medium truncate">{u.name || "\u2014"}</p>
+                    <p className="text-[11px] text-muted-foreground font-mono truncate">
+                      {u.username}{u.nip ? ` · ${u.nip}` : ""}
+                    </p>
+                  </div>
+                  <span className={`inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium shrink-0 ${rb.color}`}>
+                    {rb.label}
+                  </span>
+                  {u.isActive ? (
+                    <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500 shrink-0" />
+                  ) : (
+                    <XCircle className="h-3.5 w-3.5 text-red-500 shrink-0" />
+                  )}
+                  <div className="flex items-center gap-0.5 shrink-0">
+                    <button
+                      className="p-1.5 rounded hover:bg-muted transition-colors text-muted-foreground"
+                      onClick={() => {
+                        setEditUser(u);
+                        setForm({ username: u.username, name: u.name || "", nip: u.nip || "", role: u.role, password: "", email: u.email || "", phone: u.phone || "" });
+                        setSheetTab("add");
+                        setSheetOpen(true);
+                      }}
+                    >
+                      <Pencil className="h-3.5 w-3.5" />
+                    </button>
+                    <button
+                      className="p-1.5 rounded hover:bg-red-500/10 transition-colors text-muted-foreground"
+                      onClick={() => setDeleteConfirm(u)}
+                    >
+                      <Trash2 className="h-3.5 w-3.5" />
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
+
       {/* Footer */}
-      <div className="flex items-center justify-between px-4 py-2 border-t border-border/40 bg-card/30 text-xs text-muted-foreground">
+      <div className="flex items-center justify-between px-3 sm:px-4 py-2 border-t border-border/40 bg-card/30 text-xs text-muted-foreground">
         <span>{filtered.length} rows</span>
-        <span>{users.filter((u) => u.role === "Guru").length} guru · {users.filter((u) => u.role === "TU").length} tu · {users.filter((u) => u.role === "RADIG").length} admin</span>
+        <span className="hidden sm:inline">{users.filter((u) => u.role === "Guru").length} guru · {users.filter((u) => u.role === "TU").length} tu · {users.filter((u) => u.role === "RADIG").length} admin</span>
       </div>
 
       {/* Add/Import Sheet (slides from right) */}
