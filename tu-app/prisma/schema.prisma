@@ -42,6 +42,7 @@ model Pegawai {
   portalUserId   String?    @unique  // Links to Portal User.id (centralized identity)
   noHp           String?
   alamat         String?
+  faceDescriptor Float[]    // 128-dim face descriptor vector for face recognition
   skRiwayat      Json[]     // [{"noSK":"123/KS/2026","tanggal":"2026-01-01","jenis":"Pengangkatan"}]
   kinerja        Json?      // e-Kinerja scores
   presensi       Presensi[]

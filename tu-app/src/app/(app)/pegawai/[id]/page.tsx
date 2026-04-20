@@ -47,6 +47,7 @@ export default async function PegawaiDetailPage({
       <PegawaiDetail
         pegawai={JSON.parse(JSON.stringify({
           ...pegawai,
+          faceDescriptor: pegawai.faceDescriptor || [],
           skRiwayat: pegawai.skRiwayat || [],
           dokumen: pegawai.dokumen || [],
         }))}

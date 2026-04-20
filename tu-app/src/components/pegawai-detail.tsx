@@ -13,6 +13,7 @@ import { toast } from "sonner";
 import { PrintPreview } from "@/components/print-preview";
 import { PegawaiFormSheet } from "@/components/pegawai-form-sheet";
 import { SKFormSheet, type SkData } from "@/components/sk-form-sheet";
+import { FaceRegistration } from "@/components/face-registration";
 
 interface SkRiwayat {
   noSK: string; tanggal: string; jenis: string;
@@ -27,6 +28,7 @@ interface DokumenData {
 interface PegawaiData {
   id: string; nip: string; namaLengkap: string; jabatan: string;
   accessLevel: string; username: string; noHp: string | null; alamat: string | null;
+  faceDescriptor: number[];
   skRiwayat: SkRiwayat[]; kinerja: { skor?: number; grade?: string } | null;
   dokumen: DokumenData[]; createdAt: string;
 }
@@ -245,6 +247,11 @@ export function PegawaiDetail({ pegawai, templates = [] }: { pegawai: PegawaiDat
                 </div>
               </div>
             </div>
+            {/* Face Registration */}
+            <FaceRegistration
+              pegawaiId={pegawai.id}
+              hasFace={pegawai.faceDescriptor && pegawai.faceDescriptor.length > 0}
+            />
           </div>
         </div>
       )}

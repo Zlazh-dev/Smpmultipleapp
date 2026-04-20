@@ -4,8 +4,9 @@ import { useState } from "react";
 import { DataTable, Column } from "@/components/data-table";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { QrCode, MapPin, Loader2, CheckCircle, Search, Calendar } from "lucide-react";
+import { QrCode, MapPin, Loader2, CheckCircle, Search, Calendar, ShieldCheck } from "lucide-react";
 import { QrScannerDialog } from "@/components/qr-scanner";
+import { FaceVerifyDialog } from "@/components/face-verify-dialog";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
@@ -98,36 +99,25 @@ export function PresensiTable({
   dateStr: string;
 }) {
   const [scannerOpen, setScannerOpen] = useState(false);
+  const [faceVerifyOpen, setFaceVerifyOpen] = useState(false);
   const [checkingIn, setCheckingIn] = useState(false);
   const [checkedIn, setCheckedIn] = useState(data.length > 0 && !isKhusus);
   const router = useRouter();
 
-  // UMUM self-check-in with geofencing
-  const handleSelfCheckIn = async () => {
+  // UMUM: After face verification succeeds, do GPS check-in
+  const handleFaceVerified = async (coords: { latitude: number; longitude: number }) => {
     if (!userId) return;
     setCheckingIn(true);
 
     try {
-      // Get GPS location
-      const pos = await new Promise<GeolocationPosition>((resolve, reject) => {
-        if (!navigator.geolocation) {
-          reject(new Error("Geolocation tidak didukung"));
-          return;
-        }
-        navigator.geolocation.getCurrentPosition(resolve, reject, {
-          enableHighAccuracy: true,
-          timeout: 15000,
-        });
-      });
-
       const res = await fetch("/api/presensi", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           pegawaiId: userId,
           status: "HADIR",
-          latitude: pos.coords.latitude,
-          longitude: pos.coords.longitude,
+          latitude: coords.latitude,
+          longitude: coords.longitude,
         }),
       });
 
@@ -142,15 +132,7 @@ export function PresensiTable({
       setCheckedIn(true);
       router.refresh();
     } catch (err: any) {
-      if (err.code === 1) {
-        toast.error("Izin lokasi ditolak. Aktifkan GPS untuk presensi.");
-      } else if (err.code === 2) {
-        toast.error("Lokasi tidak tersedia. Pastikan GPS aktif.");
-      } else if (err.code === 3) {
-        toast.error("Waktu mendapatkan lokasi habis. Coba lagi.");
-      } else {
-        toast.error(err.message || "Gagal presensi");
-      }
+      toast.error(err.message || "Gagal presensi");
     } finally {
       setCheckingIn(false);
     }
@@ -189,27 +171,27 @@ export function PresensiTable({
 
   return (
     <>
-      {/* UMUM: Self check-in button */}
+      {/* UMUM: Self check-in with face verification */}
       {!isKhusus && !checkedIn && (
         <div className="p-4 rounded-xl border border-primary/20 bg-primary/5 text-center space-y-3 animate-fade-in-up mb-4">
           <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 mx-auto">
-            <MapPin className="h-6 w-6 text-primary" />
+            <ShieldCheck className="h-6 w-6 text-primary" />
           </div>
           <div>
             <p className="text-sm font-semibold">Presensi Hari Ini</p>
             <p className="text-[11px] text-muted-foreground mt-0.5">
-              Tekan tombol di bawah untuk mencatat kehadiran. Lokasi GPS Anda akan diverifikasi.
+              Verifikasi wajah dan lokasi GPS untuk mencatat kehadiran.
             </p>
           </div>
           <Button
-            onClick={handleSelfCheckIn}
+            onClick={() => setFaceVerifyOpen(true)}
             disabled={checkingIn}
             className="h-10 px-6 cursor-pointer"
           >
             {checkingIn ? (
-              <><Loader2 className="h-4 w-4 mr-2 animate-spin" /> Memverifikasi lokasi...</>
+              <><Loader2 className="h-4 w-4 mr-2 animate-spin" /> Mencatat presensi...</>
             ) : (
-              <><MapPin className="h-4 w-4 mr-2" /> Presensi Sekarang</>
+              <><ShieldCheck className="h-4 w-4 mr-2" /> Verifikasi & Presensi</>
             )}
           </Button>
         </div>
@@ -268,6 +250,16 @@ export function PresensiTable({
 
       {/* QR Scanner — KHUSUS only */}
       {isKhusus && <QrScannerDialog open={scannerOpen} onOpenChange={setScannerOpen} />}
+
+      {/* Face Verification — UMUM only */}
+      {!isKhusus && userId && (
+        <FaceVerifyDialog
+          open={faceVerifyOpen}
+          onOpenChange={setFaceVerifyOpen}
+          userId={userId}
+          onVerified={handleFaceVerified}
+        />
+      )}
     </>
   );
 }
