@@ -23,17 +23,6 @@ export async function PATCH(request: NextRequest, { params }: Params) {
   try {
     const body = await request.json();
 
-    // If setting active, deactivate others in same category first
-    if (body.isActive === true) {
-      const existing = await db.printTemplate.findUnique({ where: { id } });
-      if (existing) {
-        await db.printTemplate.updateMany({
-          where: { kategori: existing.kategori, isActive: true, NOT: { id } },
-          data: { isActive: false },
-        });
-      }
-    }
-
     const template = await db.printTemplate.update({
       where: { id },
       data: {
@@ -41,7 +30,6 @@ export async function PATCH(request: NextRequest, { params }: Params) {
         ...(body.kategori !== undefined && { kategori: body.kategori }),
         ...(body.deskripsi !== undefined && { deskripsi: body.deskripsi }),
         ...(body.canvasData !== undefined && { canvasData: body.canvasData }),
-        ...(body.isActive !== undefined && { isActive: body.isActive }),
       },
     });
 

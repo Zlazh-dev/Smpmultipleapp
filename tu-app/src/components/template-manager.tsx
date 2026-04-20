@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -11,7 +10,7 @@ import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import {
-  Plus, Pencil, Trash2, Check, X, FileText,
+  Plus, Pencil, Trash2, X, FileText,
   ClipboardCheck, Award, Briefcase, Layers,
   LayoutGrid, List, Search, ChevronDown, Clock, CalendarDays,
   SortAsc, MoreHorizontal,
@@ -22,7 +21,6 @@ interface Template {
   nama: string;
   kategori: string;
   deskripsi: string | null;
-  isActive: boolean;
   canvasData: any;
   updatedAt: string;
   createdAt: string;
@@ -168,16 +166,7 @@ export function TemplateManager({
     finally { setCreating(false); }
   };
 
-  const handleSetActive = async (id: string, e: React.MouseEvent) => {
-    e.stopPropagation();
-    try {
-      const res = await fetch(`/api/templates/${id}`, { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ isActive: true }) });
-      if (!res.ok) throw new Error();
-      const updated = await res.json();
-      setTemplates((prev) => prev.map((t) => ({ ...t, isActive: t.id === id ? true : t.kategori === updated.kategori ? false : t.isActive })));
-      toast.success("Template diaktifkan");
-    } catch { toast.error("Gagal"); }
-  };
+
 
   const handleDelete = async (id: string, e: React.MouseEvent) => {
     e.stopPropagation();
@@ -304,7 +293,7 @@ export function TemplateManager({
                 <div className={cn(
                   "aspect-[4/3] rounded-xl overflow-hidden transition-all border-2 bg-[#2c2c2c]",
                   "group-hover:shadow-xl group-hover:shadow-primary/10 group-hover:border-primary/40 group-hover:scale-[1.02]",
-                  tpl.isActive ? "border-primary/50 ring-2 ring-primary/20" : "border-transparent"
+                  "border-transparent"
                 )}>
                   <MiniPreview canvasData={tpl.canvasData} />
                 </div>
@@ -321,22 +310,12 @@ export function TemplateManager({
                     </div>
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-1">
                       <p className="text-xs font-semibold truncate">{tpl.nama}</p>
-                      {tpl.isActive && (
-                        <Badge className="bg-primary/15 text-primary border-0 text-[7px] px-1 py-0 h-3.5 shrink-0">Aktif</Badge>
-                      )}
-                    </div>
                     <p className="text-[10px] text-muted-foreground">{getTimeAgo(tpl.updatedAt)}</p>
                   </div>
 
                   {/* Actions overlay */}
                   <div className="opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-0.5 shrink-0">
-                    {!tpl.isActive && (
-                      <button onClick={(e) => handleSetActive(tpl.id, e)} className="p-1 rounded hover:bg-primary/10 text-primary cursor-pointer" title="Aktifkan">
-                        <Check className="h-3 w-3" />
-                      </button>
-                    )}
                     <button onClick={(e) => handleDelete(tpl.id, e)} className="p-1 rounded hover:bg-red-500/10 text-red-500 cursor-pointer" title="Hapus">
                       <Trash2 className="h-3 w-3" />
                     </button>
@@ -361,8 +340,7 @@ export function TemplateManager({
                 )}
               >
                 {/* Mini thumbnail */}
-                <div className={cn("w-16 h-12 rounded-md overflow-hidden bg-[#2c2c2c] shrink-0 border",
-                  tpl.isActive ? "border-primary/50" : "border-transparent")}>
+                <div className={cn("w-16 h-12 rounded-md overflow-hidden bg-[#2c2c2c] shrink-0 border border-transparent")}>
                   <MiniPreview canvasData={tpl.canvasData} />
                 </div>
 
@@ -373,7 +351,6 @@ export function TemplateManager({
                       tpl.kategori === "SURAT_IZIN" ? "text-blue-500" : tpl.kategori === "LAPORAN_KEHADIRAN" ? "text-emerald-500" : tpl.kategori === "SK" ? "text-amber-500" : tpl.kategori === "SURAT_TUGAS" ? "text-purple-500" : "text-gray-500"
                     )} />
                     <p className="text-xs font-semibold truncate">{tpl.nama}</p>
-                    {tpl.isActive && <Badge className="bg-primary/15 text-primary border-0 text-[7px] px-1 py-0 h-3.5">Aktif</Badge>}
                   </div>
                   {tpl.deskripsi && <p className="text-[10px] text-muted-foreground mt-0.5 truncate">{tpl.deskripsi}</p>}
                 </div>
@@ -388,11 +365,6 @@ export function TemplateManager({
 
                 {/* Actions */}
                 <div className="flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity shrink-0">
-                  {!tpl.isActive && (
-                    <button onClick={(e) => handleSetActive(tpl.id, e)} className="p-1.5 rounded hover:bg-primary/10 text-primary cursor-pointer" title="Aktifkan">
-                      <Check className="h-3.5 w-3.5" />
-                    </button>
-                  )}
                   <button onClick={(e) => handleDelete(tpl.id, e)} className="p-1.5 rounded hover:bg-red-500/10 text-red-500 cursor-pointer" title="Hapus">
                     <Trash2 className="h-3.5 w-3.5" />
                   </button>
@@ -435,7 +407,7 @@ export function TemplateManager({
                 <p>• <strong>Kehadiran</strong> → Cetak dari halaman Presensi</p>
                 <p>• <strong>SK</strong> → Cetak dari halaman Pegawai</p>
                 <p>• <strong>Surat Tugas</strong> → Cetak surat penugasan</p>
-                <p className="mt-1.5 text-primary/80">Klik "Aktifkan" untuk assign template ke halaman terkait.</p>
+                <p className="mt-1.5 text-primary/80">Template langsung tersedia untuk cetak setelah dibuat.</p>
               </div>
             </div>
             <div className="px-5 py-3 border-t border-border bg-muted/30">

@@ -29,7 +29,7 @@ export default async function PrintCutiPage({ params }: PageProps) {
 
   // Fetch active SURAT_IZIN template
   const template = await db.printTemplate.findFirst({
-    where: { kategori: "SURAT_IZIN", isActive: true },
+    where: { kategori: "SURAT_IZIN" },
   });
 
   if (!template) {

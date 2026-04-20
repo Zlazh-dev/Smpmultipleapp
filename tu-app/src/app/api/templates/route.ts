@@ -9,7 +9,6 @@ export async function GET(request: NextRequest) {
 
   const where: any = {};
   if (kategori) where.kategori = kategori;
-  if (activeOnly) where.isActive = true;
 
   const templates = await db.printTemplate.findMany({
     where,

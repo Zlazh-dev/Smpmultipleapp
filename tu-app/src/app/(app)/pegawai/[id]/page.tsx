@@ -35,7 +35,6 @@ export default async function PegawaiDetailPage({
       },
     }),
     db.printTemplate.findMany({
-      where: { isActive: true },
       select: { id: true, nama: true, kategori: true, canvasData: true },
       orderBy: { kategori: "asc" },
     }),
