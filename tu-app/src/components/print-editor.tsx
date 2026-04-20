@@ -50,9 +50,16 @@ const A4_H = 842;
 const MAX_HISTORY = 50;
 
 const TEMPLATE_VARS = [
-  "namaLengkap", "nip", "jabatan", "username", "noHp",
+  // Pegawai
+  "namaLengkap", "nip", "jabatan", "username", "noHp", "alamat", "accessLevel",
+  // SK
+  "noSK", "tanggalSK", "jenisSK", "perihalSK", "berlakuSampai", "keteranganSK",
+  // Cuti
   "jenisCuti", "tanggalMulai", "tanggalSelesai", "lamaHari", "alasan",
-  "tanggalSekarang", "namaSekolah",
+  // Sekolah & Umum
+  "tanggalSekarang", "namaSekolah", "alamatSekolah", "npsn", "tahunAjaran",
+  // RADIG
+  "namaKepsek", "nipKepsek", "jumlahSiswa", "jumlahGuru", "kelasAjar",
 ];
 
 function uid() { return Math.random().toString(36).slice(2, 9); }
@@ -834,8 +841,10 @@ export function PrintEditor({ templateId, initialData, templateName }: PrintEdit
                 <div className="mt-4 p-3 rounded bg-[#2a2a2a] text-[9px] text-[#777] space-y-1">
                   <p className="text-[#999] font-semibold">Contoh:</p>
                   <p>[namaLengkap] → Siti Nurhaliza</p>
-                  <p>[tanggalMulai] → 10 April 2026</p>
+                  <p>[noSK] → 001/KS/2026</p>
+                  <p>[tanggalSekarang] → 10 April 2026</p>
                   <p>[namaSekolah] → SMPIT Asy-Syadzili</p>
+                  <p>[namaKepsek] → Dr. Ahmad Fauzi</p>
                 </div>
               </div>
             )}

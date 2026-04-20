@@ -78,15 +78,26 @@ export function PegawaiDetail({ pegawai, templates = [] }: { pegawai: PegawaiDat
   const [editOpen, setEditOpen] = useState(false);
   const [skSheetOpen, setSkSheetOpen] = useState(false);
   const [skEditIndex, setSkEditIndex] = useState<number | undefined>(undefined);
+  const [skPrintMenu, setSkPrintMenu] = useState<number | null>(null);
   const [docView, setDocView] = useState<"card" | "list">("card");
   const fileInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
-  const pegawaiVars: Record<string, string> = {
-    namaLengkap: pegawai.namaLengkap, nip: pegawai.nip, jabatan: pegawai.jabatan,
-    username: pegawai.username, noHp: pegawai.noHp || "-", alamat: pegawai.alamat || "-",
-    tanggalSekarang: new Date().toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" }),
+  const buildVarsForSk = (sk?: SkRiwayat) => {
+    const vars: Record<string, string> = {
+      namaLengkap: pegawai.namaLengkap, nip: pegawai.nip, jabatan: pegawai.jabatan,
+      username: pegawai.username, noHp: pegawai.noHp || "-", alamat: pegawai.alamat || "-",
+      tanggalSekarang: new Date().toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" }),
+    };
+    if (sk) {
+      vars.noSK = sk.noSK; vars.tanggalSK = formatDate(sk.tanggal); vars.jenisSK = sk.jenis;
+      vars.perihalSK = sk.perihal || "-"; vars.berlakuSampai = formatDate(sk.berlakuSampai);
+      vars.keteranganSK = sk.keterangan || "-";
+    }
+    return vars;
   };
+
+  const pegawaiVars = buildVarsForSk();
 
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -289,6 +300,29 @@ export function PegawaiDetail({ pegawai, templates = [] }: { pegawai: PegawaiDat
                           onClick={() => { setSkEditIndex(i); setSkSheetOpen(true); }}>
                           <Pencil className="h-3 w-3 mr-1" /> Edit
                         </Button>
+                        {templates.length > 0 && (
+                          <div className="relative">
+                            <Button variant="ghost" size="sm" className="h-6 text-[10px] cursor-pointer"
+                              onClick={() => setSkPrintMenu(skPrintMenu === i ? null : i)}>
+                              <Printer className="h-3 w-3 mr-1" /> Print
+                            </Button>
+                            {skPrintMenu === i && (
+                              <>
+                                <div className="fixed inset-0 z-40" onClick={() => setSkPrintMenu(null)} />
+                                <div className="absolute left-0 top-full mt-1 w-52 rounded-lg border border-border/50 bg-card shadow-xl z-50 py-1 animate-fade-in">
+                                  {templates.map((t) => (
+                                    <button key={t.id} onClick={() => {
+                                      setPrintTemplate({ ...t, _skVars: buildVarsForSk(sk) } as any);
+                                      setSkPrintMenu(null);
+                                    }} className="w-full text-left px-3 py-1.5 text-xs hover:bg-muted/50 transition-colors cursor-pointer">
+                                      {t.nama}
+                                    </button>
+                                  ))}
+                                </div>
+                              </>
+                            )}
+                          </div>
+                        )}
                         <Button variant="ghost" size="sm" className="h-6 text-[10px] text-red-500 hover:text-red-600 hover:bg-red-500/10 cursor-pointer"
                           onClick={async () => {
                             if (!confirm("Hapus SK ini?")) return;
@@ -341,29 +375,45 @@ export function PegawaiDetail({ pegawai, templates = [] }: { pegawai: PegawaiDat
               <p className="text-xs mt-1">Upload file SK dalam format PDF, JPG, atau DOC</p>
             </div>
           ) : docView === "card" ? (
-            /* ── Card View (Figma-style) ── */
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+            /* ── Card View with file preview ── */
+            <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3">
               {pegawai.dokumen.map((doc) => (
                 <div key={doc.id} className="group rounded-xl border border-border/50 overflow-hidden hover:shadow-lg hover:border-primary/30 transition-all duration-200">
-                  {/* Thumbnail area */}
-                  <div className={cn("h-28 flex items-center justify-center bg-gradient-to-br relative", getFileColor(doc.mimeType))}>
-                    <span className="text-2xl font-bold opacity-60">{getFileExt(doc.namaAsli)}</span>
+                  {/* Preview area — shows actual file content */}
+                  <div className="h-24 relative overflow-hidden bg-muted/20">
+                    {doc.mimeType.includes("pdf") ? (
+                      <iframe
+                        src={`/api/pegawai/${pegawai.id}/dokumen/${doc.id}#toolbar=0&navpanes=0&scrollbar=0`}
+                        className="w-[200%] h-[200%] scale-50 origin-top-left pointer-events-none border-0"
+                        title={doc.namaAsli}
+                      />
+                    ) : doc.mimeType.includes("image") ? (
+                      <img
+                        src={`/api/pegawai/${pegawai.id}/dokumen/${doc.id}`}
+                        alt={doc.namaAsli}
+                        className="w-full h-full object-cover object-top"
+                      />
+                    ) : (
+                      <div className={cn("h-full flex items-center justify-center bg-gradient-to-br", getFileColor(doc.mimeType))}>
+                        <span className="text-lg font-bold opacity-50">{getFileExt(doc.namaAsli)}</span>
+                      </div>
+                    )}
                     {/* Hover actions */}
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100">
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100">
                       <a href={`/api/pegawai/${pegawai.id}/dokumen/${doc.id}`} target="_blank"
-                        className="p-2 rounded-full bg-white/90 text-foreground hover:bg-white transition-colors shadow-sm">
-                        <Download className="h-3.5 w-3.5" />
+                        className="p-1.5 rounded-full bg-white/90 text-foreground hover:bg-white transition-colors shadow-sm">
+                        <Download className="h-3 w-3" />
                       </a>
                       <button onClick={() => handleDelete(doc.id)}
-                        className="p-2 rounded-full bg-white/90 text-red-500 hover:bg-white transition-colors shadow-sm cursor-pointer">
-                        <Trash2 className="h-3.5 w-3.5" />
+                        className="p-1.5 rounded-full bg-white/90 text-red-500 hover:bg-white transition-colors shadow-sm cursor-pointer">
+                        <Trash2 className="h-3 w-3" />
                       </button>
                     </div>
                   </div>
                   {/* Info */}
-                  <div className="p-2.5">
-                    <p className="text-xs font-medium truncate">{doc.namaAsli}</p>
-                    <p className="text-[10px] text-muted-foreground mt-0.5">
+                  <div className="p-2">
+                    <p className="text-[11px] font-medium truncate">{doc.namaAsli}</p>
+                    <p className="text-[9px] text-muted-foreground mt-0.5">
                       {formatFileSize(doc.ukuran)} · {formatDate(doc.createdAt)}
                     </p>
                   </div>
@@ -426,7 +476,7 @@ export function PegawaiDetail({ pegawai, templates = [] }: { pegawai: PegawaiDat
 
       {/* Print Preview */}
       {printTemplate && (
-        <PrintPreview template={printTemplate.canvasData} variables={pegawaiVars}
+        <PrintPreview template={printTemplate.canvasData} variables={(printTemplate as any)._skVars || pegawaiVars}
           pegawaiId={pegawai.id} kategori={printTemplate.kategori}
           onClose={() => { setPrintTemplate(null); router.refresh(); }} />
       )}
