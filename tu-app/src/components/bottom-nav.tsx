@@ -92,7 +92,10 @@ export function BottomNav({ role }: BottomNavProps) {
               <div className="border-t border-border/40 my-1" />
 
               <a
-                href={`${process.env.NEXT_PUBLIC_PORTAL_URL || "http://localhost:3000"}/dashboard`}
+                href={typeof window !== "undefined"
+                  ? (process.env.NEXT_PUBLIC_PORTAL_URL || window.location.origin.replace(/:3001$/, ":3000")) + "/dashboard"
+                  : "/dashboard"
+                }
                 className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-muted-foreground hover:bg-muted/50 hover:text-foreground transition-colors"
               >
                 <ArrowLeft className="h-5 w-5" />
