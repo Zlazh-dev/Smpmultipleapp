@@ -5,62 +5,32 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import {
-  ArrowLeft,
-  User,
-  FileText,
-  Upload,
-  Pencil,
-  Download,
-  Trash2,
-  ScrollText,
-  Calendar,
-  Clock,
-  Printer,
-  ChevronDown,
+  ArrowLeft, User, FileText, Upload, Pencil, Download, Trash2,
+  ScrollText, Calendar, Clock, Printer, ChevronDown, LayoutGrid, List,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { PrintPreview } from "@/components/print-preview";
+import { PegawaiFormSheet } from "@/components/pegawai-form-sheet";
 
 interface SkRiwayat {
-  noSK: string;
-  tanggal: string;
-  jenis: string;
-  perihal?: string;
-  berlakuSampai?: string;
-  keterangan?: string;
+  noSK: string; tanggal: string; jenis: string;
+  perihal?: string; berlakuSampai?: string; keterangan?: string;
 }
 
 interface DokumenData {
-  id: string;
-  namaAsli: string;
-  namaFile: string;
-  ukuran: number;
-  mimeType: string;
-  createdAt: string;
+  id: string; namaAsli: string; namaFile: string;
+  ukuran: number; mimeType: string; kategori: string; createdAt: string;
 }
 
 interface PegawaiData {
-  id: string;
-  nip: string;
-  namaLengkap: string;
-  jabatan: string;
-  accessLevel: string;
-  username: string;
-  noHp: string | null;
-  alamat: string | null;
-  skRiwayat: SkRiwayat[];
-  kinerja: { skor?: number; grade?: string } | null;
-  dokumen: DokumenData[];
-  createdAt: string;
+  id: string; nip: string; namaLengkap: string; jabatan: string;
+  accessLevel: string; username: string; noHp: string | null; alamat: string | null;
+  skRiwayat: SkRiwayat[]; kinerja: { skor?: number; grade?: string } | null;
+  dokumen: DokumenData[]; createdAt: string;
 }
 
-interface TemplateOption {
-  id: string;
-  nama: string;
-  kategori: string;
-  canvasData: any;
-}
+interface TemplateOption { id: string; nama: string; kategori: string; canvasData: any; }
 
 const tabs = [
   { id: "profil", label: "Profil", icon: User },
@@ -88,70 +58,58 @@ function formatFileSize(bytes: number) {
   return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
 }
 
+function getFileColor(mime: string) {
+  if (mime.includes("pdf")) return "from-red-500/20 to-red-600/10 text-red-600";
+  if (mime.includes("image")) return "from-blue-500/20 to-blue-600/10 text-blue-600";
+  if (mime.includes("word") || mime.includes("document")) return "from-indigo-500/20 to-indigo-600/10 text-indigo-600";
+  return "from-gray-500/20 to-gray-600/10 text-gray-600";
+}
+
+function getFileExt(name: string) {
+  return name.split(".").pop()?.toUpperCase() || "FILE";
+}
+
 export function PegawaiDetail({ pegawai, templates = [] }: { pegawai: PegawaiData; templates?: TemplateOption[] }) {
   const [activeTab, setActiveTab] = useState("profil");
   const [uploading, setUploading] = useState(false);
   const [showTemplateMenu, setShowTemplateMenu] = useState(false);
   const [printTemplate, setPrintTemplate] = useState<TemplateOption | null>(null);
+  const [editOpen, setEditOpen] = useState(false);
+  const [docView, setDocView] = useState<"card" | "list">("card");
   const fileInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
   const pegawaiVars: Record<string, string> = {
-    namaLengkap: pegawai.namaLengkap,
-    nip: pegawai.nip,
-    jabatan: pegawai.jabatan,
-    username: pegawai.username,
-    noHp: pegawai.noHp || "-",
-    alamat: pegawai.alamat || "-",
+    namaLengkap: pegawai.namaLengkap, nip: pegawai.nip, jabatan: pegawai.jabatan,
+    username: pegawai.username, noHp: pegawai.noHp || "-", alamat: pegawai.alamat || "-",
     tanggalSekarang: new Date().toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" }),
   };
 
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-
-    // Validate
-    const maxSize = 10 * 1024 * 1024; // 10MB
-    if (file.size > maxSize) {
-      toast.error("File terlalu besar (maks 10MB)");
-      return;
-    }
-
+    if (file.size > 10 * 1024 * 1024) { toast.error("File terlalu besar (maks 10MB)"); return; }
     setUploading(true);
     try {
       const formData = new FormData();
       formData.append("file", file);
       formData.append("kategori", "SK");
-
-      const res = await fetch(`/api/pegawai/${pegawai.id}/dokumen`, {
-        method: "POST",
-        body: formData,
-      });
-
-      if (!res.ok) throw new Error("Gagal upload");
-
+      const res = await fetch(`/api/pegawai/${pegawai.id}/dokumen`, { method: "POST", body: formData });
+      if (!res.ok) throw new Error();
       toast.success("Dokumen berhasil diupload");
       router.refresh();
-    } catch {
-      toast.error("Gagal upload dokumen");
-    } finally {
-      setUploading(false);
-      if (fileInputRef.current) fileInputRef.current.value = "";
-    }
+    } catch { toast.error("Gagal upload dokumen"); }
+    finally { setUploading(false); if (fileInputRef.current) fileInputRef.current.value = ""; }
   };
 
   const handleDelete = async (docId: string) => {
     if (!confirm("Hapus dokumen ini?")) return;
     try {
-      const res = await fetch(`/api/pegawai/${pegawai.id}/dokumen/${docId}`, {
-        method: "DELETE",
-      });
-      if (!res.ok) throw new Error("Gagal hapus");
+      const res = await fetch(`/api/pegawai/${pegawai.id}/dokumen/${docId}`, { method: "DELETE" });
+      if (!res.ok) throw new Error();
       toast.success("Dokumen dihapus");
       router.refresh();
-    } catch {
-      toast.error("Gagal menghapus dokumen");
-    }
+    } catch { toast.error("Gagal menghapus dokumen"); }
   };
 
   return (
@@ -167,44 +125,25 @@ export function PegawaiDetail({ pegawai, templates = [] }: { pegawai: PegawaiDat
             <span className="font-mono text-xs">{pegawai.nip}</span>
             <span>·</span>
             <span>{pegawai.jabatan}</span>
-            <span
-              className={cn(
-                "inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium",
-                pegawai.accessLevel === "KHUSUS"
-                  ? "bg-purple-500/10 text-purple-600"
-                  : "bg-blue-500/10 text-blue-600"
-              )}
-            >
-              {pegawai.accessLevel}
-            </span>
+            <span className={cn(
+              "inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium",
+              pegawai.accessLevel === "KHUSUS" ? "bg-purple-500/10 text-purple-600" : "bg-blue-500/10 text-blue-600"
+            )}>{pegawai.accessLevel}</span>
           </div>
         </div>
         <div className="flex items-center gap-2">
           {templates.length > 0 && (
             <div className="relative">
-              <Button
-                variant="outline"
-                size="sm"
-                className="cursor-pointer"
-                onClick={() => setShowTemplateMenu(!showTemplateMenu)}
-              >
-                <Printer className="mr-1.5 h-3.5 w-3.5" />
-                Cetak Surat
-                <ChevronDown className="ml-1 h-3 w-3" />
+              <Button variant="outline" size="sm" className="cursor-pointer" onClick={() => setShowTemplateMenu(!showTemplateMenu)}>
+                <Printer className="mr-1.5 h-3.5 w-3.5" /> Cetak Surat <ChevronDown className="ml-1 h-3 w-3" />
               </Button>
               {showTemplateMenu && (
                 <>
                   <div className="fixed inset-0 z-40" onClick={() => setShowTemplateMenu(false)} />
                   <div className="absolute right-0 top-full mt-1 w-56 rounded-lg border border-border/50 bg-card shadow-xl z-50 py-1 animate-fade-in">
                     {templates.map((t) => (
-                      <button
-                        key={t.id}
-                        onClick={() => {
-                          setPrintTemplate(t);
-                          setShowTemplateMenu(false);
-                        }}
-                        className="w-full text-left px-3 py-2 text-sm hover:bg-muted/50 transition-colors cursor-pointer flex items-center gap-2"
-                      >
+                      <button key={t.id} onClick={() => { setPrintTemplate(t); setShowTemplateMenu(false); }}
+                        className="w-full text-left px-3 py-2 text-sm hover:bg-muted/50 transition-colors cursor-pointer flex items-center gap-2">
                         <FileText className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
                         <div>
                           <p className="font-medium text-xs">{t.nama}</p>
@@ -217,39 +156,27 @@ export function PegawaiDetail({ pegawai, templates = [] }: { pegawai: PegawaiDat
               )}
             </div>
           )}
-          <Link href={`/pegawai/${pegawai.id}/edit`}>
-            <Button variant="outline" size="sm" className="cursor-pointer">
-              <Pencil className="mr-1.5 h-3.5 w-3.5" />
-              Edit
-            </Button>
-          </Link>
+          <Button variant="outline" size="sm" className="cursor-pointer" onClick={() => setEditOpen(true)}>
+            <Pencil className="mr-1.5 h-3.5 w-3.5" /> Edit
+          </Button>
         </div>
       </div>
 
       {/* Tabs */}
       <div className="flex gap-1 border-b border-border/50 overflow-x-auto scrollbar-hide">
         {tabs.map((tab) => (
-          <button
-            key={tab.id}
-            onClick={() => setActiveTab(tab.id)}
+          <button key={tab.id} onClick={() => setActiveTab(tab.id)}
             className={cn(
               "flex items-center gap-1.5 px-3 py-2 text-sm font-medium border-b-2 transition-colors whitespace-nowrap cursor-pointer",
-              activeTab === tab.id
-                ? "border-primary text-foreground"
-                : "border-transparent text-muted-foreground hover:text-foreground"
-            )}
-          >
+              activeTab === tab.id ? "border-primary text-foreground" : "border-transparent text-muted-foreground hover:text-foreground"
+            )}>
             <tab.icon className="h-3.5 w-3.5" />
             {tab.label}
             {tab.id === "sk" && pegawai.skRiwayat.length > 0 && (
-              <span className="ml-1 text-[10px] bg-muted px-1.5 py-0.5 rounded-full">
-                {pegawai.skRiwayat.length}
-              </span>
+              <span className="ml-1 text-[10px] bg-muted px-1.5 py-0.5 rounded-full">{pegawai.skRiwayat.length}</span>
             )}
             {tab.id === "dokumen" && pegawai.dokumen.length > 0 && (
-              <span className="ml-1 text-[10px] bg-muted px-1.5 py-0.5 rounded-full">
-                {pegawai.dokumen.length}
-              </span>
+              <span className="ml-1 text-[10px] bg-muted px-1.5 py-0.5 rounded-full">{pegawai.dokumen.length}</span>
             )}
           </button>
         ))}
@@ -259,9 +186,7 @@ export function PegawaiDetail({ pegawai, templates = [] }: { pegawai: PegawaiDat
       {activeTab === "profil" && (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div className="space-y-1">
-            <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-2">
-              Informasi Pegawai
-            </h3>
+            <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-2">Informasi Pegawai</h3>
             <div className="rounded-lg border border-border/50 p-4">
               <InfoRow label="Nama Lengkap" value={pegawai.namaLengkap} />
               <InfoRow label="NIP" value={pegawai.nip} />
@@ -272,19 +197,14 @@ export function PegawaiDetail({ pegawai, templates = [] }: { pegawai: PegawaiDat
               <InfoRow label="Alamat" value={pegawai.alamat} />
             </div>
           </div>
-
           <div className="space-y-4">
             {pegawai.kinerja?.skor && (
               <div className="space-y-1">
-                <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-2">
-                  e-Kinerja
-                </h3>
+                <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-2">e-Kinerja</h3>
                 <div className="rounded-lg border border-border/50 p-4">
                   <div className="flex items-center gap-4">
                     <div className="flex h-16 w-16 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-500/20 to-blue-500/20 border border-emerald-500/20">
-                      <span className="text-2xl font-bold text-emerald-600">
-                        {pegawai.kinerja.skor}
-                      </span>
+                      <span className="text-2xl font-bold text-emerald-600">{pegawai.kinerja.skor}</span>
                     </div>
                     <div>
                       <p className="text-sm font-semibold">Grade: {pegawai.kinerja.grade || "—"}</p>
@@ -294,11 +214,8 @@ export function PegawaiDetail({ pegawai, templates = [] }: { pegawai: PegawaiDat
                 </div>
               </div>
             )}
-
             <div className="space-y-1">
-              <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-2">
-                Ringkasan
-              </h3>
+              <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-2">Ringkasan</h3>
               <div className="rounded-lg border border-border/50 p-4 space-y-3">
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-muted-foreground">Jumlah SK</span>
@@ -325,61 +242,42 @@ export function PegawaiDetail({ pegawai, templates = [] }: { pegawai: PegawaiDat
             <div className="text-center py-12 text-muted-foreground">
               <ScrollText className="h-8 w-8 mx-auto mb-2 opacity-30" />
               <p className="text-sm">Belum ada riwayat SK</p>
-              <Link href={`/pegawai/${pegawai.id}/edit`}>
-                <Button variant="outline" size="sm" className="mt-3 cursor-pointer">
-                  <Pencil className="mr-1.5 h-3.5 w-3.5" />
-                  Tambah SK
-                </Button>
-              </Link>
+              <Button variant="outline" size="sm" className="mt-3 cursor-pointer" onClick={() => setEditOpen(true)}>
+                <Pencil className="mr-1.5 h-3.5 w-3.5" /> Tambah SK
+              </Button>
             </div>
           ) : (
             <div className="relative">
-              {/* Timeline line */}
               <div className="absolute left-4 top-0 bottom-0 w-px bg-border/50" />
-
               {pegawai.skRiwayat
                 .sort((a, b) => new Date(b.tanggal).getTime() - new Date(a.tanggal).getTime())
                 .map((sk, i) => (
                   <div key={i} className="relative pl-10 pb-6 last:pb-0">
-                    {/* Timeline dot */}
                     <div className="absolute left-2.5 top-1 h-3 w-3 rounded-full bg-primary border-2 border-background shadow-sm" />
-
                     <div className="rounded-lg border border-border/50 p-4">
                       <div className="flex items-start justify-between gap-2">
                         <div>
                           <p className="text-sm font-semibold">{sk.noSK}</p>
-                          <div className="flex items-center gap-2 mt-1">
-                            <span className={cn(
-                              "inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium",
-                              sk.jenis.toLowerCase().includes("pengangkatan")
-                                ? "bg-emerald-500/10 text-emerald-600"
-                                : sk.jenis.toLowerCase().includes("mutasi")
-                                ? "bg-amber-500/10 text-amber-600"
-                                : "bg-blue-500/10 text-blue-600"
-                            )}>
-                              {sk.jenis}
-                            </span>
-                          </div>
+                          <span className={cn(
+                            "inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium mt-1",
+                            sk.jenis.toLowerCase().includes("pengangkatan") ? "bg-emerald-500/10 text-emerald-600"
+                              : sk.jenis.toLowerCase().includes("mutasi") ? "bg-amber-500/10 text-amber-600"
+                              : "bg-blue-500/10 text-blue-600"
+                          )}>{sk.jenis}</span>
                         </div>
                         <div className="text-right shrink-0">
                           <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                            <Calendar className="h-3 w-3" />
-                            {formatDate(sk.tanggal)}
+                            <Calendar className="h-3 w-3" />{formatDate(sk.tanggal)}
                           </div>
                           {sk.berlakuSampai && (
                             <div className="flex items-center gap-1 text-[10px] text-muted-foreground mt-0.5">
-                              <Clock className="h-3 w-3" />
-                              s/d {formatDate(sk.berlakuSampai)}
+                              <Clock className="h-3 w-3" />s/d {formatDate(sk.berlakuSampai)}
                             </div>
                           )}
                         </div>
                       </div>
-                      {sk.perihal && (
-                        <p className="text-sm mt-2 text-muted-foreground">{sk.perihal}</p>
-                      )}
-                      {sk.keterangan && (
-                        <p className="text-xs mt-1 italic text-muted-foreground/70">{sk.keterangan}</p>
-                      )}
+                      {sk.perihal && <p className="text-sm mt-2 text-muted-foreground">{sk.perihal}</p>}
+                      {sk.keterangan && <p className="text-xs mt-1 italic text-muted-foreground/70">{sk.keterangan}</p>}
                     </div>
                   </div>
                 ))}
@@ -391,28 +289,22 @@ export function PegawaiDetail({ pegawai, templates = [] }: { pegawai: PegawaiDat
       {/* Dokumen Tab */}
       {activeTab === "dokumen" && (
         <div className="space-y-4">
-          {/* Upload button */}
           <div className="flex items-center justify-between">
-            <p className="text-sm text-muted-foreground">
-              {pegawai.dokumen.length} dokumen SK
-            </p>
-            <div>
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
-                className="hidden"
-                onChange={handleUpload}
-              />
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => fileInputRef.current?.click()}
-                disabled={uploading}
-                className="cursor-pointer"
-              >
-                <Upload className="mr-1.5 h-3.5 w-3.5" />
-                {uploading ? "Mengupload..." : "Upload Dokumen"}
+            <p className="text-sm text-muted-foreground">{pegawai.dokumen.length} dokumen</p>
+            <div className="flex items-center gap-2">
+              <div className="flex rounded-lg border border-border/50 overflow-hidden">
+                <button onClick={() => setDocView("card")}
+                  className={cn("p-1.5 transition-colors cursor-pointer", docView === "card" ? "bg-primary/10 text-primary" : "text-muted-foreground hover:bg-muted/50")}>
+                  <LayoutGrid className="h-3.5 w-3.5" />
+                </button>
+                <button onClick={() => setDocView("list")}
+                  className={cn("p-1.5 transition-colors cursor-pointer", docView === "list" ? "bg-primary/10 text-primary" : "text-muted-foreground hover:bg-muted/50")}>
+                  <List className="h-3.5 w-3.5" />
+                </button>
+              </div>
+              <input ref={fileInputRef} type="file" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" className="hidden" onChange={handleUpload} />
+              <Button variant="outline" size="sm" onClick={() => fileInputRef.current?.click()} disabled={uploading} className="cursor-pointer">
+                <Upload className="mr-1.5 h-3.5 w-3.5" />{uploading ? "Mengupload..." : "Upload"}
               </Button>
             </div>
           </div>
@@ -423,36 +315,57 @@ export function PegawaiDetail({ pegawai, templates = [] }: { pegawai: PegawaiDat
               <p className="text-sm">Belum ada dokumen</p>
               <p className="text-xs mt-1">Upload file SK dalam format PDF, JPG, atau DOC</p>
             </div>
+          ) : docView === "card" ? (
+            /* ── Card View (Figma-style) ── */
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+              {pegawai.dokumen.map((doc) => (
+                <div key={doc.id} className="group rounded-xl border border-border/50 overflow-hidden hover:shadow-lg hover:border-primary/30 transition-all duration-200">
+                  {/* Thumbnail area */}
+                  <div className={cn("h-28 flex items-center justify-center bg-gradient-to-br relative", getFileColor(doc.mimeType))}>
+                    <span className="text-2xl font-bold opacity-60">{getFileExt(doc.namaAsli)}</span>
+                    {/* Hover actions */}
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100">
+                      <a href={`/api/pegawai/${pegawai.id}/dokumen/${doc.id}`} target="_blank"
+                        className="p-2 rounded-full bg-white/90 text-foreground hover:bg-white transition-colors shadow-sm">
+                        <Download className="h-3.5 w-3.5" />
+                      </a>
+                      <button onClick={() => handleDelete(doc.id)}
+                        className="p-2 rounded-full bg-white/90 text-red-500 hover:bg-white transition-colors shadow-sm cursor-pointer">
+                        <Trash2 className="h-3.5 w-3.5" />
+                      </button>
+                    </div>
+                  </div>
+                  {/* Info */}
+                  <div className="p-2.5">
+                    <p className="text-xs font-medium truncate">{doc.namaAsli}</p>
+                    <p className="text-[10px] text-muted-foreground mt-0.5">
+                      {formatFileSize(doc.ukuran)} · {formatDate(doc.createdAt)}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
           ) : (
+            /* ── List View ── */
             <div className="space-y-2">
               {pegawai.dokumen.map((doc) => (
-                <div
-                  key={doc.id}
-                  className="flex items-center gap-3 rounded-lg border border-border/50 p-3 hover:bg-muted/30 transition-colors"
-                >
-                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 shrink-0">
-                    <FileText className="h-5 w-5 text-primary" />
+                <div key={doc.id} className="flex items-center gap-3 rounded-lg border border-border/50 p-3 hover:bg-muted/30 transition-colors">
+                  <div className={cn("flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br shrink-0", getFileColor(doc.mimeType))}>
+                    <FileText className="h-5 w-5" />
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium truncate">{doc.namaAsli}</p>
                     <div className="flex items-center gap-2 text-[10px] text-muted-foreground">
-                      <span>{formatFileSize(doc.ukuran)}</span>
-                      <span>·</span>
-                      <span>{formatDate(doc.createdAt)}</span>
+                      <span>{formatFileSize(doc.ukuran)}</span><span>·</span><span>{formatDate(doc.createdAt)}</span>
                     </div>
                   </div>
                   <div className="flex items-center gap-1">
-                    <a
-                      href={`/api/pegawai/${pegawai.id}/dokumen/${doc.id}`}
-                      target="_blank"
-                      className="p-1.5 rounded-md hover:bg-muted transition-colors text-muted-foreground hover:text-foreground"
-                    >
+                    <a href={`/api/pegawai/${pegawai.id}/dokumen/${doc.id}`} target="_blank"
+                      className="p-1.5 rounded-md hover:bg-muted transition-colors text-muted-foreground hover:text-foreground">
                       <Download className="h-3.5 w-3.5" />
                     </a>
-                    <button
-                      onClick={() => handleDelete(doc.id)}
-                      className="p-1.5 rounded-md hover:bg-red-500/10 transition-colors text-muted-foreground hover:text-red-500 cursor-pointer"
-                    >
+                    <button onClick={() => handleDelete(doc.id)}
+                      className="p-1.5 rounded-md hover:bg-red-500/10 transition-colors text-muted-foreground hover:text-red-500 cursor-pointer">
                       <Trash2 className="h-3.5 w-3.5" />
                     </button>
                   </div>
@@ -462,18 +375,27 @@ export function PegawaiDetail({ pegawai, templates = [] }: { pegawai: PegawaiDat
           )}
         </div>
       )}
-      {/* Print Preview Modal */}
+
+      {/* Edit Sheet */}
+      <PegawaiFormSheet
+        open={editOpen}
+        onOpenChange={setEditOpen}
+        pegawai={{
+          id: pegawai.id, nip: pegawai.nip, namaLengkap: pegawai.namaLengkap,
+          jabatan: pegawai.jabatan, accessLevel: pegawai.accessLevel, username: pegawai.username,
+          noHp: pegawai.noHp || "", alamat: pegawai.alamat || "",
+          skRiwayat: (pegawai.skRiwayat || []).map((sk) => ({
+            noSK: sk.noSK, tanggal: sk.tanggal, jenis: sk.jenis,
+            perihal: sk.perihal || "", berlakuSampai: sk.berlakuSampai || "", keterangan: sk.keterangan || "",
+          })),
+        }}
+      />
+
+      {/* Print Preview */}
       {printTemplate && (
-        <PrintPreview
-          template={printTemplate.canvasData}
-          variables={pegawaiVars}
-          pegawaiId={pegawai.id}
-          kategori={printTemplate.kategori}
-          onClose={() => {
-            setPrintTemplate(null);
-            router.refresh();
-          }}
-        />
+        <PrintPreview template={printTemplate.canvasData} variables={pegawaiVars}
+          pegawaiId={pegawai.id} kategori={printTemplate.kategori}
+          onClose={() => { setPrintTemplate(null); router.refresh(); }} />
       )}
     </div>
   );
