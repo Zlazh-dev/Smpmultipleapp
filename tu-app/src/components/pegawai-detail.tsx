@@ -6,12 +6,13 @@ import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import {
   ArrowLeft, User, FileText, Upload, Pencil, Download, Trash2,
-  ScrollText, Calendar, Clock, Printer, ChevronDown, LayoutGrid, List,
+  ScrollText, Calendar, Clock, Printer, ChevronDown, LayoutGrid, List, Plus,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { PrintPreview } from "@/components/print-preview";
 import { PegawaiFormSheet } from "@/components/pegawai-form-sheet";
+import { SKFormSheet, type SkData } from "@/components/sk-form-sheet";
 
 interface SkRiwayat {
   noSK: string; tanggal: string; jenis: string;
@@ -75,6 +76,8 @@ export function PegawaiDetail({ pegawai, templates = [] }: { pegawai: PegawaiDat
   const [showTemplateMenu, setShowTemplateMenu] = useState(false);
   const [printTemplate, setPrintTemplate] = useState<TemplateOption | null>(null);
   const [editOpen, setEditOpen] = useState(false);
+  const [skSheetOpen, setSkSheetOpen] = useState(false);
+  const [skEditIndex, setSkEditIndex] = useState<number | undefined>(undefined);
   const [docView, setDocView] = useState<"card" | "list">("card");
   const fileInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
@@ -238,13 +241,16 @@ export function PegawaiDetail({ pegawai, templates = [] }: { pegawai: PegawaiDat
       {/* SK Timeline Tab */}
       {activeTab === "sk" && (
         <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <p className="text-sm text-muted-foreground">{pegawai.skRiwayat.length} SK tercatat</p>
+            <Button variant="outline" size="sm" className="cursor-pointer" onClick={() => { setSkEditIndex(undefined); setSkSheetOpen(true); }}>
+              <Plus className="mr-1.5 h-3.5 w-3.5" /> Tambah SK
+            </Button>
+          </div>
           {pegawai.skRiwayat.length === 0 ? (
             <div className="text-center py-12 text-muted-foreground">
               <ScrollText className="h-8 w-8 mx-auto mb-2 opacity-30" />
               <p className="text-sm">Belum ada riwayat SK</p>
-              <Button variant="outline" size="sm" className="mt-3 cursor-pointer" onClick={() => setEditOpen(true)}>
-                <Pencil className="mr-1.5 h-3.5 w-3.5" /> Tambah SK
-              </Button>
             </div>
           ) : (
             <div className="relative">
@@ -278,6 +284,25 @@ export function PegawaiDetail({ pegawai, templates = [] }: { pegawai: PegawaiDat
                       </div>
                       {sk.perihal && <p className="text-sm mt-2 text-muted-foreground">{sk.perihal}</p>}
                       {sk.keterangan && <p className="text-xs mt-1 italic text-muted-foreground/70">{sk.keterangan}</p>}
+                      <div className="flex gap-1 mt-2 pt-2 border-t border-border/30">
+                        <Button variant="ghost" size="sm" className="h-6 text-[10px] cursor-pointer"
+                          onClick={() => { setSkEditIndex(i); setSkSheetOpen(true); }}>
+                          <Pencil className="h-3 w-3 mr-1" /> Edit
+                        </Button>
+                        <Button variant="ghost" size="sm" className="h-6 text-[10px] text-red-500 hover:text-red-600 hover:bg-red-500/10 cursor-pointer"
+                          onClick={async () => {
+                            if (!confirm("Hapus SK ini?")) return;
+                            const updated = pegawai.skRiwayat.filter((_, j) => j !== i);
+                            await fetch(`/api/pegawai/${pegawai.id}`, {
+                              method: "PATCH", headers: { "Content-Type": "application/json" },
+                              body: JSON.stringify({ skRiwayat: updated }),
+                            });
+                            toast.success("SK dihapus");
+                            router.refresh();
+                          }}>
+                          <Trash2 className="h-3 w-3 mr-1" /> Hapus
+                        </Button>
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -376,7 +401,7 @@ export function PegawaiDetail({ pegawai, templates = [] }: { pegawai: PegawaiDat
         </div>
       )}
 
-      {/* Edit Sheet */}
+      {/* Edit Pegawai Sheet */}
       <PegawaiFormSheet
         open={editOpen}
         onOpenChange={setEditOpen}
@@ -384,11 +409,19 @@ export function PegawaiDetail({ pegawai, templates = [] }: { pegawai: PegawaiDat
           id: pegawai.id, nip: pegawai.nip, namaLengkap: pegawai.namaLengkap,
           jabatan: pegawai.jabatan, accessLevel: pegawai.accessLevel, username: pegawai.username,
           noHp: pegawai.noHp || "", alamat: pegawai.alamat || "",
-          skRiwayat: (pegawai.skRiwayat || []).map((sk) => ({
-            noSK: sk.noSK, tanggal: sk.tanggal, jenis: sk.jenis,
-            perihal: sk.perihal || "", berlakuSampai: sk.berlakuSampai || "", keterangan: sk.keterangan || "",
-          })),
         }}
+      />
+
+      {/* SK Sheet */}
+      <SKFormSheet
+        open={skSheetOpen}
+        onOpenChange={setSkSheetOpen}
+        pegawaiId={pegawai.id}
+        allSk={(pegawai.skRiwayat || []).map((sk) => ({
+          noSK: sk.noSK, tanggal: sk.tanggal, jenis: sk.jenis,
+          perihal: sk.perihal || "", berlakuSampai: sk.berlakuSampai || "", keterangan: sk.keterangan || "",
+        }))}
+        editIndex={skEditIndex}
       />
 
       {/* Print Preview */}

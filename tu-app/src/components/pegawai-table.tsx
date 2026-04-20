@@ -159,25 +159,22 @@ export function PegawaiTable({ data }: { data: Pegawai[] }) {
         )}
       />
 
-      <PegawaiFormSheet
-        open={sheetOpen}
-        onOpenChange={setSheetOpen}
-        pegawai={
-          editPegawai
-            ? {
-                id: editPegawai.id,
-                nip: editPegawai.nip,
-                namaLengkap: editPegawai.namaLengkap,
-                jabatan: editPegawai.jabatan,
-                accessLevel: editPegawai.accessLevel,
-                username: editPegawai.username,
-                noHp: editPegawai.noHp || "",
-                alamat: (editPegawai.alamat as string) || "",
-                skRiwayat: editPegawai.skRiwayat || [],
-              }
-            : undefined
-        }
-      />
+      {editPegawai && (
+        <PegawaiFormSheet
+          open={sheetOpen}
+          onOpenChange={setSheetOpen}
+          pegawai={{
+            id: editPegawai.id,
+            nip: editPegawai.nip,
+            namaLengkap: editPegawai.namaLengkap,
+            jabatan: editPegawai.jabatan,
+            accessLevel: editPegawai.accessLevel,
+            username: editPegawai.username,
+            noHp: editPegawai.noHp || "",
+            alamat: (editPegawai.alamat as string) || "",
+          }}
+        />
+      )}
     </>
   );
 }
