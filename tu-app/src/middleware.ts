@@ -27,8 +27,9 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // Check for session cookie
+  // Check for session cookie (SSO sets "tu.session-token", NextAuth may use "authjs.session-token")
   const hasSession =
+    request.cookies.has("tu.session-token") ||
     request.cookies.has("authjs.session-token") ||
     request.cookies.has("__Secure-authjs.session-token");
 
