@@ -60,20 +60,43 @@ export function PegawaiFormSheet({ open, onOpenChange, pegawai }: PegawaiFormShe
     setSkList(u);
   };
 
+  const [form, setForm] = useState({
+    nip: pegawai?.nip || "",
+    namaLengkap: pegawai?.namaLengkap || "",
+    jabatan: pegawai?.jabatan || "",
+    accessLevel: pegawai?.accessLevel || "UMUM",
+    username: pegawai?.username || "",
+    noHp: pegawai?.noHp || "",
+    alamat: pegawai?.alamat || "",
+  });
+
+  useEffect(() => {
+    if (open && pegawai) {
+      setForm({
+        nip: pegawai.nip || "",
+        namaLengkap: pegawai.namaLengkap || "",
+        jabatan: pegawai.jabatan || "",
+        accessLevel: pegawai.accessLevel || "UMUM",
+        username: pegawai.username || "",
+        noHp: pegawai.noHp || "",
+        alamat: pegawai.alamat || "",
+      });
+    }
+  }, [open, pegawai]);
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-    const fd = new FormData(e.currentTarget);
     const body: any = {
-      namaLengkap: fd.get("namaLengkap"),
-      jabatan: fd.get("jabatan"),
-      accessLevel: fd.get("accessLevel"),
-      username: fd.get("username"),
-      noHp: fd.get("noHp") || null,
-      alamat: fd.get("alamat") || null,
+      namaLengkap: form.namaLengkap,
+      jabatan: form.jabatan,
+      accessLevel: form.accessLevel,
+      username: form.username,
+      noHp: form.noHp || null,
+      alamat: form.alamat || null,
       skRiwayat: skList.filter((sk) => sk.noSK),
     };
-    if (isNew) body.nip = fd.get("nip");
+    if (isNew) body.nip = form.nip;
 
     try {
       const url = isNew ? "/api/pegawai" : `/api/pegawai/${pegawai!.id}`;
@@ -146,19 +169,19 @@ export function PegawaiFormSheet({ open, onOpenChange, pegawai }: PegawaiFormShe
               <>
                 <div className="space-y-1.5">
                   <Label className="text-xs">NIP {isNew && "*"}</Label>
-                  <Input name="nip" defaultValue={pegawai?.nip || ""} disabled={!isNew} required={isNew} className={`h-8 text-sm ${!isNew ? "bg-muted/50" : ""}`} />
+                  <Input value={form.nip} onChange={(e) => setForm({ ...form, nip: e.target.value })} disabled={!isNew} required={isNew} className={`h-8 text-sm ${!isNew ? "bg-muted/50" : ""}`} />
                 </div>
                 <div className="space-y-1.5">
                   <Label className="text-xs">Nama Lengkap *</Label>
-                  <Input name="namaLengkap" defaultValue={pegawai?.namaLengkap || ""} required className="h-8 text-sm" />
+                  <Input value={form.namaLengkap} onChange={(e) => setForm({ ...form, namaLengkap: e.target.value })} required className="h-8 text-sm" />
                 </div>
                 <div className="space-y-1.5">
                   <Label className="text-xs">Jabatan *</Label>
-                  <Input name="jabatan" defaultValue={pegawai?.jabatan || ""} required className="h-8 text-sm" />
+                  <Input value={form.jabatan} onChange={(e) => setForm({ ...form, jabatan: e.target.value })} required className="h-8 text-sm" />
                 </div>
                 <div className="space-y-1.5">
                   <Label className="text-xs">Hak Akses *</Label>
-                  <select name="accessLevel" defaultValue={pegawai?.accessLevel || "UMUM"}
+                  <select value={form.accessLevel} onChange={(e) => setForm({ ...form, accessLevel: e.target.value })}
                     className="w-full h-8 rounded-md border border-input bg-background px-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-ring">
                     <option value="UMUM">Umum — Akses Terbatas</option>
                     <option value="KHUSUS">Khusus — Akses Penuh</option>
@@ -166,15 +189,15 @@ export function PegawaiFormSheet({ open, onOpenChange, pegawai }: PegawaiFormShe
                 </div>
                 <div className="space-y-1.5">
                   <Label className="text-xs">Username *</Label>
-                  <Input name="username" defaultValue={pegawai?.username || ""} required className="h-8 text-sm" />
+                  <Input value={form.username} onChange={(e) => setForm({ ...form, username: e.target.value })} required className="h-8 text-sm" />
                 </div>
                 <div className="space-y-1.5">
                   <Label className="text-xs">No. HP</Label>
-                  <Input name="noHp" defaultValue={pegawai?.noHp || ""} className="h-8 text-sm" />
+                  <Input value={form.noHp} onChange={(e) => setForm({ ...form, noHp: e.target.value })} className="h-8 text-sm" />
                 </div>
                 <div className="space-y-1.5">
                   <Label className="text-xs">Alamat</Label>
-                  <Textarea name="alamat" defaultValue={pegawai?.alamat || ""} rows={2} className="text-sm resize-none" />
+                  <Textarea value={form.alamat} onChange={(e) => setForm({ ...form, alamat: e.target.value })} rows={2} className="text-sm resize-none" />
                 </div>
               </>
             )}
