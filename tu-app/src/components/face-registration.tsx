@@ -76,18 +76,18 @@ export function FaceRegistration({ pegawaiId, hasFace }: FaceRegistrationProps) 
   // Register from camera
   const captureAndRegister = async () => {
     if (!videoRef.current) return;
-    setMode("processing");
 
     try {
+      // Capture descriptor BEFORE changing mode (mode change unmounts <video>)
       const { getFaceDescriptor } = await import("@/lib/face-utils");
       const descriptor = await getFaceDescriptor(videoRef.current);
 
       if (!descriptor) {
         toast.error("Wajah tidak terdeteksi. Coba lagi.");
-        setMode("camera");
         return;
       }
 
+      setMode("processing");
       await saveDescriptor(Array.from(descriptor));
     } catch (err: any) {
       toast.error(err.message || "Gagal mendaftarkan wajah");
