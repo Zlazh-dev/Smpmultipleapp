@@ -104,10 +104,7 @@ export async function GET(request: Request) {
 
   // Use non-secure cookie for HTTP environments (Docker local dev)
   // In production with HTTPS, switch to __Secure- prefix
-  const useSecureCookie = BASE_URL.startsWith("https://");
-  const cookieName = useSecureCookie
-    ? "__Secure-authjs.session-token"
-    : "authjs.session-token";
+  const cookieName = "tu.session-token";
 
   const sessionToken = await encode({
     token: {
@@ -130,7 +127,7 @@ export async function GET(request: Request) {
     httpOnly: true,
     sameSite: "lax",
     path: "/",
-    secure: useSecureCookie,
+    secure: false,
     maxAge: 30 * 24 * 60 * 60,
   });
 
