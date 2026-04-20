@@ -1,4 +1,4 @@
-const CACHE_NAME = "tu-app-v2";
+const CACHE_NAME = "tu-app-v3";
 const STATIC_ASSETS = [
   "/manifest.json",
   "/icons/icon-192.png",
@@ -35,7 +35,9 @@ self.addEventListener("fetch", (event) => {
     url.pathname === "/"
   ) {
     event.respondWith(
-      fetch(event.request).catch(() => caches.match("/offline") || new Response("Offline", { status: 503 }))
+      fetch(event.request).catch(() =>
+        caches.match(event.request).then((c) => c || new Response("Offline", { status: 503, headers: { "Content-Type": "text/plain" } }))
+      )
     );
     return;
   }
@@ -62,6 +64,8 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  // Everything else: network only
-  event.respondWith(fetch(event.request));
+  // Everything else: network only (with fallback)
+  event.respondWith(
+    fetch(event.request).catch(() => new Response("Network error", { status: 503, headers: { "Content-Type": "text/plain" } }))
+  );
 });

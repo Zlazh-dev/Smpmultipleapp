@@ -30,26 +30,30 @@ export async function PATCH(request: NextRequest, { params }: Params) {
 
   try {
     const body = await request.json();
+    const data: any = {};
+
+    // Only update fields that are explicitly provided
+    if (body.namaLengkap !== undefined) data.namaLengkap = body.namaLengkap;
+    if (body.jabatan !== undefined) data.jabatan = body.jabatan;
+    if (body.accessLevel !== undefined) data.accessLevel = body.accessLevel;
+    if (body.username !== undefined) data.username = body.username;
+    if (body.noHp !== undefined) data.noHp = body.noHp;
+    if (body.alamat !== undefined) data.alamat = body.alamat;
+    if (body.skRiwayat !== undefined) data.skRiwayat = body.skRiwayat;
+    if (body.kinerja !== undefined) data.kinerja = body.kinerja;
+
     const pegawai = await db.pegawai.update({
       where: { id },
-      data: {
-        namaLengkap: body.namaLengkap,
-        jabatan: body.jabatan,
-        accessLevel: body.accessLevel,
-        username: body.username,
-        noHp: body.noHp,
-        alamat: body.alamat,
-        skRiwayat: body.skRiwayat,
-        kinerja: body.kinerja,
-      },
+      data,
     });
 
     return NextResponse.json(pegawai);
   } catch (error: any) {
+    console.error("[PATCH /api/pegawai] Error:", error);
     if (error.code === "P2025") {
       return NextResponse.json({ error: "Pegawai tidak ditemukan" }, { status: 404 });
     }
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+    return NextResponse.json({ error: error.message || "Internal server error" }, { status: 500 });
   }
 }
 
