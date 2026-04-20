@@ -8,7 +8,7 @@ export const dynamic = "force-dynamic";
 export default async function SettingLayout({ children }: { children: React.ReactNode }) {
   const user = await getCurrentUser();
   if (!user) return redirect("/login");
-  if (user.role !== "KHUSUS") return <AccessDenied />;
+  if (user.accessLevel !== "KHUSUS") return <AccessDenied />;
 
   return (
     <div className="flex flex-col h-full">

@@ -12,7 +12,7 @@ interface PageProps {
 export default async function EditorPage({ params }: PageProps) {
   const user = await getCurrentUser();
   if (!user) return redirect("/login");
-  if (user.role !== "KHUSUS") return redirect("/dashboard");
+  if (user.accessLevel !== "KHUSUS") return redirect("/dashboard");
 
   const { id } = await params;
 

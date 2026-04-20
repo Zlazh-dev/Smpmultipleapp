@@ -164,12 +164,19 @@ if (isset($_GET['search_siswa']) || isset($_GET['page_siswa'])) {
         <div class="d-sm-flex justify-content-between align-items-center">
             <div>
                 <h1 class="mb-1">Manajemen Pengguna & Siswa</h1>
-                <p class="lead mb-0 opacity-75">Kelola akun guru, admin, dan siswa di sistem.</p>
+                <p class="lead mb-0 opacity-75">Data guru dikelola dari Portal. Kelola siswa di sini.</p>
             </div>
             <div class="d-flex mt-3 mt-sm-0">
-                <!-- Tautan ke pengguna_tambah.php Anda -->
-                <a href="pengguna_tambah.php" class="btn btn-light"><i class="bi bi-person-plus-fill me-2"></i>Tambah Guru/Admin</a>
+                <a href="siswa_tambah.php" class="btn btn-light"><i class="bi bi-person-plus-fill me-2"></i>Tambah Siswa</a>
             </div>
+        </div>
+    </div>
+    <!-- Portal Redirect Banner -->
+    <div class="alert alert-info border-0 shadow-sm mb-4 d-flex align-items-center" style="border-left: 5px solid var(--primary-color) !important;">
+        <i class="bi bi-info-circle-fill fs-4 me-3 text-primary"></i>
+        <div>
+            <strong>Manajemen Guru Terpusat</strong><br>
+            <small>Data guru/admin kini dikelola dari <strong>Portal</strong> dan otomatis tersinkronisasi ke RADIG. <a href="<?php echo getenv('PORTAL_URL') ?: 'https://portal.smpitasy-syadzili.sch.id'; ?>/dashboard/guru" target="_blank" class="fw-bold">Buka Portal →</a></small>
         </div>
     </div>
 
@@ -260,9 +267,7 @@ if (isset($_GET['search_siswa']) || isset($_GET['page_siswa'])) {
                                     <div class="col user-card-col">
                                         <div class="card h-100 user-card">
                                             <div class="card-body">
-                                                <?php if (!$is_self): ?>
-                                                <input class="form-check-input bulk-checkbox-guru" type="checkbox" name="user_ids[]" value="<?php echo $data['id_guru']; ?>" title="Pilih pengguna ini">
-                                                <?php endif; ?>
+                                                <?php /* Checkbox disabled — guru dikelola dari Portal */ ?>
                                                 <div class="d-flex align-items-center">
                                                     <img src="<?php echo htmlspecialchars($gambar_tampil); ?>" class="user-card-img" alt="Foto <?php echo htmlspecialchars($data['nama_guru']); ?>">
                                                     <div class="ms-3 text-start">
@@ -287,10 +292,9 @@ if (isset($_GET['search_siswa']) || isset($_GET['page_siswa'])) {
                                                     </p>
                                                 </div>
                                                 <div class="mt-3 border-top pt-3">
-                                                    <a href="pengguna_edit.php?id=<?php echo $data['id_guru']; ?>" class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" title="Edit Pengguna"><i class="bi bi-pencil-fill me-1"></i> Edit</a>
+                                                    <span class="badge text-bg-light text-muted"><i class="bi bi-lock me-1"></i>Dikelola dari Portal</span>
                                                     <?php if (!$is_self) : ?>
                                                     <a href="admin_aksi.php?aksi=login_sebagai_guru&id_target=<?php echo $data['id_guru']; ?>" class="btn btn-outline-warning btn-sm" data-bs-toggle="tooltip" title="Login sebagai <?php echo htmlspecialchars($data['nama_guru']); ?>"><i class="bi bi-person-fill-gear"></i></a>
-                                                    <a href="#" onclick="hapusGuru(<?php echo $data['id_guru']; ?>)" class="btn btn-outline-danger btn-sm" data-bs-toggle="tooltip" title="Hapus Pengguna"><i class="bi bi-trash-fill me-1"></i> Hapus</a>
                                                     <?php endif; ?>
                                                 </div>
                                             </div>

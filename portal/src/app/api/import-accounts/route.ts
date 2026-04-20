@@ -62,8 +62,10 @@ export async function POST(req: NextRequest) {
 
       try {
         // Map role string to Prisma Role enum
-        let role: Role = Role.RADIG;
-        if (account.role === "TU") role = Role.TU;
+        let role: Role = Role.Guru; // default
+        if (account.role === "admin") role = Role.RADIG;
+        else if (account.role === "TU") role = Role.TU;
+        else if (account.role === "guru") role = Role.Guru;
 
         await db.user.upsert({
           where: { username: account.username },

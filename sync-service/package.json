@@ -1,14 +1,14 @@
 {
   "name": "smpit-sync-service",
-  "version": "1.0.0",
-  "private": true,
+  "version": "2.0.0",
+  "description": "Webhook-based sync service for SMPIT Portal → TU + RADIG",
+  "main": "sync.js",
   "scripts": {
-    "start": "node sync.js",
-    "sync-once": "SYNC_ONCE=true node sync.js"
+    "start": "node sync.js"
   },
   "dependencies": {
-    "mysql2": "^3.11.0",
-    "pg": "^8.13.0",
+    "mysql2": "^3.9.0",
+    "pg": "^8.11.0",
     "node-cron": "^3.0.3"
   }
 }

@@ -70,7 +70,7 @@ export async function GET(req: NextRequest) {
     let filename = "export";
 
     if (type === "pegawai") {
-      if (user.role !== "KHUSUS") return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+      if (user.accessLevel !== "KHUSUS") return NextResponse.json({ error: "Forbidden" }, { status: 403 });
       const data = await db.pegawai.findMany({ orderBy: { namaLengkap: "asc" } });
 
       const ws = workbook.addWorksheet("Data Pegawai");
@@ -101,7 +101,7 @@ export async function GET(req: NextRequest) {
       ];
 
       data.forEach((p, i) => {
-        const row = ws.addRow([i + 1, p.nip, p.namaLengkap, p.jabatan, p.username, p.noHp || "-", p.role]);
+        const row = ws.addRow([i + 1, p.nip, p.namaLengkap, p.jabatan, p.username, p.noHp || "-", p.accessLevel]);
         applyDataStyle(row);
         if (i % 2 === 0) {
           row.eachCell((cell) => {
@@ -114,7 +114,7 @@ export async function GET(req: NextRequest) {
 
     } else if (type === "presensi") {
       const where: any = {};
-      if (user.role === "UMUM") where.pegawaiId = user.id;
+      if (user.accessLevel === "UMUM") where.pegawaiId = user.id;
       let dateLabel = "Semua";
 
       if (tanggal) {
@@ -186,7 +186,7 @@ export async function GET(req: NextRequest) {
 
     } else if (type === "cuti") {
       const where: any = {};
-      if (user.role === "UMUM") where.pegawaiId = user.id;
+      if (user.accessLevel === "UMUM") where.pegawaiId = user.id;
       const data = await db.cuti.findMany({
         where,
         include: { pegawai: { select: { namaLengkap: true } } },

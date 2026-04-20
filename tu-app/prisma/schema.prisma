@@ -7,7 +7,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum PegawaiRole {
+enum AccessLevel {
   KHUSUS
   UMUM
 }
@@ -37,7 +37,7 @@ model Pegawai {
   nip            String     @unique
   namaLengkap    String
   jabatan        String
-  role           PegawaiRole @default(UMUM)
+  accessLevel    AccessLevel @default(UMUM) @map("role")
   username       String     @unique
   portalUserId   String?    @unique  // Links to Portal User.id (centralized identity)
   noHp           String?

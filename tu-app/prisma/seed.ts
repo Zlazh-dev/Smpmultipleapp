@@ -1,4 +1,4 @@
-import { PrismaClient, PegawaiRole } from "@prisma/client";
+import { PrismaClient, AccessLevel } from "@prisma/client";
 import bcrypt from "bcryptjs";
 
 const prisma = new PrismaClient();
@@ -15,7 +15,7 @@ async function main() {
       nip: "superadmin-001",
       namaLengkap: "Super Administrator",
       jabatan: "Administrator",
-      role: PegawaiRole.KHUSUS,
+      accessLevel: AccessLevel.KHUSUS,
       username: "superadmin",
     },
   });

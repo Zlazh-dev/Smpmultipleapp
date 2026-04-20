@@ -2,16 +2,23 @@ import { AppSidebar } from "@/components/app-sidebar";
 import { BottomNav } from "@/components/bottom-nav";
 import { MobileHeader } from "@/components/mobile-header";
 import { getCurrentUser } from "@/lib/current-user";
+import { db } from "@/lib/db";
 
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
   const user = await getCurrentUser();
-  const role = user?.role || "UMUM";
+  const role = user?.accessLevel || "UMUM";
+
+  // Get pending cuti count for sidebar badge (only for KHUSUS/admin)
+  let pendingCutiCount = 0;
+  if (role === "KHUSUS") {
+    pendingCutiCount = await db.cuti.count({ where: { status: "PENDING" } });
+  }
 
   return (
     <div className="flex h-screen overflow-hidden">
       {/* Sidebar — desktop only */}
       <div className="hidden md:block">
-        <AppSidebar role={role} />
+        <AppSidebar role={role} pendingCutiCount={pendingCutiCount} />
       </div>
 
       {/* Main content */}
@@ -29,4 +36,3 @@ export default async function AppLayout({ children }: { children: React.ReactNod
     </div>
   );
 }
-

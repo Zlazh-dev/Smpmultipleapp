@@ -24,7 +24,7 @@ export async function PATCH(req: NextRequest) {
   try {
     const user = await getCurrentUser();
     if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    if (user.role !== "KHUSUS") return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    if (user.accessLevel !== "KHUSUS") return NextResponse.json({ error: "Forbidden" }, { status: 403 });
 
     const body = await req.json();
     const profil = await db.profilSekolah.upsert({

@@ -51,7 +51,6 @@ services:
       MYSQL_PASSWORD: ${MYSQL_RADIG_PASSWORD}
     volumes:
       - mysql_data:/var/lib/mysql
-      - ./radig/deepsync.sql:/docker-entrypoint-initdb.d/01-seed.sql:ro
     # NO ports exposed — Docker network only
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}"]
@@ -80,6 +79,8 @@ services:
       NEXT_PUBLIC_TU_URL: ${TU_URL}
       NEXT_PUBLIC_RADIG_URL: ${RADIG_URL}
       SSO_JWT_SECRET: ${SSO_JWT_SECRET}
+      SYNC_SERVICE_URL: "http://sync:3002"
+      SYNC_SECRET: ${SYNC_SECRET}
     ports:
       - "127.0.0.1:3000:3000"
     networks:
@@ -95,8 +96,11 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+      mysql:
+        condition: service_healthy
     environment:
       DATABASE_URL: "postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/tu_smpit?schema=public"
+      RADIG_DATABASE_URL: "mysql://${MYSQL_RADIG_USER}:${MYSQL_RADIG_PASSWORD}@mysql:3306/raporsmp"
       NEXTAUTH_SECRET: ${NEXTAUTH_SECRET}
       NEXTAUTH_URL: ${TU_URL}
       AUTH_TRUST_HOST: "true"
@@ -105,6 +109,8 @@ services:
       NEXT_PUBLIC_PORTAL_URL: ${PORTAL_URL}
     ports:
       - "127.0.0.1:3001:3000"
+    volumes:
+      - tu_uploads:/app/uploads
     networks:
       - smpit-net
 
@@ -130,9 +136,33 @@ services:
     networks:
       - smpit-net
 
+  # ---- Sync Service (Webhook) ----
+  sync:
+    build: ./sync-service
+    container_name: smpit-sync
+    restart: unless-stopped
+    depends_on:
+      mysql:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    environment:
+      SYNC_PORT: 3002
+      SYNC_SECRET: ${SYNC_SECRET}
+      MYSQL_HOST: mysql
+      MYSQL_USER: ${MYSQL_RADIG_USER}
+      MYSQL_PASSWORD: ${MYSQL_RADIG_PASSWORD}
+      MYSQL_DATABASE: raporsmp
+      PORTAL_DB_URL: "postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/portal_smpit"
+      TU_DB_URL: "postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/tu_smpit"
+      FULL_SYNC_INTERVAL_MINUTES: 60
+    networks:
+      - smpit-net
+
 volumes:
   postgres_data:
   mysql_data:
+  tu_uploads:
 
 networks:
   smpit-net:

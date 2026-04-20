@@ -26,7 +26,7 @@ interface PegawaiFormSheetProps {
     nip: string;
     namaLengkap: string;
     jabatan: string;
-    role: string;
+    accessLevel: string;
     username: string;
     noHp: string;
     alamat: string;
@@ -53,7 +53,7 @@ export function PegawaiFormSheet({
     const body: any = {
       namaLengkap: fd.get("namaLengkap"),
       jabatan: fd.get("jabatan"),
-      role: fd.get("role"),
+      accessLevel: fd.get("accessLevel"),
       username: fd.get("username"),
       noHp: fd.get("noHp") || null,
       alamat: fd.get("alamat") || null,
@@ -142,8 +142,8 @@ export function PegawaiFormSheet({
         <div className="space-y-1.5">
           <Label className="text-xs font-medium">Hak Akses *</Label>
           <select
-            name="role"
-            defaultValue={pegawai?.role || "UMUM"}
+            name="accessLevel"
+            defaultValue={pegawai?.accessLevel || "UMUM"}
             className="w-full h-8 rounded-md border border-input bg-background px-2.5 text-sm focus:outline-none focus:ring-1 focus:ring-ring"
           >
             <option value="UMUM">Umum — Akses Terbatas</option>

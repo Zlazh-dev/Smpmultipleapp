@@ -8,7 +8,7 @@ export default async function PresensiLayout({ children }: { children: React.Rea
   const user = await getCurrentUser();
   if (!user) return redirect("/login");
 
-  const isKhusus = user.role === "KHUSUS";
+  const isKhusus = user.accessLevel === "KHUSUS";
 
   return (
     <div className="flex flex-col h-full">

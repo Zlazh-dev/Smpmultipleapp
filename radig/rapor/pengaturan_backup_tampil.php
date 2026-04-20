@@ -289,18 +289,16 @@ rsort($backup_files);
             </div>
         </div>
 
-        <!-- BACKUP AKUN (Export untuk Portal) -->
+        <!-- SYNC STATUS (Replaces old Backup Akun) -->
         <div class="col-md-6 col-lg-3">
             <div class="card db-tool-card p-4" style="background: #f0fdfa;">
                 <div class="db-icon-box bg-info bg-opacity-10 text-info">
-                    <i class="bi bi-people-fill"></i>
+                    <i class="bi bi-arrow-left-right"></i>
                 </div>
                 <div class="text-center">
-                    <h5 class="fw-bolder mb-2" style="color: var(--teal-primary);">BACKUP AKUN</h5>
-                    <p class="small text-muted mb-4">Ekspor data guru sebagai JSON untuk diimport ke Portal SSO.</p>
-                    <a href="pengaturan_aksi.php?aksi=backup_akun" class="btn btn-db w-100" style="background: var(--teal-primary); color: white;">
-                        <i class="bi bi-person-badge me-2"></i>EKSPOR AKUN
-                    </a>
+                    <h5 class="fw-bolder mb-2" style="color: var(--teal-primary);">SYNC OTOMATIS</h5>
+                    <p class="small text-muted mb-4">Data guru/admin otomatis disinkronkan dari Portal ke RADIG secara real-time.</p>
+                    <span class="badge bg-success rounded-pill px-3 py-2 fw-bold"><i class="bi bi-check-circle me-1"></i>AKTIF</span>
                 </div>
             </div>
         </div>

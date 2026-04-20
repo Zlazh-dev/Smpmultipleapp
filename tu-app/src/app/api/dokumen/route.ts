@@ -15,7 +15,7 @@ export async function GET(req: NextRequest) {
     const where: any = {};
 
     // UMUM users can only see their own documents
-    if (user.role === "UMUM") {
+    if (user.accessLevel === "UMUM") {
       where.OR = [
         { pegawaiId: user.id },
         { uploadedBy: user.id },

@@ -35,7 +35,7 @@ export async function PATCH(request: NextRequest, { params }: Params) {
       data: {
         namaLengkap: body.namaLengkap,
         jabatan: body.jabatan,
-        role: body.role,
+        accessLevel: body.accessLevel,
         username: body.username,
         noHp: body.noHp,
         alamat: body.alamat,

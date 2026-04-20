@@ -8,13 +8,16 @@ const secret = new TextEncoder().encode(SSO_SECRET);
 
 // Use NEXTAUTH_URL for redirects since request.url inside Docker returns internal 0.0.0.0:3000
 const BASE_URL = process.env.NEXTAUTH_URL || "http://tu.localhost";
+const PORTAL_DASHBOARD = process.env.NEXT_PUBLIC_PORTAL_URL
+  ? `${process.env.NEXT_PUBLIC_PORTAL_URL}/dashboard`
+  : "http://localhost:3000/dashboard";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const token = searchParams.get("token");
 
   if (!token) {
-    return NextResponse.redirect(`${BASE_URL}/login?error=sso_no_token`);
+    return NextResponse.redirect(PORTAL_DASHBOARD);
   }
 
   // 1. Verify JWT
@@ -24,7 +27,7 @@ export async function GET(request: Request) {
     payload = result.payload;
   } catch (err) {
     console.error("SSO JWT verify failed:", err);
-    return NextResponse.redirect(`${BASE_URL}/login?error=sso_invalid_token`);
+    return NextResponse.redirect(PORTAL_DASHBOARD);
   }
 
   const portalUserId = (payload.portalUserId as string) || (payload.sub as string);
@@ -34,7 +37,7 @@ export async function GET(request: Request) {
   const role = payload.role as string;
 
   if (!username || !portalUserId) {
-    return NextResponse.redirect(`${BASE_URL}/login?error=sso_invalid_token`);
+    return NextResponse.redirect(PORTAL_DASHBOARD);
   }
 
   // 2. Find Pegawai: portalUserId (primary) → NIP → username (fallback)
@@ -71,11 +74,11 @@ export async function GET(request: Request) {
 
   // 3. Auto-create if not found
   if (!pegawai) {
-    // Map Portal role to TU role
+    // Map Portal role to TU accessLevel
     // RADIG (superadmin/admin) or TU → KHUSUS (full access)
     // Guru/WaliSantri → UMUM (basic access)
     const isAdmin = role === "RADIG" || role === "TU";
-    const tuRole = isAdmin ? "KHUSUS" : "UMUM";
+    const tuAccessLevel = isAdmin ? "KHUSUS" : "UMUM";
     const tuJabatan = isAdmin ? "Admin" : role === "TU" ? "Tata Usaha" : "Guru";
 
     try {
@@ -85,14 +88,14 @@ export async function GET(request: Request) {
           namaLengkap: name || username,
           username: username,
           jabatan: tuJabatan,
-          role: tuRole,
+          accessLevel: tuAccessLevel,
           portalUserId: portalUserId,
         },
       });
       console.log(`SSO auto-created Pegawai: ${pegawai.namaLengkap} (${pegawai.username}) portalUserId=${portalUserId}`);
     } catch (err) {
       console.error("SSO auto-create failed:", err);
-      return NextResponse.redirect(`${BASE_URL}/login?error=sso_create_failed`);
+      return NextResponse.redirect(PORTAL_DASHBOARD);
     }
   }
 
@@ -111,7 +114,7 @@ export async function GET(request: Request) {
       id: pegawai.id,
       email: pegawai.username,
       name: pegawai.namaLengkap,
-      role: pegawai.role,
+      accessLevel: pegawai.accessLevel,
       jabatan: pegawai.jabatan,
       sub: pegawai.id,
     },

@@ -1,12 +1,12 @@
 import { auth } from "@/lib/auth";
 
-export type UserRole = "KHUSUS" | "UMUM";
+export type AccessLevel = "KHUSUS" | "UMUM";
 
 export interface CurrentUser {
   id: string;
   name: string;
   username: string;
-  role: UserRole;
+  accessLevel: AccessLevel;
   jabatan: string;
 }
 
@@ -19,13 +19,13 @@ export async function getCurrentUser(): Promise<CurrentUser | null> {
     id: session.user.id as string,
     name: session.user.name || "",
     username: session.user.email || "", // username stored in email field
-    role: ((session.user as any).role || "UMUM") as UserRole,
+    accessLevel: ((session.user as any).accessLevel || "UMUM") as AccessLevel,
     jabatan: (session.user as any).jabatan || "",
   };
 }
 
-/** Check if user has KHUSUS role */
+/** Check if user has KHUSUS access level */
 export async function isKhusus(): Promise<boolean> {
   const user = await getCurrentUser();
-  return user?.role === "KHUSUS";
+  return user?.accessLevel === "KHUSUS";
 }

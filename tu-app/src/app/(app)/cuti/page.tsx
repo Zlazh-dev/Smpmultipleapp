@@ -9,7 +9,7 @@ export default async function CutiPage() {
   const user = await getCurrentUser();
   if (!user) return null;
 
-  const isKhusus = user.role === "KHUSUS";
+  const isKhusus = user.accessLevel === "KHUSUS";
 
   if (isKhusus) {
     // KHUSUS: see all cuti, kanban board, approve/reject

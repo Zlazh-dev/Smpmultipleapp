@@ -155,6 +155,12 @@
 .animation-delay-300 { animation-delay: 300ms; animation-fill-mode: both; }
 .animation-delay-400 { animation-delay: 400ms; animation-fill-mode: both; }
 
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-slide-up { animation: slide-up 0.2s ease-out; }
+
 /* ── Scrollbar ── */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }

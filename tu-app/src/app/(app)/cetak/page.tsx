@@ -9,7 +9,7 @@ export const dynamic = "force-dynamic";
 export default async function CetakPage() {
   const user = await getCurrentUser();
   if (!user) return redirect("/login");
-  if (user.role !== "KHUSUS") return <AccessDenied />;
+  if (user.accessLevel !== "KHUSUS") return <AccessDenied />;
 
   const templates = await db.printTemplate.findMany({
     orderBy: { updatedAt: "desc" },

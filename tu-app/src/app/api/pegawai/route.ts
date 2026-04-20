@@ -30,14 +30,14 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { nip, namaLengkap, jabatan, role, username, noHp, alamat } = body;
+    const { nip, namaLengkap, jabatan, accessLevel, username, noHp, alamat } = body;
 
     if (!nip || !namaLengkap || !jabatan || !username) {
       return NextResponse.json({ error: "Field wajib tidak lengkap" }, { status: 400 });
     }
 
     const pegawai = await db.pegawai.create({
-      data: { nip, namaLengkap, jabatan, role: role || "UMUM", username, noHp, alamat },
+      data: { nip, namaLengkap, jabatan, accessLevel: accessLevel || "UMUM", username, noHp, alamat },
     });
 
     return NextResponse.json(pegawai, { status: 201 });

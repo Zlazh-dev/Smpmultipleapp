@@ -13,7 +13,7 @@ interface Pegawai {
   nip: string;
   namaLengkap: string;
   jabatan: string;
-  role: string;
+  accessLevel: string;
   username: string;
   noHp: string | null;
   alamat: string | null;
@@ -129,6 +129,7 @@ export function PegawaiTable({ data }: { data: Pegawai[] }) {
         data={data}
         keyField="id"
         emptyMessage="Tidak ada data pegawai"
+        onRowClick={(row) => router.push(`/pegawai/${row.id}`)}
         toolbar={
           <Button
             size="sm"
@@ -178,7 +179,7 @@ export function PegawaiTable({ data }: { data: Pegawai[] }) {
                 nip: editPegawai.nip,
                 namaLengkap: editPegawai.namaLengkap,
                 jabatan: editPegawai.jabatan,
-                role: editPegawai.role,
+                accessLevel: editPegawai.accessLevel,
                 username: editPegawai.username,
                 noHp: editPegawai.noHp || "",
                 alamat: (editPegawai.alamat as string) || "",

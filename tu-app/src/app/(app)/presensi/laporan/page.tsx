@@ -8,7 +8,7 @@ export const dynamic = "force-dynamic";
 export default async function LaporanPresensiPage() {
   const user = await getCurrentUser();
   if (!user) return redirect("/login");
-  if (user.role !== "KHUSUS") return <AccessDenied />;
+  if (user.accessLevel !== "KHUSUS") return <AccessDenied />;
 
   return (
     <div className="p-4 lg:p-6 space-y-4">

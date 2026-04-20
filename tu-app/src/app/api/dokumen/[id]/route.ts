@@ -19,7 +19,7 @@ export async function DELETE(
     if (!dokumen) return NextResponse.json({ error: "Not found" }, { status: 404 });
 
     // UMUM can only delete own documents
-    if (user.role === "UMUM" && dokumen.uploadedBy !== user.id) {
+    if (user.accessLevel === "UMUM" && dokumen.uploadedBy !== user.id) {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
@@ -54,7 +54,7 @@ export async function PATCH(
     const dokumen = await db.dokumen.findUnique({ where: { id } });
     if (!dokumen) return NextResponse.json({ error: "Not found" }, { status: 404 });
 
-    if (user.role === "UMUM" && dokumen.uploadedBy !== user.id) {
+    if (user.accessLevel === "UMUM" && dokumen.uploadedBy !== user.id) {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 

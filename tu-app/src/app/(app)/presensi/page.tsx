@@ -16,7 +16,7 @@ export default async function PresensiPage({ searchParams }: PageProps) {
   const user = await getCurrentUser();
   if (!user) return null;
 
-  const isKhusus = user.role === "KHUSUS";
+  const isKhusus = user.accessLevel === "KHUSUS";
   const params = await searchParams;
   const today = new Date();
   const filterDate = params.tanggal ? new Date(params.tanggal) : today;

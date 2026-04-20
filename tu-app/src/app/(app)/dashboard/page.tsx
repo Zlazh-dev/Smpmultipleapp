@@ -19,7 +19,7 @@ export default async function DashboardPage() {
   const user = await getCurrentUser();
   if (!user) return redirect("/login");
 
-  const isKhusus = user.role === "KHUSUS";
+  const isKhusus = user.accessLevel === "KHUSUS";
 
   if (isKhusus) {
     // ── KHUSUS: Full admin dashboard ──

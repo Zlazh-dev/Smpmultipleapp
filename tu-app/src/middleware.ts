@@ -1,28 +1,27 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-const PORTAL_LOGIN = process.env.NEXT_PUBLIC_PORTAL_URL
-  ? `${process.env.NEXT_PUBLIC_PORTAL_URL}/login`
-  : "http://portal.localhost/login";
+const PORTAL_DASHBOARD = process.env.NEXT_PUBLIC_PORTAL_URL
+  ? `${process.env.NEXT_PUBLIC_PORTAL_URL}/dashboard`
+  : "http://localhost:3000/dashboard";
 
 /**
  * TU App middleware:
- * - Allow /login (for SSO callback), /api, /static routes
- * - Redirect unauthenticated to Portal login (SSO gateway)
+ * - Allow /api (includes SSO callback), /static routes
+ * - Redirect unauthenticated users to Portal dashboard (SSO gateway)
+ * - No standalone login — SSO is the only way in
  */
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Public routes (login kept for SSO callback handling)
+  // Public routes
   if (
-    pathname.startsWith("/login") ||
     pathname.startsWith("/api") ||
     pathname.startsWith("/_next") ||
     pathname.startsWith("/favicon") ||
     pathname.startsWith("/icons") ||
     pathname === "/manifest.json" ||
     pathname === "/sw.js" ||
-    pathname === "/unauthorized" ||
     pathname.startsWith("/presensi/checkin")
   ) {
     return NextResponse.next();
@@ -34,8 +33,8 @@ export function middleware(request: NextRequest) {
     request.cookies.has("__Secure-authjs.session-token");
 
   if (!hasSession) {
-    // Redirect to Portal login — SSO is the only way in
-    return NextResponse.redirect(PORTAL_LOGIN);
+    // No session → redirect to Portal dashboard (user must SSO from there)
+    return NextResponse.redirect(PORTAL_DASHBOARD);
   }
 
   return NextResponse.next();

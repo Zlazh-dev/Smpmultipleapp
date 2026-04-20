@@ -17,6 +17,9 @@ interface SkRiwayat {
   noSK: string;
   tanggal: string;
   jenis: string;
+  perihal: string;
+  berlakuSampai: string;
+  keterangan: string;
 }
 
 interface PegawaiData {
@@ -37,7 +40,7 @@ export function PegawaiEditForm({ pegawai, isNew }: { pegawai: PegawaiData; isNe
   const [skList, setSkList] = useState<SkRiwayat[]>(pegawai.skRiwayat || []);
 
   const addSk = () => {
-    setSkList([...skList, { noSK: "", tanggal: "", jenis: "" }]);
+    setSkList([...skList, { noSK: "", tanggal: "", jenis: "", perihal: "", berlakuSampai: "", keterangan: "" }]);
   };
 
   const removeSk = (index: number) => {
@@ -136,44 +139,75 @@ export function PegawaiEditForm({ pegawai, isNew }: { pegawai: PegawaiData; isNe
             <p className="text-sm text-muted-foreground text-center py-4">Belum ada riwayat SK</p>
           ) : (
             skList.map((sk, i) => (
-              <div key={i} className="grid grid-cols-1 md:grid-cols-4 gap-3 p-3 rounded-lg border border-border/30 bg-muted/20">
-                <div className="space-y-1">
-                  <Label className="text-xs">No. SK</Label>
-                  <Input
-                    value={sk.noSK}
-                    onChange={(e) => updateSk(i, "noSK", e.target.value)}
-                    placeholder="001/KS/2026"
-                    className="h-8 text-sm"
-                  />
+              <div key={i} className="p-3 rounded-lg border border-border/30 bg-muted/20 space-y-3">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
+                  <div className="space-y-1">
+                    <Label className="text-xs">No. SK *</Label>
+                    <Input
+                      value={sk.noSK}
+                      onChange={(e) => updateSk(i, "noSK", e.target.value)}
+                      placeholder="001/KS/2026"
+                      className="h-8 text-sm"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <Label className="text-xs">Tanggal *</Label>
+                    <Input
+                      type="date"
+                      value={sk.tanggal}
+                      onChange={(e) => updateSk(i, "tanggal", e.target.value)}
+                      className="h-8 text-sm"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <Label className="text-xs">Jenis *</Label>
+                    <Input
+                      value={sk.jenis}
+                      onChange={(e) => updateSk(i, "jenis", e.target.value)}
+                      placeholder="Pengangkatan"
+                      className="h-8 text-sm"
+                    />
+                  </div>
+                  <div className="flex items-end">
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      className="h-8 text-red-500 hover:text-red-600 hover:bg-red-500/10 cursor-pointer"
+                      onClick={() => removeSk(i)}
+                    >
+                      <Trash2 className="h-3.5 w-3.5" />
+                    </Button>
+                  </div>
                 </div>
-                <div className="space-y-1">
-                  <Label className="text-xs">Tanggal</Label>
-                  <Input
-                    type="date"
-                    value={sk.tanggal}
-                    onChange={(e) => updateSk(i, "tanggal", e.target.value)}
-                    className="h-8 text-sm"
-                  />
-                </div>
-                <div className="space-y-1">
-                  <Label className="text-xs">Jenis</Label>
-                  <Input
-                    value={sk.jenis}
-                    onChange={(e) => updateSk(i, "jenis", e.target.value)}
-                    placeholder="Pengangkatan"
-                    className="h-8 text-sm"
-                  />
-                </div>
-                <div className="flex items-end">
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="sm"
-                    className="h-8 text-red-500 hover:text-red-600 hover:bg-red-500/10 cursor-pointer"
-                    onClick={() => removeSk(i)}
-                  >
-                    <Trash2 className="h-3.5 w-3.5" />
-                  </Button>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                  <div className="space-y-1">
+                    <Label className="text-xs">Perihal</Label>
+                    <Input
+                      value={sk.perihal}
+                      onChange={(e) => updateSk(i, "perihal", e.target.value)}
+                      placeholder="Tentang penetapan..."
+                      className="h-8 text-sm"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <Label className="text-xs">Berlaku Sampai</Label>
+                    <Input
+                      type="date"
+                      value={sk.berlakuSampai}
+                      onChange={(e) => updateSk(i, "berlakuSampai", e.target.value)}
+                      className="h-8 text-sm"
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <Label className="text-xs">Keterangan</Label>
+                    <Input
+                      value={sk.keterangan}
+                      onChange={(e) => updateSk(i, "keterangan", e.target.value)}
+                      placeholder="Catatan tambahan"
+                      className="h-8 text-sm"
+                    />
+                  </div>
                 </div>
               </div>
             ))

@@ -16,7 +16,7 @@ interface PageProps {
 export default async function PegawaiPage({ searchParams }: PageProps) {
   const user = await getCurrentUser();
   if (!user) return redirect("/login");
-  if (user.role !== "KHUSUS") return <AccessDenied />;
+  if (user.accessLevel !== "KHUSUS") return <AccessDenied />;
   const params = await searchParams;
   const { q, jabatan } = params;
 

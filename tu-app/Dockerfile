@@ -6,7 +6,8 @@ RUN apk add --no-cache libc6-compat
 WORKDIR /app
 COPY package.json package-lock.json* ./
 COPY prisma ./prisma/
-RUN npm ci && npx prisma generate
+# Generate both PostgreSQL (main) and MySQL (RADIG) Prisma clients
+RUN npm ci && npx prisma generate && npx prisma generate --schema=prisma/radig.prisma
 
 # ---- Build ----
 FROM base AS builder

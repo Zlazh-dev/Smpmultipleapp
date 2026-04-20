@@ -13,7 +13,7 @@ import {
   ExternalLink,
   LogOut,
   GraduationCap,
-  Upload,
+  Users,
 } from "lucide-react";
 import { logoutAction } from "@/lib/auth-actions";
 import { apps, roleLabels } from "@/lib/config";
@@ -42,13 +42,15 @@ export function DashboardSidebar({ user }: DashboardSidebarProps) {
       href: "/dashboard",
       label: "Dashboard",
       icon: LayoutDashboard,
+      adminOnly: false,
     },
     {
-      href: "/dashboard/import-accounts",
-      label: "Import Akun",
-      icon: Upload,
+      href: "/dashboard/guru",
+      label: "Manajemen Guru",
+      icon: Users,
+      adminOnly: true,
     },
-  ];
+  ].filter((item) => !item.adminOnly || user.role === "RADIG");
 
   return (
     <aside className="flex h-full w-64 flex-col border-r border-border/40 bg-card/30 backdrop-blur-sm">

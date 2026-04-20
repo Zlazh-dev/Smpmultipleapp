@@ -1,0 +1,187 @@
+// Prisma schema for RADIG MySQL database (READ-ONLY from TU-App)
+// This is a separate datasource that connects to the RADIG MySQL container
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/radig-client"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("RADIG_DATABASE_URL")
+}
+
+enum JenisKelamin {
+  L
+  P
+}
+
+enum StatusSiswa {
+  Aktif
+  Lulus
+  Pindah
+  Keluar
+}
+
+enum GuruRole {
+  admin
+  guru
+}
+
+enum StatusTahunAjaran {
+  Aktif        @map("Aktif")
+  TidakAktif   @map("Tidak Aktif")
+}
+
+model Siswa {
+  id_siswa            Int       @id @default(autoincrement())
+  nisn                String    @db.VarChar(20)
+  nis                 String?   @db.VarChar(20)
+  nama_lengkap        String    @db.VarChar(100)
+  jenis_kelamin       JenisKelamin?
+  tempat_lahir        String?   @db.VarChar(100)
+  tanggal_lahir       DateTime? @db.Date
+  nik                 String?   @db.VarChar(20)
+  agama               String?   @db.VarChar(50)
+  alamat              String?   @db.MediumText
+  nama_ayah           String?   @db.VarChar(100)
+  nama_ibu            String?   @db.VarChar(100)
+  id_kelas            Int?
+  id_guru_wali        Int?
+  username            String    @db.VarChar(50)
+  status_siswa        StatusSiswa  @default(Aktif)
+  sekolah_asal        String?   @db.VarChar(100)
+  diterima_tanggal    DateTime? @db.Date
+  diterima_di_kelas   String?   @db.VarChar(50)
+  anak_ke             Int?
+  status_dalam_keluarga String? @db.VarChar(50)
+  telepon_siswa       String?   @db.VarChar(20)
+  pekerjaan_ayah      String?   @db.VarChar(100)
+  telepon_ayah        String?   @db.VarChar(20)
+  pekerjaan_ibu       String?   @db.VarChar(100)
+  telepon_ibu         String?   @db.VarChar(20)
+  nama_wali           String?   @db.VarChar(100)
+  alamat_wali         String?   @db.MediumText
+  telepon_wali        String?   @db.VarChar(20)
+  pekerjaan_wali      String?   @db.VarChar(100)
+  foto_siswa          String?   @db.VarChar(255)
+
+  kelas               Kelas?    @relation(fields: [id_kelas], references: [id_kelas])
+  wali_kelas          Guru?     @relation(fields: [id_guru_wali], references: [id_guru])
+  rapor               Rapor[]
+  catatan             CatatanGuruWali[]
+
+  @@map("siswa")
+}
+
+model Kelas {
+  id_kelas        Int     @id @default(autoincrement())
+  nama_kelas      String  @db.VarChar(50)
+  fase            String  @default("D") @db.VarChar(5)
+  id_wali_kelas   Int?
+  id_tahun_ajaran Int?
+
+  siswa           Siswa[]
+  tahun_ajaran    TahunAjaran? @relation(fields: [id_tahun_ajaran], references: [id_tahun_ajaran])
+  wali_kelas      Guru?        @relation(fields: [id_wali_kelas], references: [id_guru])
+
+  @@map("kelas")
+}
+
+model Guru {
+  id_guru         Int       @id @default(autoincrement())
+  nip             String?   @db.VarChar(30)
+  nama_guru       String    @db.VarChar(100)
+  username        String    @db.VarChar(50)
+  role            GuruRole  // admin, guru
+  foto_guru       String?   @db.VarChar(255)
+  portal_user_id  String?   @db.VarChar(36)
+
+  kelas_wali    Kelas[]
+  siswa_wali    Siswa[]
+
+  @@map("guru")
+}
+
+model TahunAjaran {
+  id_tahun_ajaran Int     @id @default(autoincrement())
+  tahun_ajaran    String  @db.VarChar(20)
+  status          StatusTahunAjaran  // Aktif, Tidak Aktif
+
+  kelas           Kelas[]
+
+  @@map("tahun_ajaran")
+}
+
+enum RaporStatus {
+  Draft
+  Final
+}
+
+model Rapor {
+  id_rapor                  Int          @id @default(autoincrement())
+  id_siswa                  Int?
+  id_kelas                  Int?
+  id_tahun_ajaran           Int?
+  semester                  Int?
+  sakit                     Int?         @default(0)
+  izin                      Int?         @default(0)
+  tanpa_keterangan          Int?         @default(0)
+  catatan_wali_kelas        String?      @db.Text
+  deskripsi_kokurikuler     String?      @db.Text
+  deskripsi_ekstrakurikuler String?      @db.Text
+  status                    RaporStatus? @default(Draft)
+  tanggal_rapor             DateTime?    @db.Date
+
+  siswa           Siswa?  @relation(fields: [id_siswa], references: [id_siswa])
+  detail_akademik RaporDetailAkademik[]
+
+  @@map("rapor")
+}
+
+model RaporDetailAkademik {
+  id_rapor_detail     Int     @id @default(autoincrement())
+  id_rapor            Int?
+  id_mapel            Int?
+  nilai_akhir         Int?
+  nilai_katrol        Int?
+  capaian_kompetensi  String? @db.Text
+
+  rapor           Rapor?  @relation(fields: [id_rapor], references: [id_rapor])
+  mapel           MataPelajaran? @relation(fields: [id_mapel], references: [id_mapel])
+
+  @@map("rapor_detail_akademik")
+}
+
+enum KategoriCatatan {
+  Akademik
+  Karakter
+  Keterampilan
+  KomunikasiOrtu   @map("Komunikasi Ortu")
+  Lainnya
+}
+
+model CatatanGuruWali {
+  id_catatan        Int             @id @default(autoincrement())
+  id_siswa          Int
+  id_guru_wali      Int
+  tanggal_catatan   DateTime        @db.Date
+  kategori_catatan  KategoriCatatan
+  isi_catatan       String          @db.Text
+
+  siswa             Siswa           @relation(fields: [id_siswa], references: [id_siswa])
+
+  @@map("catatan_guru_wali")
+}
+
+model MataPelajaran {
+  id_mapel          Int     @id @default(autoincrement())
+  nama_mapel        String  @db.VarChar(100)
+  kode_mapel        String? @db.VarChar(10)
+  urutan            Int     @default(99)
+  kelompok          String? @default("Umum") @db.VarChar(50)
+
+  detail_akademik   RaporDetailAkademik[]
+
+  @@map("mata_pelajaran")
+}

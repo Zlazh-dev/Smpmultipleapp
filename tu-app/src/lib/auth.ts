@@ -22,7 +22,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
         const pegawai = await db.pegawai.findUnique({
           where: { username },
-          select: { id: true, username: true, namaLengkap: true, role: true, jabatan: true },
+          select: { id: true, username: true, namaLengkap: true, accessLevel: true, jabatan: true },
         });
 
         if (!pegawai) return null;
@@ -32,7 +32,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           id: pegawai.id,
           email: pegawai.username, // NextAuth requires email field, we store username here
           name: pegawai.namaLengkap,
-          role: pegawai.role,
+          accessLevel: pegawai.accessLevel,
           jabatan: pegawai.jabatan,
         };
       },
@@ -42,7 +42,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
-        token.role = (user as any).role;
+        token.accessLevel = (user as any).accessLevel;
         token.jabatan = (user as any).jabatan;
       }
       return token;
@@ -50,7 +50,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     async session({ session, token }) {
       if (token) {
         session.user.id = token.id as string;
-        (session.user as any).role = token.role;
+        (session.user as any).accessLevel = token.accessLevel;
         (session.user as any).jabatan = token.jabatan;
       }
       return session;

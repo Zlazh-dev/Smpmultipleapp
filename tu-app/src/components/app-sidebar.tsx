@@ -17,14 +17,15 @@ import {
   ExternalLink,
   Printer,
   Settings,
-  LogOut,
+  ArrowLeft,
+  GraduationCap,
 } from "lucide-react";
 import { useTheme } from "next-themes";
-import { signOut } from "next-auth/react";
 
 const allNavItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard, roles: ["UMUM", "KHUSUS"] },
   { href: "/pegawai", label: "Pegawai", icon: Users, roles: ["KHUSUS"] },
+  { href: "/siswa", label: "Siswa", icon: GraduationCap, roles: ["UMUM", "KHUSUS"] },
   { href: "/presensi", label: "Presensi", icon: ClipboardCheck, roles: ["UMUM", "KHUSUS"] },
   { href: "/cuti", label: "Cuti", icon: CalendarOff, roles: ["UMUM", "KHUSUS"] },
   { href: "/cetak", label: "Cetak Surat", icon: Printer, roles: ["KHUSUS"] },
@@ -33,9 +34,10 @@ const allNavItems = [
 
 interface AppSidebarProps {
   role: string;
+  pendingCutiCount?: number;
 }
 
-export function AppSidebar({ role }: AppSidebarProps) {
+export function AppSidebar({ role, pendingCutiCount = 0 }: AppSidebarProps) {
   const pathname = usePathname();
   const { theme, setTheme } = useTheme();
 
@@ -78,9 +80,9 @@ export function AppSidebar({ role }: AppSidebarProps) {
             >
               <item.icon className={cn("h-4 w-4", isActive && "text-sidebar-primary")} />
               {item.label}
-              {item.label === "Cuti" && (
+              {item.label === "Cuti" && pendingCutiCount > 0 && (
                 <span className="ml-auto flex h-5 min-w-5 items-center justify-center rounded-full bg-amber-500/15 px-1.5 text-[10px] font-semibold text-amber-500">
-                  3
+                  {pendingCutiCount}
                 </span>
               )}
             </Link>
@@ -132,15 +134,13 @@ export function AppSidebar({ role }: AppSidebarProps) {
           )}
           {theme === "dark" ? "Mode Terang" : "Mode Gelap"}
         </Button>
-        <Button
-          variant="ghost"
-          size="sm"
-          className="w-full justify-start text-red-500 hover:text-red-600 hover:bg-red-500/10 cursor-pointer"
-          onClick={() => signOut({ callbackUrl: process.env.NEXT_PUBLIC_PORTAL_URL || "http://portal.localhost/login" })}
+        <a
+          href={`${process.env.NEXT_PUBLIC_PORTAL_URL || "http://localhost:3000"}/dashboard`}
+          className="w-full flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium text-muted-foreground hover:bg-sidebar-accent/50 hover:text-sidebar-foreground transition-all"
         >
-          <LogOut className="mr-2 h-4 w-4" />
-          Keluar
-        </Button>
+          <ArrowLeft className="h-4 w-4" />
+          Kembali ke Portal
+        </a>
       </div>
     </aside>
   );
