@@ -1,4 +1,4 @@
-const CACHE_NAME = "portal-smpit-v1";
+const CACHE_NAME = "portal-smpit-v2";
 const STATIC_ASSETS = [
   "/",
   "/login",
