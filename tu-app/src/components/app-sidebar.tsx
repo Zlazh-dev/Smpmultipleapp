@@ -45,9 +45,12 @@ export function AppSidebar({ role, pendingCutiCount = 0 }: AppSidebarProps) {
   const [portalUrl, setPortalUrl] = useState("");
 
   useEffect(() => {
-    setPortalUrl(
-      (process.env.NEXT_PUBLIC_PORTAL_URL || window.location.origin.replace(/:3001/, ":3000")) + "/dashboard"
-    );
+    // NEXT_PUBLIC_PORTAL_URL is baked at build time; fallback replaces subdomain for production
+    const envUrl = process.env.NEXT_PUBLIC_PORTAL_URL;
+    const fallback = window.location.origin
+      .replace(/\/\/tu\./, '//portal.')  // production: tu.domain → portal.domain
+      .replace(/:3001/, ':3000');          // dev: localhost:3001 → localhost:3000
+    setPortalUrl((envUrl || fallback) + '/dashboard');
   }, []);
 
   const navItems = allNavItems.filter((item) => item.roles.includes(role));
@@ -120,7 +123,7 @@ export function AppSidebar({ role, pendingCutiCount = 0 }: AppSidebarProps) {
         )}
 
         <a
-          href={process.env.NEXT_PUBLIC_PORTAL_URL || "/"}
+          href={portalUrl || "/"}
           className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-muted-foreground hover:bg-sidebar-accent/50 hover:text-sidebar-foreground transition-all"
         >
           <ExternalLink className="h-4 w-4" />

@@ -39,9 +39,11 @@ export function BottomNav({ role }: BottomNavProps) {
   const [portalUrl, setPortalUrl] = useState("");
 
   useEffect(() => {
-    setPortalUrl(
-      (process.env.NEXT_PUBLIC_PORTAL_URL || window.location.origin.replace(/:3001/, ":3000")) + "/dashboard"
-    );
+    const envUrl = process.env.NEXT_PUBLIC_PORTAL_URL;
+    const fallback = window.location.origin
+      .replace(/\/\/tu\./, '//portal.')
+      .replace(/:3001/, ':3000');
+    setPortalUrl((envUrl || fallback) + '/dashboard');
   }, []);
 
   const filteredMain = mainItems.filter((item) => item.roles.includes(role));
