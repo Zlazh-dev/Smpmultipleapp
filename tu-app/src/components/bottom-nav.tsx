@@ -36,6 +36,13 @@ export function BottomNav({ role }: BottomNavProps) {
   const pathname = usePathname();
   const [moreOpen, setMoreOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+  const [portalUrl, setPortalUrl] = useState("");
+
+  useEffect(() => {
+    setPortalUrl(
+      (process.env.NEXT_PUBLIC_PORTAL_URL || window.location.origin.replace(/:3001/, ":3000")) + "/dashboard"
+    );
+  }, []);
 
   const filteredMain = mainItems.filter((item) => item.roles.includes(role));
   const filteredMore = moreItems.filter((item) => item.roles.includes(role));
@@ -92,10 +99,7 @@ export function BottomNav({ role }: BottomNavProps) {
               <div className="border-t border-border/40 my-1" />
 
               <a
-                href={typeof window !== "undefined"
-                  ? (process.env.NEXT_PUBLIC_PORTAL_URL || window.location.origin.replace(/:3001$/, ":3000")) + "/dashboard"
-                  : "/dashboard"
-                }
+                href={portalUrl || "/dashboard"}
                 className="flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-muted-foreground hover:bg-muted/50 hover:text-foreground transition-colors"
               >
                 <ArrowLeft className="h-5 w-5" />

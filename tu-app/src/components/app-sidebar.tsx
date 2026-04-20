@@ -1,5 +1,7 @@
 "use client";
 
+import { useState, useEffect } from "react";
+
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
@@ -40,6 +42,13 @@ interface AppSidebarProps {
 export function AppSidebar({ role, pendingCutiCount = 0 }: AppSidebarProps) {
   const pathname = usePathname();
   const { theme, setTheme } = useTheme();
+  const [portalUrl, setPortalUrl] = useState("");
+
+  useEffect(() => {
+    setPortalUrl(
+      (process.env.NEXT_PUBLIC_PORTAL_URL || window.location.origin.replace(/:3001/, ":3000")) + "/dashboard"
+    );
+  }, []);
 
   const navItems = allNavItems.filter((item) => item.roles.includes(role));
 
@@ -135,10 +144,7 @@ export function AppSidebar({ role, pendingCutiCount = 0 }: AppSidebarProps) {
           {theme === "dark" ? "Mode Terang" : "Mode Gelap"}
         </Button>
         <a
-          href={typeof window !== "undefined"
-            ? (process.env.NEXT_PUBLIC_PORTAL_URL || window.location.origin.replace(/:3001$/, ":3000")) + "/dashboard"
-            : "/dashboard"
-          }
+          href={portalUrl || "/dashboard"}
           className="w-full flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium text-muted-foreground hover:bg-sidebar-accent/50 hover:text-sidebar-foreground transition-all"
         >
           <ArrowLeft className="h-4 w-4" />
