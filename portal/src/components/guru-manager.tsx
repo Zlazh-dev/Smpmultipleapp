@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -61,6 +61,16 @@ export function GuruManager({ initialUsers }: { initialUsers: User[] }) {
   const [editUser, setEditUser] = useState<User | null>(null);
   const [deleteConfirm, setDeleteConfirm] = useState<User | null>(null);
   const [formError, setFormError] = useState("");
+
+  // Mobile detection for bottom sheet
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 639px)");
+    setIsMobile(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
 
   // Import state
   const [importFile, setImportFile] = useState<File | null>(null);
@@ -393,9 +403,9 @@ export function GuruManager({ initialUsers }: { initialUsers: User[] }) {
         <span className="hidden sm:inline">{users.filter((u) => u.role === "Guru").length} guru · {users.filter((u) => u.role === "TU").length} tu · {users.filter((u) => u.role === "RADIG").length} admin</span>
       </div>
 
-      {/* Add/Import Sheet (slides from right) */}
+      {/* Add/Import Sheet (bottom on mobile, right on desktop) */}
       <Sheet open={sheetOpen} onOpenChange={(open) => { setSheetOpen(open); if (!open) { resetForm(); setImportFile(null); setImportResult(null); } }}>
-        <SheetContent side="right" className="w-full sm:max-w-md overflow-y-auto">
+        <SheetContent side={isMobile ? "bottom" : "right"} className={isMobile ? "max-h-[85vh] overflow-y-auto rounded-t-2xl" : "w-full sm:max-w-md overflow-y-auto"}>
           <SheetHeader>
             <SheetTitle>{editUser ? "Edit User" : "Tambah User"}</SheetTitle>
           </SheetHeader>
@@ -543,7 +553,7 @@ export function GuruManager({ initialUsers }: { initialUsers: User[] }) {
 
       {/* Delete Confirm Sheet */}
       <Sheet open={!!deleteConfirm} onOpenChange={(open) => { if (!open) setDeleteConfirm(null); }}>
-        <SheetContent side="right" className="w-full sm:max-w-sm">
+        <SheetContent side={isMobile ? "bottom" : "right"} className={isMobile ? "max-h-[50vh] rounded-t-2xl" : "w-full sm:max-w-sm"}>
           <SheetHeader>
             <SheetTitle className="text-red-600">Hapus Akun</SheetTitle>
           </SheetHeader>
