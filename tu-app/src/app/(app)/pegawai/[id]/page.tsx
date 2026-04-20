@@ -25,15 +25,21 @@ export default async function PegawaiDetailPage({
 
   const { id } = await params;
 
-  const pegawai = await db.pegawai.findUnique({
-    where: { id },
-    include: {
-      dokumen: {
-        where: { kategori: "SK" },
-        orderBy: { createdAt: "desc" },
+  const [pegawai, templates] = await Promise.all([
+    db.pegawai.findUnique({
+      where: { id },
+      include: {
+        dokumen: {
+          orderBy: { createdAt: "desc" },
+        },
       },
-    },
-  });
+    }),
+    db.printTemplate.findMany({
+      where: { isActive: true },
+      select: { id: true, nama: true, kategori: true, canvasData: true },
+      orderBy: { kategori: "asc" },
+    }),
+  ]);
 
   if (!pegawai) notFound();
 
@@ -45,7 +51,9 @@ export default async function PegawaiDetailPage({
           skRiwayat: pegawai.skRiwayat || [],
           dokumen: pegawai.dokumen || [],
         }))}
+        templates={JSON.parse(JSON.stringify(templates))}
       />
     </div>
   );
 }
+

@@ -130,16 +130,6 @@ export function PegawaiTable({ data }: { data: Pegawai[] }) {
         keyField="id"
         emptyMessage="Tidak ada data pegawai"
         onRowClick={(row) => router.push(`/pegawai/${row.id}`)}
-        toolbar={
-          <Button
-            size="sm"
-            className="h-8 bg-primary text-primary-foreground hover:bg-primary/90 cursor-pointer"
-            onClick={handleOpenNew}
-          >
-            <Plus className="mr-1.5 h-3.5 w-3.5" />
-            Tambah
-          </Button>
-        }
         mobileCardRender={(row) => (
           <div
             className="mobile-card cursor-pointer"

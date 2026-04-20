@@ -10,21 +10,19 @@ interface BeforeInstallPromptEvent extends Event {
 }
 
 const DISMISS_KEY = "pwa-prompt-dismissed";
-const DISMISS_DAYS = 7;
+// Dismissed permanently — user already saw it and chose "Nanti Saja"
 
 export function PwaInstallPrompt() {
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [show, setShow] = useState(false);
 
   useEffect(() => {
-    // Check if dismissed recently
+    // Check if dismissed permanently or already installed as PWA
     const dismissed = localStorage.getItem(DISMISS_KEY);
-    if (dismissed) {
-      const dismissedAt = parseInt(dismissed, 10);
-      if (Date.now() - dismissedAt < DISMISS_DAYS * 24 * 60 * 60 * 1000) {
-        return;
-      }
-    }
+    if (dismissed) return;
+
+    // Already running as installed PWA
+    if (window.matchMedia("(display-mode: standalone)").matches) return;
 
     function handlePrompt(e: Event) {
       e.preventDefault();
@@ -49,7 +47,7 @@ export function PwaInstallPrompt() {
 
   const handleDismiss = useCallback(() => {
     setShow(false);
-    localStorage.setItem(DISMISS_KEY, Date.now().toString());
+    localStorage.setItem(DISMISS_KEY, "true");
   }, []);
 
   if (!show) return null;

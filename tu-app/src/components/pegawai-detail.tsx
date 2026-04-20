@@ -15,9 +15,12 @@ import {
   ScrollText,
   Calendar,
   Clock,
+  Printer,
+  ChevronDown,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+import { PrintPreview } from "@/components/print-preview";
 
 interface SkRiwayat {
   noSK: string;
@@ -52,6 +55,13 @@ interface PegawaiData {
   createdAt: string;
 }
 
+interface TemplateOption {
+  id: string;
+  nama: string;
+  kategori: string;
+  canvasData: any;
+}
+
 const tabs = [
   { id: "profil", label: "Profil", icon: User },
   { id: "sk", label: "Riwayat SK", icon: ScrollText },
@@ -78,11 +88,23 @@ function formatFileSize(bytes: number) {
   return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
 }
 
-export function PegawaiDetail({ pegawai }: { pegawai: PegawaiData }) {
+export function PegawaiDetail({ pegawai, templates = [] }: { pegawai: PegawaiData; templates?: TemplateOption[] }) {
   const [activeTab, setActiveTab] = useState("profil");
   const [uploading, setUploading] = useState(false);
+  const [showTemplateMenu, setShowTemplateMenu] = useState(false);
+  const [printTemplate, setPrintTemplate] = useState<TemplateOption | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
+
+  const pegawaiVars: Record<string, string> = {
+    namaLengkap: pegawai.namaLengkap,
+    nip: pegawai.nip,
+    jabatan: pegawai.jabatan,
+    username: pegawai.username,
+    noHp: pegawai.noHp || "-",
+    alamat: pegawai.alamat || "-",
+    tanggalSekarang: new Date().toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" }),
+  };
 
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -157,12 +179,51 @@ export function PegawaiDetail({ pegawai }: { pegawai: PegawaiData }) {
             </span>
           </div>
         </div>
-        <Link href={`/pegawai/${pegawai.id}/edit`}>
-          <Button variant="outline" size="sm" className="cursor-pointer">
-            <Pencil className="mr-1.5 h-3.5 w-3.5" />
-            Edit
-          </Button>
-        </Link>
+        <div className="flex items-center gap-2">
+          {templates.length > 0 && (
+            <div className="relative">
+              <Button
+                variant="outline"
+                size="sm"
+                className="cursor-pointer"
+                onClick={() => setShowTemplateMenu(!showTemplateMenu)}
+              >
+                <Printer className="mr-1.5 h-3.5 w-3.5" />
+                Cetak Surat
+                <ChevronDown className="ml-1 h-3 w-3" />
+              </Button>
+              {showTemplateMenu && (
+                <>
+                  <div className="fixed inset-0 z-40" onClick={() => setShowTemplateMenu(false)} />
+                  <div className="absolute right-0 top-full mt-1 w-56 rounded-lg border border-border/50 bg-card shadow-xl z-50 py-1 animate-fade-in">
+                    {templates.map((t) => (
+                      <button
+                        key={t.id}
+                        onClick={() => {
+                          setPrintTemplate(t);
+                          setShowTemplateMenu(false);
+                        }}
+                        className="w-full text-left px-3 py-2 text-sm hover:bg-muted/50 transition-colors cursor-pointer flex items-center gap-2"
+                      >
+                        <FileText className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
+                        <div>
+                          <p className="font-medium text-xs">{t.nama}</p>
+                          <p className="text-[10px] text-muted-foreground">{t.kategori.replace(/_/g, " ")}</p>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                </>
+              )}
+            </div>
+          )}
+          <Link href={`/pegawai/${pegawai.id}/edit`}>
+            <Button variant="outline" size="sm" className="cursor-pointer">
+              <Pencil className="mr-1.5 h-3.5 w-3.5" />
+              Edit
+            </Button>
+          </Link>
+        </div>
       </div>
 
       {/* Tabs */}
@@ -400,6 +461,19 @@ export function PegawaiDetail({ pegawai }: { pegawai: PegawaiData }) {
             </div>
           )}
         </div>
+      )}
+      {/* Print Preview Modal */}
+      {printTemplate && (
+        <PrintPreview
+          template={printTemplate.canvasData}
+          variables={pegawaiVars}
+          pegawaiId={pegawai.id}
+          kategori={printTemplate.kategori}
+          onClose={() => {
+            setPrintTemplate(null);
+            router.refresh();
+          }}
+        />
       )}
     </div>
   );
