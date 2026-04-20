@@ -57,6 +57,11 @@ export function FaceRegistration({ pegawaiId, hasFace }: FaceRegistrationProps) 
       const { getFaceDescriptor } = await import("@/lib/face-utils");
       const loop = async () => {
         if (!videoRef.current || !streamRef.current) return;
+        // Wait for video to have frame data before detection
+        if (videoRef.current.readyState < 2) {
+          if (streamRef.current) requestAnimationFrame(loop);
+          return;
+        }
         const d = await getFaceDescriptor(videoRef.current);
         setFaceDetected(!!d);
         if (streamRef.current) requestAnimationFrame(loop);

@@ -114,6 +114,11 @@ export function FaceVerifyDialog({
 
     const loop = async () => {
       if (!videoRef.current || !streamRef.current) return;
+      // Wait for video to have frame data before detection
+      if (videoRef.current.readyState < 2) {
+        animFrameRef.current = requestAnimationFrame(loop);
+        return;
+      }
 
       const descriptor = await getFaceDescriptor(videoRef.current);
       setFaceDetected(!!descriptor);
