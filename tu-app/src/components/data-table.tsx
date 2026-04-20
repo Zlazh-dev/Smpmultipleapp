@@ -1,7 +1,6 @@
 "use client";
 
 import { ReactNode } from "react";
-import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
 /* ── Types ── */
@@ -11,20 +10,20 @@ export interface Column<T> {
   className?: string;
   mono?: boolean;
   render?: (row: T, index: number) => ReactNode;
-  mobileHidden?: boolean; // hide in mobile card
-  mobileLabel?: string;   // override label in mobile card
+  mobileHidden?: boolean;
+  mobileLabel?: string;
 }
 
 interface DataTableProps<T> {
   columns: Column<T>[];
   data: T[];
   keyField: string;
-  title?: string;
-  subtitle?: string;
   toolbar?: ReactNode;
   emptyMessage?: string;
   onRowClick?: (row: T) => void;
   mobileCardRender?: (row: T, index: number) => ReactNode;
+  footerLeft?: ReactNode;
+  footerRight?: ReactNode;
 }
 
 /* ── Desktop Table ── */
@@ -34,9 +33,9 @@ function DesktopTable<T extends Record<string, any>>({
   keyField,
   emptyMessage,
   onRowClick,
-}: DataTableProps<T>) {
+}: Pick<DataTableProps<T>, "columns" | "data" | "keyField" | "emptyMessage" | "onRowClick">) {
   return (
-    <div className="data-table-wrapper hidden md:block overflow-x-auto">
+    <div className="overflow-x-auto">
       <table className="data-table">
         <thead>
           <tr>
@@ -53,7 +52,7 @@ function DesktopTable<T extends Record<string, any>>({
             <tr>
               <td
                 colSpan={columns.length + 1}
-                className="!text-center !py-12 !text-muted-foreground"
+                className="!text-center !py-16 !text-muted-foreground !text-sm"
               >
                 {emptyMessage || "Tidak ada data"}
               </td>
@@ -79,13 +78,6 @@ function DesktopTable<T extends Record<string, any>>({
           )}
         </tbody>
       </table>
-      {/* Footer */}
-      {data.length > 0 && (
-        <div className="flex items-center justify-between px-3 py-2 border-t text-[11px] text-muted-foreground bg-[var(--table-header-bg)]">
-          <span>{data.length} rows</span>
-          <span className="text-[10px]">Supabase-style table</span>
-        </div>
-      )}
     </div>
   );
 }
@@ -98,11 +90,11 @@ function MobileCards<T extends Record<string, any>>({
   emptyMessage,
   onRowClick,
   mobileCardRender,
-}: DataTableProps<T>) {
+}: Pick<DataTableProps<T>, "columns" | "data" | "keyField" | "emptyMessage" | "onRowClick" | "mobileCardRender">) {
   const visibleCols = columns.filter((c) => !c.mobileHidden);
 
   return (
-    <div className="md:hidden space-y-2">
+    <div className="md:hidden space-y-2 p-3">
       {data.length === 0 ? (
         <div className="text-center py-10 text-sm text-muted-foreground">
           {emptyMessage || "Tidak ada data"}
@@ -139,43 +131,63 @@ function MobileCards<T extends Record<string, any>>({
           )
         )
       )}
-      {data.length > 0 && (
-        <p className="text-center text-[10px] text-muted-foreground pt-2">
-          {data.length} data
-        </p>
-      )}
     </div>
   );
 }
 
-/* ── Combined DataTable ── */
+/* ── Combined DataTable — Supabase unified card ── */
 export function DataTable<T extends Record<string, any>>(
   props: DataTableProps<T>
 ) {
   return (
     <div className="animate-fade-in-up">
-      {/* Toolbar */}
-      {(props.title || props.toolbar) && (
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
-          {props.title && (
-            <div>
-              <h2 className="text-base font-semibold">{props.title}</h2>
-              {props.subtitle && (
-                <p className="text-xs text-muted-foreground mt-0.5">
-                  {props.subtitle}
-                </p>
-              )}
-            </div>
-          )}
-          {props.toolbar && <div className="flex items-center gap-2">{props.toolbar}</div>}
-        </div>
-      )}
+      {/* Unified card: toolbar + table + footer */}
+      <div className="data-table-wrapper hidden md:block">
+        {/* Toolbar */}
+        {props.toolbar && (
+          <div className="table-toolbar">{props.toolbar}</div>
+        )}
 
-      {/* Desktop */}
-      <DesktopTable {...props} />
+        {/* Table */}
+        <DesktopTable
+          columns={props.columns}
+          data={props.data}
+          keyField={props.keyField}
+          emptyMessage={props.emptyMessage}
+          onRowClick={props.onRowClick}
+        />
+
+        {/* Footer */}
+        {props.data.length > 0 && (
+          <div className="data-table-footer">
+            <span>{props.footerLeft || `${props.data.length} rows`}</span>
+            <span>{props.footerRight || ""}</span>
+          </div>
+        )}
+      </div>
 
       {/* Mobile */}
-      <MobileCards {...props} />
+      <div className="md:hidden">
+        <div className="data-table-wrapper">
+          {props.toolbar && (
+            <div className="table-toolbar">{props.toolbar}</div>
+          )}
+          <MobileCards
+            columns={props.columns}
+            data={props.data}
+            keyField={props.keyField}
+            emptyMessage={props.emptyMessage}
+            onRowClick={props.onRowClick}
+            mobileCardRender={props.mobileCardRender}
+          />
+          {props.data.length > 0 && (
+            <div className="data-table-footer">
+              <span>{props.data.length} data</span>
+              <span></span>
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 }

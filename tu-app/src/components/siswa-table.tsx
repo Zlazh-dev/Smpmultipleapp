@@ -1,10 +1,9 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useState, useCallback } from "react";
 import Link from "next/link";
-import { Input } from "@/components/ui/input";
-import { Search, ChevronLeft, ChevronRight, GraduationCap, User } from "lucide-react";
+import { Search, ChevronLeft, ChevronRight, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface SiswaRow {
@@ -74,165 +73,164 @@ export function SiswaTable({
     navigate({ search, page: "1" });
   };
 
-  return (
-    <div className="space-y-3">
-      {/* Filters */}
-      <div className="flex flex-col sm:flex-row gap-2">
-        <form onSubmit={handleSearch} className="flex-1 relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Cari nama, NISN, atau NIS..."
-            className="pl-9 h-9 text-sm"
-          />
-        </form>
-        <select
-          value={currentKelas}
-          onChange={(e) => navigate({ kelas: e.target.value, page: "1" })}
-          className="h-9 rounded-md border border-input bg-background px-3 text-sm"
-        >
-          <option value="">Semua Kelas</option>
-          {kelasList.map((k) => (
-            <option key={k.id_kelas} value={String(k.id_kelas)}>
-              {k.nama_kelas} ({k._count.siswa})
-            </option>
-          ))}
-        </select>
-        <select
-          value={currentStatus}
-          onChange={(e) => navigate({ status: e.target.value, page: "1" })}
-          className="h-9 rounded-md border border-input bg-background px-3 text-sm"
-        >
-          <option value="Aktif">Aktif</option>
-          <option value="Lulus">Lulus</option>
-          <option value="Pindah">Pindah</option>
-          <option value="Keluar">Keluar</option>
-          <option value="">Semua</option>
-        </select>
-      </div>
+  /* ── Toolbar (inside the card) ── */
+  const toolbar = (
+    <>
+      <form onSubmit={handleSearch} className="toolbar-search">
+        <Search />
+        <input
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Cari nama, NISN, NIS..."
+        />
+      </form>
+      <select
+        value={currentKelas}
+        onChange={(e) => navigate({ kelas: e.target.value, page: "1" })}
+      >
+        <option value="">Semua Kelas</option>
+        {kelasList.map((k) => (
+          <option key={k.id_kelas} value={String(k.id_kelas)}>
+            {k.nama_kelas} ({k._count.siswa})
+          </option>
+        ))}
+      </select>
+      <select
+        value={currentStatus}
+        onChange={(e) => navigate({ status: e.target.value, page: "1" })}
+      >
+        <option value="Aktif">Aktif</option>
+        <option value="Lulus">Lulus</option>
+        <option value="Pindah">Pindah</option>
+        <option value="Keluar">Keluar</option>
+        <option value="">Semua</option>
+      </select>
+    </>
+  );
 
-      {/* Desktop Table */}
-      <div className="hidden md:block data-table-wrapper">
-        <table className="data-table">
-          <thead>
-            <tr>
-              <th className="row-num">#</th>
-              <th>Nama Lengkap</th>
-              <th>NISN</th>
-              <th>NIS</th>
-              <th>Kelas</th>
-              <th>L/P</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {siswa.length === 0 ? (
+  /* ── Status badge helper ── */
+  const statusBadge = (s: string) => (
+    <span
+      className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium ${
+        s === "Aktif"
+          ? "bg-emerald-500/10 text-emerald-600"
+          : s === "Lulus"
+          ? "bg-blue-500/10 text-blue-600"
+          : "bg-red-500/10 text-red-500"
+      }`}
+    >
+      {s}
+    </span>
+  );
+
+  return (
+    <div className="space-y-0 animate-fade-in-up">
+      {/* Unified Card: toolbar + table + footer */}
+      <div className="data-table-wrapper">
+        {/* Toolbar */}
+        <div className="table-toolbar">{toolbar}</div>
+
+        {/* Desktop Table */}
+        <div className="hidden md:block overflow-x-auto">
+          <table className="data-table">
+            <thead>
               <tr>
-                <td colSpan={7} className="text-center py-8 text-muted-foreground">
-                  Tidak ada data siswa ditemukan
-                </td>
+                <th className="row-num">#</th>
+                <th>Nama Lengkap</th>
+                <th>NISN</th>
+                <th>NIS</th>
+                <th>Kelas</th>
+                <th>L/P</th>
+                <th>Status</th>
               </tr>
-            ) : (
-              siswa.map((s, i) => (
-                <tr key={s.id_siswa}>
-                  <td className="row-num">{(page - 1) * limit + i + 1}</td>
-                  <td>
-                    <Link
-                      href={`/siswa/${s.id_siswa}`}
-                      className="font-medium text-foreground hover:text-primary transition-colors"
-                    >
-                      {s.nama_lengkap}
-                    </Link>
-                  </td>
-                  <td className="col-mono">{s.nisn}</td>
-                  <td className="col-mono">{s.nis || "-"}</td>
-                  <td>{s.kelas?.nama_kelas || "-"}</td>
-                  <td>{s.jenis_kelamin || "-"}</td>
-                  <td>
-                    <span
-                      className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium ${
-                        s.status_siswa === "Aktif"
-                          ? "bg-emerald-500/10 text-emerald-600"
-                          : s.status_siswa === "Lulus"
-                          ? "bg-blue-500/10 text-blue-600"
-                          : "bg-red-500/10 text-red-500"
-                      }`}
-                    >
-                      {s.status_siswa}
-                    </span>
+            </thead>
+            <tbody>
+              {siswa.length === 0 ? (
+                <tr>
+                  <td colSpan={7} className="!text-center !py-16 !text-muted-foreground !text-sm">
+                    Tidak ada data siswa ditemukan
                   </td>
                 </tr>
-              ))
-            )}
-          </tbody>
-        </table>
-      </div>
-
-      {/* Mobile Cards */}
-      <div className="md:hidden space-y-2">
-        {siswa.length === 0 ? (
-          <div className="text-center py-12 text-muted-foreground text-sm">
-            Tidak ada data siswa ditemukan
-          </div>
-        ) : (
-          siswa.map((s) => (
-            <Link
-              key={s.id_siswa}
-              href={`/siswa/${s.id_siswa}`}
-              className="mobile-card flex items-center gap-3"
-            >
-              <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-muted">
-                <User className="h-4 w-4 text-muted-foreground" />
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium truncate">{s.nama_lengkap}</p>
-                <p className="text-[11px] text-muted-foreground">
-                  {s.nisn} · {s.kelas?.nama_kelas || "Tanpa Kelas"}
-                </p>
-              </div>
-              <span
-                className={`shrink-0 inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium ${
-                  s.status_siswa === "Aktif"
-                    ? "bg-emerald-500/10 text-emerald-600"
-                    : "bg-red-500/10 text-red-500"
-                }`}
-              >
-                {s.jenis_kelamin || ""}
-              </span>
-            </Link>
-          ))
-        )}
-      </div>
-
-      {/* Pagination */}
-      {totalPages > 1 && (
-        <div className="flex items-center justify-between pt-2">
-          <p className="text-xs text-muted-foreground">
-            Halaman {page} dari {totalPages} ({total} siswa)
-          </p>
-          <div className="flex gap-1">
-            <Button
-              variant="outline"
-              size="sm"
-              className="h-7 text-xs"
-              disabled={page <= 1}
-              onClick={() => navigate({ page: String(page - 1) })}
-            >
-              <ChevronLeft className="h-3 w-3" />
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              className="h-7 text-xs"
-              disabled={page >= totalPages}
-              onClick={() => navigate({ page: String(page + 1) })}
-            >
-              <ChevronRight className="h-3 w-3" />
-            </Button>
-          </div>
+              ) : (
+                siswa.map((s, i) => (
+                  <tr
+                    key={s.id_siswa}
+                    className="cursor-pointer"
+                    onClick={() => router.push(`/siswa/${s.id_siswa}`)}
+                  >
+                    <td className="row-num">{(page - 1) * limit + i + 1}</td>
+                    <td>
+                      <span className="font-medium text-[13px]">{s.nama_lengkap}</span>
+                    </td>
+                    <td className="col-mono col-id">{s.nisn}</td>
+                    <td className="col-mono col-id">{s.nis || "—"}</td>
+                    <td>{s.kelas?.nama_kelas || "—"}</td>
+                    <td>{s.jenis_kelamin || "—"}</td>
+                    <td>{statusBadge(s.status_siswa)}</td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
         </div>
-      )}
+
+        {/* Mobile Cards */}
+        <div className="md:hidden space-y-2 p-3">
+          {siswa.length === 0 ? (
+            <div className="text-center py-12 text-muted-foreground text-sm">
+              Tidak ada data siswa ditemukan
+            </div>
+          ) : (
+            siswa.map((s) => (
+              <Link
+                key={s.id_siswa}
+                href={`/siswa/${s.id_siswa}`}
+                className="mobile-card flex items-center gap-3"
+              >
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-muted">
+                  <User className="h-4 w-4 text-muted-foreground" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium truncate">{s.nama_lengkap}</p>
+                  <p className="text-[11px] text-muted-foreground">
+                    {s.nisn} · {s.kelas?.nama_kelas || "Tanpa Kelas"}
+                  </p>
+                </div>
+                {statusBadge(s.status_siswa)}
+              </Link>
+            ))
+          )}
+        </div>
+
+        {/* Footer */}
+        <div className="data-table-footer">
+          <span>
+            {total} siswa · Halaman {page}/{totalPages}
+          </span>
+          {totalPages > 1 && (
+            <div className="flex gap-1">
+              <Button
+                variant="outline"
+                size="sm"
+                className="h-6 w-6 p-0"
+                disabled={page <= 1}
+                onClick={() => navigate({ page: String(page - 1) })}
+              >
+                <ChevronLeft className="h-3 w-3" />
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                className="h-6 w-6 p-0"
+                disabled={page >= totalPages}
+                onClick={() => navigate({ page: String(page + 1) })}
+              >
+                <ChevronRight className="h-3 w-3" />
+              </Button>
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 }

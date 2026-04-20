@@ -1,8 +1,5 @@
 import { db } from "@/lib/db";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Search } from "lucide-react";
 import { PresensiTable } from "@/components/presensi-table";
 import { getCurrentUser } from "@/lib/current-user";
 
@@ -108,13 +105,13 @@ export default async function PresensiPage({ searchParams }: PageProps) {
 
   return (
     <div className="p-4 lg:p-6 space-y-4">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 animate-fade-in">
+      {/* Page Header */}
+      <div className="page-header animate-fade-in">
         <div>
-          <h1 className="text-xl sm:text-2xl font-bold tracking-tight">
+          <h1 className="page-header-title">
             {isKhusus ? "Presensi Harian" : "Presensi Saya"}
           </h1>
-          <p className="text-muted-foreground text-xs mt-0.5">
+          <p className="page-header-subtitle">
             {filterDate.toLocaleDateString("id-ID", {
               weekday: "long", day: "numeric", month: "long", year: "numeric",
             })}
@@ -122,17 +119,11 @@ export default async function PresensiPage({ searchParams }: PageProps) {
         </div>
       </div>
 
-      {/* Date + Status Summary */}
-      <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 animate-fade-in-up">
-        <form className="col-span-2 sm:col-span-1 flex gap-1.5">
-          <Input type="date" name="tanggal" defaultValue={dateStr} className="h-8 text-xs" />
-          <Button type="submit" variant="secondary" size="sm" className="h-8 px-2 cursor-pointer">
-            <Search className="h-3.5 w-3.5" />
-          </Button>
-        </form>
+      {/* Status Summary Cards */}
+      <div className="grid grid-cols-4 gap-2 animate-fade-in-up">
         {Object.entries(statusCounts).map(([status, count]) => (
-          <div key={status} className="flex items-center justify-between px-3 py-2 rounded-md border border-border bg-card">
-            <span className="text-lg font-bold">{count}</span>
+          <div key={status} className="flex items-center justify-between px-3 py-2.5 rounded-md border border-border bg-card">
+            <span className="text-lg font-bold tabular-nums">{count}</span>
             <Badge
               className={
                 status === "HADIR" ? "bg-emerald-500/15 text-emerald-500 border-0 text-[10px]"
@@ -147,12 +138,13 @@ export default async function PresensiPage({ searchParams }: PageProps) {
         ))}
       </div>
 
-      {/* Table */}
+      {/* Unified Table Card */}
       <PresensiTable
         data={JSON.parse(JSON.stringify(flatPresensi))}
         belumPresensi={JSON.parse(JSON.stringify(belumPresensi))}
         isKhusus={isKhusus}
         userId={user.id}
+        dateStr={dateStr}
       />
     </div>
   );

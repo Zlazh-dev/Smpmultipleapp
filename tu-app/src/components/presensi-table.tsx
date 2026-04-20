@@ -4,7 +4,7 @@ import { useState } from "react";
 import { DataTable, Column } from "@/components/data-table";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { QrCode, MapPin, Loader2, CheckCircle } from "lucide-react";
+import { QrCode, MapPin, Loader2, CheckCircle, Search, Calendar } from "lucide-react";
 import { QrScannerDialog } from "@/components/qr-scanner";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
@@ -44,7 +44,7 @@ const columns: Column<PresensiRow>[] = [
   {
     key: "namaLengkap",
     label: "Nama",
-    render: (row) => <span className="font-medium text-sm">{row.namaLengkap}</span>,
+    render: (row) => <span className="font-medium text-[13px]">{row.namaLengkap}</span>,
   },
   { key: "nip", label: "NIP", mono: true, className: "col-id" },
   {
@@ -89,11 +89,13 @@ export function PresensiTable({
   belumPresensi,
   isKhusus = true,
   userId,
+  dateStr,
 }: {
   data: PresensiRow[];
   belumPresensi: BelumPresensi[];
   isKhusus?: boolean;
   userId?: string;
+  dateStr: string;
 }) {
   const [scannerOpen, setScannerOpen] = useState(false);
   const [checkingIn, setCheckingIn] = useState(false);
@@ -154,11 +156,42 @@ export function PresensiTable({
     }
   };
 
+  const toolbar = (
+    <>
+      <form className="contents" action="/presensi">
+        <div className="toolbar-search" style={{ maxWidth: 180 }}>
+          <Calendar />
+          <input
+            type="date"
+            name="tanggal"
+            defaultValue={dateStr}
+            style={{ paddingLeft: 30 }}
+          />
+        </div>
+        <button type="submit" className="toolbar-btn toolbar-btn-ghost">
+          <Search className="h-3.5 w-3.5" />
+          Filter
+        </button>
+      </form>
+      <div className="toolbar-spacer" />
+      {isKhusus && (
+        <button
+          type="button"
+          className="toolbar-btn toolbar-btn-primary"
+          onClick={() => setScannerOpen(true)}
+        >
+          <QrCode className="h-3.5 w-3.5" />
+          Scan QR
+        </button>
+      )}
+    </>
+  );
+
   return (
     <>
       {/* UMUM: Self check-in button */}
       {!isKhusus && !checkedIn && (
-        <div className="p-4 rounded-xl border border-primary/20 bg-primary/5 text-center space-y-3 animate-fade-in-up">
+        <div className="p-4 rounded-xl border border-primary/20 bg-primary/5 text-center space-y-3 animate-fade-in-up mb-4">
           <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10 mx-auto">
             <MapPin className="h-6 w-6 text-primary" />
           </div>
@@ -183,7 +216,7 @@ export function PresensiTable({
       )}
 
       {!isKhusus && checkedIn && (
-        <div className="p-3 rounded-lg border border-emerald-500/20 bg-emerald-500/5 flex items-center gap-2 animate-fade-in">
+        <div className="p-3 rounded-lg border border-emerald-500/20 bg-emerald-500/5 flex items-center gap-2 animate-fade-in mb-4">
           <CheckCircle className="h-4 w-4 text-emerald-500" />
           <p className="text-xs font-medium text-emerald-600 dark:text-emerald-400">
             Anda sudah presensi hari ini
@@ -195,20 +228,9 @@ export function PresensiTable({
         columns={columns}
         data={data}
         keyField="id"
-        title={isKhusus ? `Data Presensi (${data.length})` : undefined}
         emptyMessage={isKhusus ? "Belum ada data presensi hari ini" : "Belum ada presensi untuk tanggal ini"}
-        toolbar={
-          isKhusus ? (
-            <Button
-              size="sm"
-              className="h-8 bg-primary text-primary-foreground hover:bg-primary/90 cursor-pointer"
-              onClick={() => setScannerOpen(true)}
-            >
-              <QrCode className="mr-1.5 h-3.5 w-3.5" />
-              Scan QR
-            </Button>
-          ) : undefined
-        }
+        toolbar={toolbar}
+        footerLeft={`${data.length} presensi`}
         mobileCardRender={(row) => (
           <div className="mobile-card">
             <div className="flex items-center justify-between mb-1">
@@ -216,6 +238,11 @@ export function PresensiTable({
               {statusBadge(row.status)}
             </div>
             <p className="text-[10px] text-muted-foreground font-mono">{row.nip} · {row.jabatan}</p>
+            {row.jamDatang && (
+              <p className="text-[10px] text-muted-foreground mt-1">
+                Masuk: {row.jamDatang} {row.jamPulang ? `· Pulang: ${row.jamPulang}` : ""}
+              </p>
+            )}
             {row.keterangan && (
               <p className="text-xs text-muted-foreground mt-1">{row.keterangan}</p>
             )}

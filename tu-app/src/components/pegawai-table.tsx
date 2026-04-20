@@ -4,8 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { DataTable, Column } from "@/components/data-table";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Pencil, Plus } from "lucide-react";
+import { Pencil, Plus, Search } from "lucide-react";
 import { PegawaiFormSheet } from "@/components/pegawai-form-sheet";
 
 interface Pegawai {
@@ -24,13 +23,13 @@ interface Pegawai {
 const columns: Column<Pegawai>[] = [
   {
     key: "namaLengkap",
-    label: "Nama Lengkap",
+    label: "Nama",
     render: (row) => (
-      <div className="flex items-center gap-2">
-        <div className="flex h-6 w-6 items-center justify-center rounded-full bg-primary/15 text-primary text-[10px] font-bold shrink-0">
+      <div className="flex items-center gap-2.5">
+        <div className="flex h-7 w-7 items-center justify-center rounded-full bg-primary/15 text-primary text-[10px] font-bold shrink-0">
           {row.namaLengkap.charAt(0)}
         </div>
-        <span className="font-medium text-sm">{row.namaLengkap}</span>
+        <span className="font-medium text-[13px]">{row.namaLengkap}</span>
       </div>
     ),
     mobileLabel: "Nama",
@@ -89,15 +88,17 @@ const columns: Column<Pegawai>[] = [
   },
 ];
 
-export function PegawaiTable({ data }: { data: Pegawai[] }) {
+interface PegawaiTableProps {
+  data: Pegawai[];
+  jabatanList: string[];
+  currentSearch: string;
+  currentJabatan: string;
+}
+
+export function PegawaiTable({ data, jabatanList, currentSearch, currentJabatan }: PegawaiTableProps) {
   const router = useRouter();
   const [sheetOpen, setSheetOpen] = useState(false);
   const [editPegawai, setEditPegawai] = useState<Pegawai | undefined>(undefined);
-
-  const handleOpenNew = () => {
-    setEditPegawai(undefined);
-    setSheetOpen(true);
-  };
 
   const handleOpenEdit = (row: Pegawai) => {
     setEditPegawai(row);
@@ -122,6 +123,39 @@ export function PegawaiTable({ data }: { data: Pegawai[] }) {
     mobileHidden: true,
   };
 
+  const toolbar = (
+    <>
+      <form className="contents" action="/pegawai">
+        <div className="toolbar-search">
+          <Search />
+          <input
+            name="q"
+            placeholder="Cari nama, NIP, username..."
+            defaultValue={currentSearch}
+          />
+        </div>
+        <select name="jabatan" defaultValue={currentJabatan}>
+          <option value="">Semua Jabatan</option>
+          {jabatanList.map((j) => (
+            <option key={j} value={j}>{j}</option>
+          ))}
+        </select>
+        <button type="submit" className="toolbar-btn toolbar-btn-ghost">
+          Filter
+        </button>
+      </form>
+      <div className="toolbar-spacer" />
+      <button
+        type="button"
+        className="toolbar-btn toolbar-btn-primary"
+        onClick={() => { setEditPegawai(undefined); setSheetOpen(true); }}
+      >
+        <Plus className="h-3.5 w-3.5" />
+        Tambah
+      </button>
+    </>
+  );
+
   return (
     <>
       <DataTable
@@ -130,10 +164,12 @@ export function PegawaiTable({ data }: { data: Pegawai[] }) {
         keyField="id"
         emptyMessage="Tidak ada data pegawai"
         onRowClick={(row) => router.push(`/pegawai/${row.id}`)}
+        toolbar={toolbar}
+        footerLeft={`${data.length} pegawai`}
         mobileCardRender={(row) => (
           <div
             className="mobile-card cursor-pointer"
-            onClick={() => handleOpenEdit(row)}
+            onClick={() => router.push(`/pegawai/${row.id}`)}
           >
             <div className="flex items-center justify-between mb-2">
               <div className="flex items-center gap-2">

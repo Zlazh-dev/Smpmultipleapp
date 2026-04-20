@@ -172,7 +172,96 @@
   border: 1px solid var(--table-border);
   border-radius: var(--radius);
   overflow: hidden;
+  background: var(--card);
 }
+
+/* Toolbar — search + filters row, flush with table */
+.table-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--table-border);
+  background: var(--table-header-bg);
+  flex-wrap: wrap;
+}
+.table-toolbar .toolbar-search {
+  position: relative;
+  flex: 1;
+  min-width: 180px;
+  max-width: 320px;
+}
+.table-toolbar .toolbar-search input {
+  width: 100%;
+  height: 30px;
+  padding: 0 10px 0 30px;
+  font-size: 12px;
+  border: 1px solid var(--table-border);
+  border-radius: 4px;
+  background: var(--background);
+  color: var(--foreground);
+  outline: none;
+  transition: border-color 0.15s;
+}
+.table-toolbar .toolbar-search input:focus {
+  border-color: var(--primary);
+}
+.table-toolbar .toolbar-search svg {
+  position: absolute;
+  left: 9px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 14px;
+  height: 14px;
+  color: var(--muted-foreground);
+  pointer-events: none;
+}
+.table-toolbar select {
+  height: 30px;
+  padding: 0 24px 0 8px;
+  font-size: 12px;
+  border: 1px solid var(--table-border);
+  border-radius: 4px;
+  background: var(--background);
+  color: var(--foreground);
+  cursor: pointer;
+  outline: none;
+}
+.table-toolbar select:focus {
+  border-color: var(--primary);
+}
+.table-toolbar .toolbar-spacer {
+  flex: 1;
+}
+.table-toolbar .toolbar-btn {
+  height: 30px;
+  padding: 0 12px;
+  font-size: 12px;
+  font-weight: 500;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: background-color 0.15s, opacity 0.15s;
+}
+.table-toolbar .toolbar-btn-primary {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+.table-toolbar .toolbar-btn-primary:hover {
+  opacity: 0.9;
+}
+.table-toolbar .toolbar-btn-ghost {
+  background: transparent;
+  color: var(--muted-foreground);
+}
+.table-toolbar .toolbar-btn-ghost:hover {
+  background: var(--accent);
+  color: var(--foreground);
+}
+
 .data-table {
   width: 100%;
   border-collapse: collapse;
@@ -188,8 +277,10 @@
 .data-table thead th {
   padding: 8px 12px;
   font-weight: 500;
-  font-size: 12px;
+  font-size: 11px;
   color: var(--muted-foreground);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
   text-align: left;
   white-space: nowrap;
   border-right: 1px solid var(--table-border);
@@ -200,14 +291,12 @@
   border-bottom: 1px solid var(--table-border);
   transition: background-color 0.1s;
 }
-.data-table tbody tr:nth-child(even) {
-  background: var(--table-row-alt);
-}
+.data-table tbody tr:last-child { border-bottom: none; }
 .data-table tbody tr:hover {
   background: var(--table-row-hover);
 }
 .data-table tbody td {
-  padding: 6px 12px;
+  padding: 8px 12px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -219,10 +308,10 @@
   color: var(--table-row-num);
   font-size: 11px;
   font-variant-numeric: tabular-nums;
-  width: 48px;
-  min-width: 48px;
+  width: 44px;
+  min-width: 44px;
   text-align: center;
-  padding: 6px 8px;
+  padding: 8px 6px;
 }
 .data-table .col-mono {
   font-family: var(--font-mono), ui-monospace, monospace;
@@ -231,7 +320,39 @@
 }
 .data-table .col-id {
   color: var(--muted-foreground);
+  font-size: 12px;
+}
+
+/* Table footer */
+.data-table-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 12px;
+  border-top: 1px solid var(--table-border);
   font-size: 11px;
+  color: var(--muted-foreground);
+  background: var(--table-header-bg);
+}
+
+/* Page header pattern */
+.page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 0 16px 0;
+}
+.page-header-title {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+}
+.page-header-subtitle {
+  font-size: 13px;
+  color: var(--muted-foreground);
+  margin-top: 2px;
 }
 
 /* ── Mobile card style ── */

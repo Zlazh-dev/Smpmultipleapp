@@ -64,12 +64,14 @@ export default async function SiswaPage({
     // If no matching guru/kelas found, show empty
     if (!scopedKelasIds || scopedKelasIds.length === 0) {
       return (
-        <div className="p-4 md:p-6 space-y-4 animate-fade-in">
-          <div>
-            <h1 className="text-xl font-bold tracking-tight">Data Siswa</h1>
-            <p className="text-sm text-muted-foreground mt-0.5">
-              Anda belum ditugaskan sebagai wali kelas di tahun ajaran aktif.
-            </p>
+        <div className="p-4 md:p-6 space-y-0 animate-fade-in">
+          <div className="page-header">
+            <div>
+              <h1 className="page-header-title">Data Siswa</h1>
+              <p className="page-header-subtitle">
+                Anda belum ditugaskan sebagai wali kelas di tahun ajaran aktif.
+              </p>
+            </div>
           </div>
         </div>
       );
@@ -119,16 +121,20 @@ export default async function SiswaPage({
   );
 
   const subtitle = role === "UMUM" && guruNama
-    ? `Kelas wali Anda (${guruNama}) — ${total} siswa`
-    : `Data siswa dari RADIG — ${total} siswa ditemukan`;
+    ? `Kelas wali Anda (${guruNama})`
+    : `Data siswa dari RADIG`;
 
   return (
-    <div className="p-4 md:p-6 space-y-4 animate-fade-in">
-      <div>
-        <h1 className="text-xl font-bold tracking-tight">Data Siswa</h1>
-        <p className="text-sm text-muted-foreground mt-0.5">{subtitle}</p>
+    <div className="p-4 md:p-6 space-y-0 animate-fade-in">
+      {/* Page Header */}
+      <div className="page-header">
+        <div>
+          <h1 className="page-header-title">Data Siswa</h1>
+          <p className="page-header-subtitle">{subtitle}</p>
+        </div>
       </div>
 
+      {/* Unified Table Card */}
       <SiswaTable
         siswa={JSON.parse(JSON.stringify(siswa))}
         kelasList={JSON.parse(JSON.stringify(activeKelas))}
