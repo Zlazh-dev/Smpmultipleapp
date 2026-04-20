@@ -30,15 +30,26 @@ export async function loadFaceModels(): Promise<void> {
 export async function getFaceDescriptor(
   input: HTMLVideoElement | HTMLImageElement | HTMLCanvasElement
 ): Promise<Float32Array | null> {
-  const faceapi = await import("face-api.js");
+  // Guard: ensure input is a valid, mounted DOM element with content
+  if (!input || !(input instanceof HTMLElement)) return null;
+  if (input instanceof HTMLVideoElement && input.readyState < 2) return null;
+  if (input instanceof HTMLImageElement && !input.complete) return null;
 
-  const detection = await faceapi
-    .detectSingleFace(input, new faceapi.TinyFaceDetectorOptions({ inputSize: 320, scoreThreshold: 0.5 }))
-    .withFaceLandmarks()
-    .withFaceDescriptor();
+  try {
+    const faceapi = await import("face-api.js");
 
-  if (!detection) return null;
-  return detection.descriptor;
+    const detection = await faceapi
+      .detectSingleFace(input, new faceapi.TinyFaceDetectorOptions({ inputSize: 320, scoreThreshold: 0.5 }))
+      .withFaceLandmarks()
+      .withFaceDescriptor();
+
+    if (!detection) return null;
+    return detection.descriptor;
+  } catch (err) {
+    // Suppress toNetInput errors from face-api internals
+    console.warn("Face detection skipped:", (err as Error).message);
+    return null;
+  }
 }
 
 /**
