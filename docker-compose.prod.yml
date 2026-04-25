@@ -159,6 +159,42 @@ services:
     networks:
       - smpit-net
 
+  # ---- DB Tools (for prisma db push / seed) ----
+  # These use the full deps stage with all node_modules.
+  # Usage:
+  #   docker compose -f docker-compose.prod.yml run --rm portal-tools npx prisma db push
+  #   docker compose -f docker-compose.prod.yml run --rm tu-tools npx prisma db push
+  portal-tools:
+    build:
+      context: ./portal
+      dockerfile: Dockerfile
+      target: deps
+    profiles: ["tools"]
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: "postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/portal_smpit?schema=public"
+    networks:
+      - smpit-net
+
+  tu-tools:
+    build:
+      context: ./tu-app
+      dockerfile: Dockerfile
+      target: deps
+    profiles: ["tools"]
+    depends_on:
+      postgres:
+        condition: service_healthy
+      mysql:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: "postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/tu_smpit?schema=public"
+      RADIG_DATABASE_URL: "mysql://${MYSQL_RADIG_USER}:${MYSQL_RADIG_PASSWORD}@mysql:3306/raporsmp"
+    networks:
+      - smpit-net
+
 volumes:
   postgres_data:
   mysql_data:
