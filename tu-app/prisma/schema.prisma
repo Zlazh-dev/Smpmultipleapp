@@ -43,6 +43,8 @@ model Pegawai {
   noHp           String?
   alamat         String?
   faceDescriptor Float[]    // 128-dim face descriptor vector for face recognition
+  facePhoto      String?    // Path to uploaded face photo for admin review
+  faceVerified   Boolean    @default(false) // Admin has verified the face photo
   skRiwayat      Json[]     // [{"noSK":"123/KS/2026","tanggal":"2026-01-01","jenis":"Pengangkatan"}]
   kinerja        Json?      // e-Kinerja scores
   presensi       Presensi[]

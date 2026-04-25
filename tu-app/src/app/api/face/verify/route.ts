@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
 
     const pegawai = await db.pegawai.findUnique({
       where: { id: pegawaiId },
-      select: { id: true, namaLengkap: true, faceDescriptor: true },
+      select: { id: true, namaLengkap: true, faceDescriptor: true, faceVerified: true },
     });
 
     if (!pegawai) {
@@ -43,7 +43,19 @@ export async function POST(request: NextRequest) {
         {
           error: "Wajah belum terdaftar",
           notRegistered: true,
-          message: "Kamu harus registrasi wajah dahulu atau hubungi admin segera.",
+          message: "Kamu harus registrasi wajah dahulu di halaman profil atau hubungi admin.",
+        },
+        { status: 400 }
+      );
+    }
+
+    // Check if face is verified by admin
+    if (!pegawai.faceVerified) {
+      return NextResponse.json(
+        {
+          error: "Wajah belum diverifikasi",
+          notVerified: true,
+          message: "Foto wajah kamu sudah diupload tapi belum diverifikasi oleh admin. Hubungi admin untuk verifikasi.",
         },
         { status: 400 }
       );

@@ -20,31 +20,6 @@ export const authConfig: NextAuthConfig = {
   },
   providers: [], // Providers are added in auth.ts (Node.js runtime only)
   callbacks: {
-    authorized({ auth, request: { nextUrl } }) {
-      const isLoggedIn = !!auth?.user;
-      const protectedRoutes = ["/dashboard"];
-      const authRoutes = ["/login", "/register"];
-
-      const isProtected = protectedRoutes.some((route) =>
-        nextUrl.pathname.startsWith(route)
-      );
-      const isAuthRoute = authRoutes.some((route) =>
-        nextUrl.pathname.startsWith(route)
-      );
-
-      if (isAuthRoute && isLoggedIn) {
-        return Response.redirect(new URL("/dashboard", nextUrl));
-      }
-
-      if (isProtected && !isLoggedIn) {
-        const callbackUrl = encodeURIComponent(nextUrl.pathname);
-        return Response.redirect(
-          new URL(`/login?callbackUrl=${callbackUrl}`, nextUrl)
-        );
-      }
-
-      return true;
-    },
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id as string;

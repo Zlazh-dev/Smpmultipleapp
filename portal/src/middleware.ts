@@ -2,15 +2,13 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 /**
- * Portal middleware — classifier only.
- * No auth checks. Portal is a public landing page that redirects
- * users to each app's own login.
- *
- * Subdomain detection still works for production:
- * tu.sekolahasy.com → redirect to TU app
- * radig.sekolahasy.com → redirect to RADIG app
- * guru.sekolahasy.com → redirect to Guru app (future)
- * wali.sekolahasy.com → redirect to Wali app (future)
+ * Portal middleware — simple, no NextAuth wrapper.
+ * Auth is handled by NextAuth's authorized() callback in auth.config.ts
+ * which is invoked automatically by the NextAuth route handler.
+ * 
+ * This middleware only handles:
+ * 1. Subdomain detection
+ * 2. No-cache headers on protected pages
  */
 
 const SUBDOMAIN_URL_MAP: Record<string, string> = {
@@ -21,14 +19,34 @@ const SUBDOMAIN_URL_MAP: Record<string, string> = {
 };
 
 export function middleware(request: NextRequest) {
-  const { hostname } = request.nextUrl;
+  const { hostname, pathname } = request.nextUrl;
 
   // Subdomain detection (production)
   const subdomain = hostname.split(".")[0];
-
-  if (subdomain && subdomain in SUBDOMAIN_URL_MAP && subdomain !== "portal" && subdomain !== "localhost" && subdomain !== "www") {
-    // Redirect to the app's URL
+  if (
+    subdomain &&
+    subdomain in SUBDOMAIN_URL_MAP &&
+    subdomain !== "portal" &&
+    subdomain !== "localhost" &&
+    subdomain !== "www"
+  ) {
     return NextResponse.redirect(SUBDOMAIN_URL_MAP[subdomain]);
+  }
+
+  // No-cache on dashboard pages (prevents back-button after logout)
+  if (pathname.startsWith("/dashboard")) {
+    // Check session using the correct cookie name from auth.config.ts
+    const hasSession = request.cookies.has("portal.session-token");
+
+    if (!hasSession) {
+      return NextResponse.redirect(new URL("/login", request.url));
+    }
+
+    const response = NextResponse.next();
+    response.headers.set("Cache-Control", "no-cache, no-store, must-revalidate, private");
+    response.headers.set("Pragma", "no-cache");
+    response.headers.set("Expires", "0");
+    return response;
   }
 
   return NextResponse.next();

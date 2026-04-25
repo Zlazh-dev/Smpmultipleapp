@@ -10,23 +10,46 @@ import {
   Loader2,
   ShieldCheck,
   Trash2,
+  Clock,
+  ShieldAlert,
+  ImageIcon,
 } from "lucide-react";
 import { toast } from "sonner";
 
 interface FaceRegistrationProps {
   pegawaiId: string;
   hasFace: boolean;
+  facePhoto?: string | null;
+  faceVerified?: boolean;
+  /** true when the logged-in user is viewing their own profile */
+  isSelf?: boolean;
+  /** true when the logged-in user is admin (KHUSUS) */
+  isAdmin?: boolean;
 }
 
-export function FaceRegistration({ pegawaiId, hasFace }: FaceRegistrationProps) {
+export function FaceRegistration({
+  pegawaiId,
+  hasFace,
+  facePhoto,
+  faceVerified = false,
+  isSelf = false,
+  isAdmin = false,
+}: FaceRegistrationProps) {
   const [mode, setMode] = useState<"idle" | "camera" | "uploading" | "processing">("idle");
   const [registered, setRegistered] = useState(hasFace);
+  const [verified, setVerified] = useState(faceVerified);
+  const [photoUrl, setPhotoUrl] = useState<string | null>(
+    facePhoto ? `/api/face/photo/${pegawaiId}` : null
+  );
   const [faceDetected, setFaceDetected] = useState(false);
   const [modelsLoaded, setModelsLoaded] = useState(false);
+  const [capturedPhoto, setCapturedPhoto] = useState<string | null>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
+
+  const canRegister = isAdmin || isSelf;
 
   const stopCamera = useCallback(() => {
     if (streamRef.current) {
@@ -38,6 +61,7 @@ export function FaceRegistration({ pegawaiId, hasFace }: FaceRegistrationProps) 
   const startCamera = async () => {
     setMode("camera");
     setFaceDetected(false);
+    setCapturedPhoto(null);
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
         video: { facingMode: "user", width: 320, height: 320 },
@@ -57,7 +81,6 @@ export function FaceRegistration({ pegawaiId, hasFace }: FaceRegistrationProps) 
       const { getFaceDescriptor } = await import("@/lib/face-utils");
       const loop = async () => {
         if (!videoRef.current || !streamRef.current) return;
-        // Wait for video to have frame data before detection
         if (videoRef.current.readyState < 2) {
           if (streamRef.current) requestAnimationFrame(loop);
           return;
@@ -73,12 +96,27 @@ export function FaceRegistration({ pegawaiId, hasFace }: FaceRegistrationProps) 
     }
   };
 
+  // Capture photo from video as base64
+  const capturePhotoFromVideo = (): string | null => {
+    if (!videoRef.current || !canvasRef.current) return null;
+    const video = videoRef.current;
+    const canvas = canvasRef.current;
+    canvas.width = video.videoWidth || 320;
+    canvas.height = video.videoHeight || 320;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return null;
+    // Mirror the image to match the video display
+    ctx.translate(canvas.width, 0);
+    ctx.scale(-1, 1);
+    ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    return canvas.toDataURL("image/jpeg", 0.85);
+  };
+
   // Register from camera
   const captureAndRegister = async () => {
     if (!videoRef.current) return;
 
     try {
-      // Capture descriptor BEFORE changing mode (mode change unmounts <video>)
       const { getFaceDescriptor } = await import("@/lib/face-utils");
       const descriptor = await getFaceDescriptor(videoRef.current);
 
@@ -87,8 +125,13 @@ export function FaceRegistration({ pegawaiId, hasFace }: FaceRegistrationProps) 
         return;
       }
 
+      // Capture the photo before stopping camera
+      const photo = capturePhotoFromVideo();
+      setCapturedPhoto(photo);
+
       setMode("processing");
-      await saveDescriptor(Array.from(descriptor));
+      stopCamera();
+      await saveDescriptor(Array.from(descriptor), photo);
     } catch (err: any) {
       toast.error(err.message || "Gagal mendaftarkan wajah");
       setMode("camera");
@@ -107,11 +150,9 @@ export function FaceRegistration({ pegawaiId, hasFace }: FaceRegistrationProps) 
     setMode("processing");
 
     try {
-      // Load models
       const { loadFaceModels, getFaceDescriptor } = await import("@/lib/face-utils");
       await loadFaceModels();
 
-      // Create image element
       const img = new Image();
       img.crossOrigin = "anonymous";
       const url = URL.createObjectURL(file);
@@ -131,7 +172,15 @@ export function FaceRegistration({ pegawaiId, hasFace }: FaceRegistrationProps) 
         return;
       }
 
-      await saveDescriptor(Array.from(descriptor));
+      // Convert file to base64
+      const reader = new FileReader();
+      const photoBase64 = await new Promise<string>((resolve) => {
+        reader.onloadend = () => resolve(reader.result as string);
+        reader.readAsDataURL(file);
+      });
+
+      setCapturedPhoto(photoBase64);
+      await saveDescriptor(Array.from(descriptor), photoBase64);
     } catch (err: any) {
       toast.error(err.message || "Gagal memproses foto");
       setMode("idle");
@@ -140,11 +189,11 @@ export function FaceRegistration({ pegawaiId, hasFace }: FaceRegistrationProps) 
     }
   };
 
-  const saveDescriptor = async (descriptor: number[]) => {
+  const saveDescriptor = async (descriptor: number[], photo?: string | null) => {
     const res = await fetch("/api/face/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ pegawaiId, descriptor }),
+      body: JSON.stringify({ pegawaiId, descriptor, photo }),
     });
     const data = await res.json();
 
@@ -156,14 +205,58 @@ export function FaceRegistration({ pegawaiId, hasFace }: FaceRegistrationProps) 
 
     toast.success(data.message || "Wajah berhasil didaftarkan!");
     setRegistered(true);
-    stopCamera();
+    setVerified(data.verified ?? isAdmin);
+    setPhotoUrl(`/api/face/photo/${pegawaiId}?t=${Date.now()}`);
     setMode("idle");
   };
 
-  // Delete face
+  // Admin: approve face
+  const handleApprove = async () => {
+    try {
+      const res = await fetch("/api/face/verify-status", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ pegawaiId, verified: true }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setVerified(true);
+        toast.success(data.message || "Wajah diverifikasi");
+      } else {
+        toast.error(data.error || "Gagal verifikasi");
+      }
+    } catch {
+      toast.error("Gagal verifikasi wajah");
+    }
+  };
+
+  // Admin: reject face
+  const handleReject = async () => {
+    if (!confirm("Tolak registrasi wajah ini? Pegawai harus mendaftar ulang.")) return;
+    try {
+      const res = await fetch("/api/face/verify-status", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ pegawaiId, verified: false }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setRegistered(false);
+        setVerified(false);
+        setPhotoUrl(null);
+        setCapturedPhoto(null);
+        toast.success(data.message || "Registrasi ditolak");
+      } else {
+        toast.error(data.error || "Gagal menolak");
+      }
+    } catch {
+      toast.error("Gagal menolak registrasi");
+    }
+  };
+
+  // Admin: delete face
   const handleDeleteFace = async () => {
     if (!confirm("Hapus data wajah? Pegawai tidak bisa presensi sampai didaftarkan ulang.")) return;
-
     try {
       const res = await fetch("/api/face/register", {
         method: "POST",
@@ -172,6 +265,9 @@ export function FaceRegistration({ pegawaiId, hasFace }: FaceRegistrationProps) 
       });
       if (res.ok) {
         setRegistered(false);
+        setVerified(false);
+        setPhotoUrl(null);
+        setCapturedPhoto(null);
         toast.success("Data wajah dihapus");
       }
     } catch {
@@ -185,42 +281,132 @@ export function FaceRegistration({ pegawaiId, hasFace }: FaceRegistrationProps) 
         Face Recognition
       </h3>
       <div className="rounded-lg border border-border/50 p-4 space-y-3">
-        {/* Status */}
-        {registered && mode === "idle" && (
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <CheckCircle className="h-4 w-4 text-emerald-500" />
-              <span className="text-sm text-emerald-600 dark:text-emerald-400 font-medium">
-                Wajah terdaftar
-              </span>
-            </div>
-            <div className="flex gap-1">
-              <Button variant="outline" size="sm" className="h-7 text-xs cursor-pointer" onClick={startCamera}>
-                <Camera className="h-3 w-3 mr-1" /> Ganti
-              </Button>
-              <Button variant="outline" size="sm" className="h-7 text-xs text-red-500 hover:text-red-600 cursor-pointer" onClick={handleDeleteFace}>
-                <Trash2 className="h-3 w-3" />
-              </Button>
+        {/* ── Registered + Verified ── */}
+        {registered && verified && mode === "idle" && (
+          <div className="space-y-3">
+            {/* Photo preview */}
+            {photoUrl && (
+              <div className="flex justify-center">
+                <div className="relative w-32 h-32 rounded-xl overflow-hidden border-2 border-emerald-500/30 shadow-sm">
+                  <img
+                    src={photoUrl}
+                    alt="Foto wajah"
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).style.display = "none";
+                    }}
+                  />
+                </div>
+              </div>
+            )}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <CheckCircle className="h-4 w-4 text-emerald-500" />
+                <span className="text-sm text-emerald-600 dark:text-emerald-400 font-medium">
+                  Wajah terverifikasi
+                </span>
+              </div>
+              {(isAdmin || isSelf) && (
+                <div className="flex gap-1">
+                  <Button variant="outline" size="sm" className="h-7 text-xs cursor-pointer" onClick={startCamera}>
+                    <Camera className="h-3 w-3 mr-1" /> Ganti
+                  </Button>
+                  {isAdmin && (
+                    <Button variant="outline" size="sm" className="h-7 text-xs text-red-500 hover:text-red-600 cursor-pointer" onClick={handleDeleteFace}>
+                      <Trash2 className="h-3 w-3" />
+                    </Button>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         )}
 
+        {/* ── Registered + Pending Verification ── */}
+        {registered && !verified && mode === "idle" && (
+          <div className="space-y-3">
+            {/* Photo preview */}
+            {photoUrl && (
+              <div className="flex justify-center">
+                <div className="relative w-32 h-32 rounded-xl overflow-hidden border-2 border-amber-500/30 shadow-sm">
+                  <img
+                    src={photoUrl}
+                    alt="Foto wajah (menunggu verifikasi)"
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).style.display = "none";
+                    }}
+                  />
+                  <div className="absolute bottom-0 inset-x-0 bg-amber-500/90 text-white text-[9px] font-medium text-center py-0.5">
+                    Menunggu Verifikasi
+                  </div>
+                </div>
+              </div>
+            )}
+
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Clock className="h-4 w-4 text-amber-500" />
+                <span className="text-sm text-amber-600 dark:text-amber-400 font-medium">
+                  Menunggu verifikasi admin
+                </span>
+              </div>
+              {isSelf && !isAdmin && (
+                <Button variant="outline" size="sm" className="h-7 text-xs cursor-pointer" onClick={startCamera}>
+                  <Camera className="h-3 w-3 mr-1" /> Ganti
+                </Button>
+              )}
+            </div>
+
+            {/* Admin approve/reject buttons */}
+            {isAdmin && (
+              <div className="flex gap-2 pt-1">
+                <Button
+                  size="sm"
+                  className="flex-1 h-8 bg-emerald-600 hover:bg-emerald-700 text-white cursor-pointer"
+                  onClick={handleApprove}
+                >
+                  <CheckCircle className="h-3.5 w-3.5 mr-1.5" /> Verifikasi
+                </Button>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="flex-1 h-8 text-red-500 hover:text-red-600 border-red-500/30 hover:bg-red-500/10 cursor-pointer"
+                  onClick={handleReject}
+                >
+                  <XCircle className="h-3.5 w-3.5 mr-1.5" /> Tolak
+                </Button>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* ── Not Registered ── */}
         {!registered && mode === "idle" && (
           <div className="text-center space-y-3 py-2">
             <div className="flex h-10 w-10 items-center justify-center rounded-full bg-amber-500/10 mx-auto">
-              <ShieldCheck className="h-5 w-5 text-amber-500" />
+              {canRegister ? (
+                <ShieldCheck className="h-5 w-5 text-amber-500" />
+              ) : (
+                <ShieldAlert className="h-5 w-5 text-muted-foreground" />
+              )}
             </div>
             <p className="text-sm text-muted-foreground">
-              Wajah belum terdaftar. Daftarkan wajah untuk presensi.
+              {canRegister
+                ? "Wajah belum terdaftar. Daftarkan wajah untuk presensi."
+                : "Wajah belum terdaftar. Hubungi admin atau daftarkan di profil Anda."
+              }
             </p>
-            <div className="flex gap-2 justify-center">
-              <Button variant="outline" size="sm" className="cursor-pointer" onClick={startCamera}>
-                <Camera className="h-3.5 w-3.5 mr-1.5" /> Kamera
-              </Button>
-              <Button variant="outline" size="sm" className="cursor-pointer" onClick={() => fileInputRef.current?.click()}>
-                <Upload className="h-3.5 w-3.5 mr-1.5" /> Upload Foto
-              </Button>
-            </div>
+            {canRegister && (
+              <div className="flex gap-2 justify-center">
+                <Button variant="outline" size="sm" className="cursor-pointer" onClick={startCamera}>
+                  <Camera className="h-3.5 w-3.5 mr-1.5" /> Kamera
+                </Button>
+                <Button variant="outline" size="sm" className="cursor-pointer" onClick={() => fileInputRef.current?.click()}>
+                  <Upload className="h-3.5 w-3.5 mr-1.5" /> Upload Foto
+                </Button>
+              </div>
+            )}
           </div>
         )}
 
@@ -293,11 +479,12 @@ export function FaceRegistration({ pegawaiId, hasFace }: FaceRegistrationProps) 
           </div>
         )}
 
-        {/* Hidden file input */}
+        {/* Hidden inputs */}
         <input
           ref={fileInputRef}
           type="file"
           accept="image/*"
+          capture="user"
           className="hidden"
           onChange={handleFileUpload}
         />

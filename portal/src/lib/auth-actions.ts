@@ -99,5 +99,8 @@ export async function registerAction(
 }
 
 export async function logoutAction(): Promise<void> {
-  await signOut({ redirectTo: "/" });
+  // Sign out from Portal first, then redirect to TU logout to clear TU cookies
+  // TU logout will redirect back to Portal login
+  const tuUrl = process.env.NEXT_PUBLIC_TU_URL || "http://tu.localhost";
+  await signOut({ redirectTo: `${tuUrl}/api/auth/logout` });
 }

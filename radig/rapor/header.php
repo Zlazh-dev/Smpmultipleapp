@@ -3,6 +3,11 @@
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
+
+// Prevent browser from caching authenticated pages (fixes back-button after logout)
+header("Cache-Control: no-cache, no-store, must-revalidate, private");
+header("Pragma: no-cache");
+header("Expires: 0");
 if (!isset($_SESSION['role'])) {
     $portal_url = getenv('PORTAL_URL') ?: 'http://portal.localhost';
     header("location:" . $portal_url . "/login?pesan=belum_login");

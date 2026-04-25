@@ -97,8 +97,11 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+      mysql:
+        condition: service_healthy
     environment:
       DATABASE_URL: "postgresql://${POSTGRES_USER:-smpit}:${POSTGRES_PASSWORD:-smpit_secret_2024}@postgres:5432/tu_smpit?schema=public"
+      RADIG_DATABASE_URL: "mysql://${MYSQL_RADIG_USER:-radig}:${MYSQL_RADIG_PASSWORD:-radig_secret_2024}@mysql:3306/raporsmp"
       NEXTAUTH_SECRET: ${NEXTAUTH_SECRET:-dev-secret-change-in-production}
       NEXTAUTH_URL: ${TU_URL:-http://tu.localhost}
       AUTH_TRUST_HOST: "true"

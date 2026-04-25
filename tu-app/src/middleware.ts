@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-const PORTAL_DASHBOARD = process.env.NEXT_PUBLIC_PORTAL_URL
-  ? `${process.env.NEXT_PUBLIC_PORTAL_URL}/dashboard`
-  : "http://localhost:3000/dashboard";
+const PORTAL_LOGIN = process.env.NEXT_PUBLIC_PORTAL_URL
+  ? `${process.env.NEXT_PUBLIC_PORTAL_URL}/login`
+  : "http://portal.localhost/login";
 
 /**
  * TU App middleware:
@@ -35,10 +35,15 @@ export function middleware(request: NextRequest) {
 
   if (!hasSession) {
     // No session → redirect to Portal dashboard (user must SSO from there)
-    return NextResponse.redirect(PORTAL_DASHBOARD);
+    return NextResponse.redirect(PORTAL_LOGIN);
   }
 
-  return NextResponse.next();
+  // Add no-cache headers to prevent browser from showing stale pages after logout
+  const response = NextResponse.next();
+  response.headers.set("Cache-Control", "no-cache, no-store, must-revalidate, private");
+  response.headers.set("Pragma", "no-cache");
+  response.headers.set("Expires", "0");
+  return response;
 }
 
 export const config = {

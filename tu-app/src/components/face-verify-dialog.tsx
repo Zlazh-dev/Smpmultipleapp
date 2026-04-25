@@ -21,7 +21,7 @@ interface FaceVerifyDialogProps {
   onVerified: (coords: { latitude: number; longitude: number }) => void;
 }
 
-type Step = "gps" | "camera" | "verifying" | "success" | "failed" | "not-registered";
+type Step = "gps" | "camera" | "verifying" | "success" | "failed" | "not-registered" | "not-verified";
 
 export function FaceVerifyDialog({
   open,
@@ -163,6 +163,12 @@ export function FaceVerifyDialog({
         if (data.notRegistered) {
           setErrorMsg(data.message);
           setStep("not-registered");
+          stopCamera();
+          return;
+        }
+        if (data.notVerified) {
+          setErrorMsg(data.message);
+          setStep("not-verified");
           stopCamera();
           return;
         }
@@ -334,7 +340,23 @@ export function FaceVerifyDialog({
               </div>
               <p className="text-lg font-semibold text-center">Wajah Belum Terdaftar</p>
               <p className="text-sm text-muted-foreground text-center">
-                Kamu harus registrasi wajah dahulu atau hubungi admin segera.
+                {errorMsg || "Kamu harus registrasi wajah dahulu di halaman profil atau hubungi admin."}
+              </p>
+              <Button variant="outline" onClick={() => onOpenChange(false)} className="cursor-pointer">
+                Tutup
+              </Button>
+            </div>
+          )}
+
+          {/* Step: Not Verified */}
+          {step === "not-verified" && (
+            <div className="flex flex-col items-center gap-3 py-8">
+              <div className="h-16 w-16 rounded-full bg-amber-500/10 flex items-center justify-center">
+                <AlertTriangle className="h-10 w-10 text-amber-500" />
+              </div>
+              <p className="text-lg font-semibold text-center">Menunggu Verifikasi Admin</p>
+              <p className="text-sm text-muted-foreground text-center">
+                {errorMsg || "Foto wajah kamu sudah diupload tapi belum diverifikasi oleh admin."}
               </p>
               <Button variant="outline" onClick={() => onOpenChange(false)} className="cursor-pointer">
                 Tutup

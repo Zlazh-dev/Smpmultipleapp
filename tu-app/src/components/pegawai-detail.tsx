@@ -29,6 +29,8 @@ interface PegawaiData {
   id: string; nip: string; namaLengkap: string; jabatan: string;
   accessLevel: string; username: string; noHp: string | null; alamat: string | null;
   faceDescriptor: number[];
+  facePhoto?: string | null;
+  faceVerified?: boolean;
   skRiwayat: SkRiwayat[]; kinerja: { skor?: number; grade?: string } | null;
   dokumen: DokumenData[]; createdAt: string;
 }
@@ -72,7 +74,7 @@ function getFileExt(name: string) {
   return name.split(".").pop()?.toUpperCase() || "FILE";
 }
 
-export function PegawaiDetail({ pegawai, templates = [] }: { pegawai: PegawaiData; templates?: TemplateOption[] }) {
+export function PegawaiDetail({ pegawai, templates = [], isSelf = false, isAdmin = false }: { pegawai: PegawaiData; templates?: TemplateOption[]; isSelf?: boolean; isAdmin?: boolean }) {
   const [activeTab, setActiveTab] = useState("profil");
   const [uploading, setUploading] = useState(false);
   const [showTemplateMenu, setShowTemplateMenu] = useState(false);
@@ -251,6 +253,10 @@ export function PegawaiDetail({ pegawai, templates = [] }: { pegawai: PegawaiDat
             <FaceRegistration
               pegawaiId={pegawai.id}
               hasFace={pegawai.faceDescriptor && pegawai.faceDescriptor.length > 0}
+              facePhoto={pegawai.facePhoto}
+              faceVerified={pegawai.faceVerified ?? false}
+              isSelf={isSelf}
+              isAdmin={isAdmin}
             />
           </div>
         </div>

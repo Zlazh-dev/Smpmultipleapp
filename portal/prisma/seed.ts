@@ -21,6 +21,21 @@ async function main() {
     },
   });
   console.log("✓ superadmin account ready");
+
+  // Guru dengan role Guru — untuk testing face upload & presensi
+  await prisma.user.upsert({
+    where: { username: "guru1" },
+    update: {},
+    create: {
+      username: "guru1",
+      name: "Ahmad Fauzi, S.Pd",
+      role: Role.Guru,
+      nip: "1990010120260101",
+      hashedPassword,
+    },
+  });
+  console.log("✓ guru1 (Guru) account ready");
+
   console.log("\n🌱 Seed complete.");
 }
 

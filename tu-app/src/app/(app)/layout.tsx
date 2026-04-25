@@ -18,7 +18,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
     <div className="flex h-screen overflow-hidden">
       {/* Sidebar — desktop only */}
       <div className="hidden md:block">
-        <AppSidebar role={role} pendingCutiCount={pendingCutiCount} />
+        <AppSidebar role={role} userId={user?.id} pendingCutiCount={pendingCutiCount} />
       </div>
 
       {/* Main content */}

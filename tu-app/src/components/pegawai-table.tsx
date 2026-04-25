@@ -144,15 +144,6 @@ export function PegawaiTable({ data, jabatanList, currentSearch, currentJabatan 
           Filter
         </button>
       </form>
-      <div className="toolbar-spacer" />
-      <button
-        type="button"
-        className="toolbar-btn toolbar-btn-primary"
-        onClick={() => { setEditPegawai(undefined); setSheetOpen(true); }}
-      >
-        <Plus className="h-3.5 w-3.5" />
-        Tambah
-      </button>
     </>
   );
 

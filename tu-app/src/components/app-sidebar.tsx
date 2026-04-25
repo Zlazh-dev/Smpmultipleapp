@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -21,6 +21,7 @@ import {
   Settings,
   ArrowLeft,
   GraduationCap,
+  UserCircle,
 } from "lucide-react";
 import { useTheme } from "next-themes";
 
@@ -36,13 +37,15 @@ const allNavItems = [
 
 interface AppSidebarProps {
   role: string;
+  userId?: string;
   pendingCutiCount?: number;
 }
 
-export function AppSidebar({ role, pendingCutiCount = 0 }: AppSidebarProps) {
+export function AppSidebar({ role, userId, pendingCutiCount = 0 }: AppSidebarProps) {
   const pathname = usePathname();
   const { theme, setTheme } = useTheme();
   const [portalUrl, setPortalUrl] = useState("");
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     // NEXT_PUBLIC_PORTAL_URL is baked at build time; fallback replaces subdomain for production
@@ -51,6 +54,7 @@ export function AppSidebar({ role, pendingCutiCount = 0 }: AppSidebarProps) {
       .replace(/\/\/tu\./, '//portal.')  // production: tu.domain → portal.domain
       .replace(/:3001/, ':3000');          // dev: localhost:3001 → localhost:3000
     setPortalUrl((envUrl || fallback) + '/dashboard');
+    setMounted(true);
   }, []);
 
   const navItems = allNavItems.filter((item) => item.roles.includes(role));
@@ -107,6 +111,21 @@ export function AppSidebar({ role, pendingCutiCount = 0 }: AppSidebarProps) {
           Lainnya
         </p>
 
+        {role === "UMUM" && userId && (
+          <Link
+            href={`/pegawai/${userId}`}
+            className={cn(
+              "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200",
+              pathname.startsWith(`/pegawai/${userId}`)
+                ? "bg-sidebar-accent text-sidebar-accent-foreground shadow-sm"
+                : "text-muted-foreground hover:bg-sidebar-accent/50 hover:text-sidebar-foreground"
+            )}
+          >
+            <UserCircle className={cn("h-4 w-4", pathname.startsWith(`/pegawai/${userId}`) && "text-sidebar-primary")} />
+            Profil Saya
+          </Link>
+        )}
+
         {role === "KHUSUS" && (
           <Link
             href="/setting"
@@ -139,12 +158,12 @@ export function AppSidebar({ role, pendingCutiCount = 0 }: AppSidebarProps) {
           className="w-full justify-start text-muted-foreground cursor-pointer"
           onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
         >
-          {theme === "dark" ? (
+          {mounted && (theme === "dark" ? (
             <Sun className="mr-2 h-4 w-4" />
           ) : (
             <Moon className="mr-2 h-4 w-4" />
-          )}
-          {theme === "dark" ? "Mode Terang" : "Mode Gelap"}
+          ))}
+          {mounted ? (theme === "dark" ? "Mode Terang" : "Mode Gelap") : "Ganti Tema"}
         </Button>
         <a
           href={portalUrl || "/dashboard"}

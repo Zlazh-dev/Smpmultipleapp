@@ -4,7 +4,7 @@ import { useState } from "react";
 import { DataTable, Column } from "@/components/data-table";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { QrCode, MapPin, Loader2, CheckCircle, Search, Calendar, ShieldCheck } from "lucide-react";
+import { QrCode, MapPin, Loader2, CheckCircle, Search, Calendar, ShieldCheck, AlertTriangle } from "lucide-react";
 import { QrScannerDialog } from "@/components/qr-scanner";
 import { FaceVerifyDialog } from "@/components/face-verify-dialog";
 import { toast } from "sonner";
@@ -101,8 +101,29 @@ export function PresensiTable({
   const [scannerOpen, setScannerOpen] = useState(false);
   const [faceVerifyOpen, setFaceVerifyOpen] = useState(false);
   const [checkingIn, setCheckingIn] = useState(false);
+  const [markingAlpha, setMarkingAlpha] = useState(false);
   const [checkedIn, setCheckedIn] = useState(data.length > 0 && !isKhusus);
   const router = useRouter();
+
+  // Auto-alpha: mark absent UMUM pegawai as ALFA
+  const handleAutoAlpha = async () => {
+    if (!confirm(`Tandai ${belumPresensi.length} pegawai sebagai ALFA hari ini?`)) return;
+    setMarkingAlpha(true);
+    try {
+      const res = await fetch("/api/presensi/auto-alpha", { method: "POST" });
+      const result = await res.json();
+      if (!res.ok) {
+        toast.error(result.error || "Gagal menandai alpha");
+        return;
+      }
+      toast.success(result.message);
+      router.refresh();
+    } catch {
+      toast.error("Gagal menandai alpha");
+    } finally {
+      setMarkingAlpha(false);
+    }
+  };
 
   // UMUM: After face verification succeeds, do GPS check-in
   const handleFaceVerified = async (coords: { latitude: number; longitude: number }) => {
@@ -156,6 +177,18 @@ export function PresensiTable({
         </button>
       </form>
       <div className="toolbar-spacer" />
+      {isKhusus && belumPresensi.length > 0 && (
+        <button
+          type="button"
+          className="toolbar-btn"
+          onClick={handleAutoAlpha}
+          disabled={markingAlpha}
+          style={{ background: "rgba(239,68,68,0.1)", color: "rgb(239,68,68)", border: "1px solid rgba(239,68,68,0.2)" }}
+        >
+          {markingAlpha ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <AlertTriangle className="h-3.5 w-3.5" />}
+          Tandai Alpha
+        </button>
+      )}
       {isKhusus && (
         <button
           type="button"

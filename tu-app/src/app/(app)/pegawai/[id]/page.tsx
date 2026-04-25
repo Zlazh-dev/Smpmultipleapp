@@ -21,9 +21,14 @@ export default async function PegawaiDetailPage({
 }) {
   const user = await getCurrentUser();
   if (!user) return redirect("/login");
-  if (user.accessLevel !== "KHUSUS") return <AccessDenied />;
 
   const { id } = await params;
+
+  const isAdmin = user.accessLevel === "KHUSUS";
+  const isSelf = user.id === id;
+
+  // UMUM can only view their OWN profile; KHUSUS can view anyone
+  if (!isAdmin && !isSelf) return <AccessDenied />;
 
   const [pegawai, templates] = await Promise.all([
     db.pegawai.findUnique({
@@ -48,12 +53,15 @@ export default async function PegawaiDetailPage({
         pegawai={JSON.parse(JSON.stringify({
           ...pegawai,
           faceDescriptor: pegawai.faceDescriptor || [],
+          facePhoto: pegawai.facePhoto || null,
+          faceVerified: pegawai.faceVerified ?? false,
           skRiwayat: pegawai.skRiwayat || [],
           dokumen: pegawai.dokumen || [],
         }))}
         templates={JSON.parse(JSON.stringify(templates))}
+        isSelf={isSelf}
+        isAdmin={isAdmin}
       />
     </div>
   );
 }
-

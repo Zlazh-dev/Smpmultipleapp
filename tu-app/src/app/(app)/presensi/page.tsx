@@ -55,6 +55,7 @@ export default async function PresensiPage({ searchParams }: PageProps) {
   let belumPresensi: any[] = [];
   if (isKhusus) {
     const allPegawai = await db.pegawai.findMany({
+      where: { accessLevel: "UMUM" }, // KHUSUS exempt from presensi
       select: { id: true, namaLengkap: true, nip: true, jabatan: true },
       orderBy: { namaLengkap: "asc" },
     });

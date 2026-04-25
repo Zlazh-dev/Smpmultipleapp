@@ -22,6 +22,7 @@ export const metadata: Metadata = {
     title: "TU App",
   },
   icons: {
+    icon: "/favicon.ico",
     apple: "/icons/icon-192.png",
   },
 };
