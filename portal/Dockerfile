@@ -7,9 +7,9 @@ WORKDIR /app
 
 COPY package.json package-lock.json ./
 COPY prisma ./prisma/
-RUN npm ci --only=production && \
+RUN (npm ci --only=production || (sleep 5 && npm ci --only=production)) && \
     cp -R node_modules /prod_node_modules && \
-    npm ci
+    (npm ci || (sleep 5 && npm ci))
 
 # ================================
 # Stage 2: Build

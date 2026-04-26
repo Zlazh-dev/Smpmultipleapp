@@ -7,7 +7,7 @@ WORKDIR /app
 COPY package.json package-lock.json* ./
 COPY prisma ./prisma/
 # Generate both PostgreSQL (main) and MySQL (RADIG) Prisma clients
-RUN npm ci && npx prisma generate && npx prisma generate --schema=prisma/radig.prisma
+RUN (npm ci || (sleep 5 && npm ci)) && npx prisma generate && npx prisma generate --schema=prisma/radig.prisma
 
 # ---- Build ----
 FROM base AS builder
