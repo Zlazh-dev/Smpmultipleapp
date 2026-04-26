@@ -4,8 +4,7 @@ import { useState } from "react";
 import { DataTable, Column } from "@/components/data-table";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { QrCode, MapPin, Loader2, CheckCircle, Search, Calendar, ShieldCheck, AlertTriangle } from "lucide-react";
-import { QrScannerDialog } from "@/components/qr-scanner";
+import { MapPin, Loader2, CheckCircle, Search, Calendar, ShieldCheck, AlertTriangle } from "lucide-react";
 import { FaceVerifyDialog } from "@/components/face-verify-dialog";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
@@ -98,7 +97,6 @@ export function PresensiTable({
   userId?: string;
   dateStr: string;
 }) {
-  const [scannerOpen, setScannerOpen] = useState(false);
   const [faceVerifyOpen, setFaceVerifyOpen] = useState(false);
   const [checkingIn, setCheckingIn] = useState(false);
   const [markingAlpha, setMarkingAlpha] = useState(false);
@@ -189,16 +187,6 @@ export function PresensiTable({
           Tandai Alpha
         </button>
       )}
-      {isKhusus && (
-        <button
-          type="button"
-          className="toolbar-btn toolbar-btn-primary"
-          onClick={() => setScannerOpen(true)}
-        >
-          <QrCode className="h-3.5 w-3.5" />
-          Scan QR
-        </button>
-      )}
     </>
   );
 
@@ -280,9 +268,6 @@ export function PresensiTable({
           </div>
         </div>
       )}
-
-      {/* QR Scanner — KHUSUS only */}
-      {isKhusus && <QrScannerDialog open={scannerOpen} onOpenChange={setScannerOpen} />}
 
       {/* Face Verification — UMUM only */}
       {!isKhusus && userId && (

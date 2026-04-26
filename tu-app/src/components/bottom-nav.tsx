@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { useSsoCheck } from "@/hooks/use-sso-check";
 import {
   LayoutDashboard,
   Users,
@@ -37,6 +38,9 @@ export function BottomNav({ role }: BottomNavProps) {
   const [moreOpen, setMoreOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const [portalUrl, setPortalUrl] = useState("");
+
+  // Validate SSO Session
+  useSsoCheck();
 
   useEffect(() => {
     const envUrl = process.env.NEXT_PUBLIC_PORTAL_URL;

@@ -31,6 +31,10 @@ export async function GET(req: NextRequest) {
     if (pegawaiId) {
       where.pegawaiId = pegawaiId;
     }
+    const folderId = searchParams.get("folderId");
+    if (folderId) {
+      where.folderId = folderId;
+    }
 
     const dokumen = await db.dokumen.findMany({
       where,
@@ -53,7 +57,7 @@ export async function POST(req: NextRequest) {
     if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
     const body = await req.json();
-    const { namaAsli, namaFile, ukuran, mimeType, path, kategori, pegawaiId } = body;
+    const { namaAsli, namaFile, ukuran, mimeType, path, kategori, pegawaiId, folderId } = body;
 
     if (!namaAsli || !namaFile || !path || !kategori) {
       return NextResponse.json({ error: "Missing fields" }, { status: 400 });
@@ -69,6 +73,7 @@ export async function POST(req: NextRequest) {
         kategori,
         pegawaiId: pegawaiId || user.id,
         uploadedBy: user.id,
+        folderId: folderId || null,
       },
       include: {
         pegawai: { select: { namaLengkap: true, jabatan: true } },

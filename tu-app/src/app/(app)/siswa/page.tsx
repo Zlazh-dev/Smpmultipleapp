@@ -57,7 +57,7 @@ export default async function SiswaPage({
           },
           select: { id_kelas: true },
         });
-        scopedKelasIds = guruKelas.map((k) => k.id_kelas);
+        scopedKelasIds = guruKelas.map((k: any) => k.id_kelas);
       }
     }
 
@@ -117,7 +117,7 @@ export default async function SiswaPage({
 
   // Filter active tahun ajaran kelas for dropdown
   const activeKelas = kelasList.filter(
-    (k) => String(k.tahun_ajaran?.status) === "Aktif"
+    (k: any) => String(k.tahun_ajaran?.status) === "Aktif"
   );
 
   const subtitle = role === "UMUM" && guruNama

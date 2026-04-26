@@ -3,6 +3,7 @@ import { Inter, JetBrains_Mono, Playfair_Display } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { ServiceWorkerRegistrar } from "@/components/sw-registrar";
+import { AuthProviders } from "@/components/providers";
 import "./globals.css";
 
 const inter = Inter({
@@ -73,9 +74,11 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
-          <ServiceWorkerRegistrar />
-          <Toaster position="top-right" />
+          <AuthProviders>
+            {children}
+            <ServiceWorkerRegistrar />
+            <Toaster position="top-right" />
+          </AuthProviders>
         </ThemeProvider>
       </body>
     </html>

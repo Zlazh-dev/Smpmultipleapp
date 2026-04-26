@@ -50,6 +50,7 @@ model Pegawai {
   presensi       Presensi[]
   cuti           Cuti[]
   dokumen        Dokumen[]
+  folders        EfilingFolder[]
   createdAt      DateTime   @default(now())
   updatedAt      DateTime   @updatedAt
 
@@ -97,6 +98,7 @@ model Cuti {
 model Dokumen {
   id         String          @id @default(cuid())
   pegawaiId  String?
+  folderId   String?         // e-Filing folder reference
   kategori   DokumenKategori
   namaAsli   String
   namaFile   String          // S3 key
@@ -105,10 +107,28 @@ model Dokumen {
   pathS3     String
   uploadedBy String
   pegawai    Pegawai?        @relation(fields: [pegawaiId], references: [id], onDelete: SetNull)
+  folder     EfilingFolder?  @relation(fields: [folderId], references: [id], onDelete: SetNull)
   createdAt  DateTime        @default(now())
 
   @@index([kategori])
   @@index([pegawaiId])
+  @@index([folderId])
+}
+
+model EfilingFolder {
+  id         String          @id @default(cuid())
+  nama       String
+  parentId   String?
+  pegawaiId  String          // Owner (the guru/pegawai)
+  parent     EfilingFolder?  @relation("FolderTree", fields: [parentId], references: [id], onDelete: Cascade)
+  children   EfilingFolder[] @relation("FolderTree")
+  dokumen    Dokumen[]
+  pegawai    Pegawai         @relation(fields: [pegawaiId], references: [id], onDelete: Cascade)
+  createdAt  DateTime        @default(now())
+  updatedAt  DateTime        @updatedAt
+
+  @@index([pegawaiId])
+  @@index([parentId])
 }
 
 enum TemplateCategory {
@@ -141,6 +161,7 @@ model GeofenceSettings {
   namaLokasi String   @default("SMPIT Asy-Syadzili")
   jamMasuk   String   @default("07:00")
   jamPulang  String   @default("16:00")
+  hariKerja  String[] @default(["Senin", "Selasa", "Rabu", "Kamis", "Jumat"])
   isActive   Boolean  @default(true)
   updatedAt  DateTime @updatedAt
 }

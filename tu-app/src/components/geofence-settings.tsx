@@ -7,8 +7,10 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
-import { MapPin, Clock, Save, Loader2, Shield, RefreshCw, QrCode, Download, Printer } from "lucide-react";
+import { MapPin, Clock, Save, Loader2, Shield, RefreshCw, CalendarDays, Check } from "lucide-react";
 import { cn } from "@/lib/utils";
+
+const ALL_DAYS = ["Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu", "Minggu"];
 
 interface Settings {
   id: string;
@@ -18,6 +20,7 @@ interface Settings {
   namaLokasi: string;
   jamMasuk: string;
   jamPulang: string;
+  hariKerja: string[];
   isActive: boolean;
 }
 
@@ -31,14 +34,16 @@ export function GeofenceSettingsForm() {
   const markerRef = useRef<any>(null);
   const circleRef = useRef<any>(null);
 
-  // QR code state
-  const [qrDataUrl, setQrDataUrl] = useState<string | null>(null);
-  const [generatingQr, setGeneratingQr] = useState(false);
-
   useEffect(() => {
     fetch("/api/geofence")
       .then((r) => r.json())
-      .then(setSettings)
+      .then((data) => {
+        // Ensure hariKerja is always an array
+        if (!data.hariKerja) {
+          data.hariKerja = ["Senin", "Selasa", "Rabu", "Kamis", "Jumat"];
+        }
+        setSettings(data);
+      })
       .catch(() => toast.error("Gagal memuat pengaturan"))
       .finally(() => setLoading(false));
   }, []);
@@ -80,13 +85,16 @@ export function GeofenceSettingsForm() {
         iconAnchor: [8, 8],
       });
 
-      const marker = L.marker([settings.latitude, settings.longitude], {
+      const lat = settings.latitude ?? -7.977438;
+      const lng = settings.longitude ?? 112.7467995;
+
+      const marker = L.marker([lat, lng], {
         icon: markerIcon,
         draggable: true,
       }).addTo(map);
 
-      const circle = L.circle([settings.latitude, settings.longitude], {
-        radius: settings.radius,
+      const circle = L.circle([lat, lng], {
+        radius: settings.radius ?? 100,
         color: "#3b82f6",
         fillColor: "#3b82f6",
         fillOpacity: 0.12,
@@ -125,13 +133,16 @@ export function GeofenceSettingsForm() {
   // Update map when settings change
   useEffect(() => {
     if (!settings || !mapInstanceRef.current) return;
-    const { latitude, longitude, radius } = settings;
-    if (markerRef.current) markerRef.current.setLatLng([latitude, longitude]);
+    const lat = settings.latitude ?? -7.977438;
+    const lng = settings.longitude ?? 112.7467995;
+    const radius = settings.radius ?? 100;
+
+    if (markerRef.current) markerRef.current.setLatLng([lat, lng]);
     if (circleRef.current) {
-      circleRef.current.setLatLng([latitude, longitude]);
+      circleRef.current.setLatLng([lat, lng]);
       circleRef.current.setRadius(radius);
     }
-    mapInstanceRef.current.setView([latitude, longitude], mapInstanceRef.current.getZoom());
+    mapInstanceRef.current.setView([lat, lng], mapInstanceRef.current.getZoom());
   }, [settings?.latitude, settings?.longitude, settings?.radius]);
 
   const handleSave = async () => {
@@ -172,47 +183,14 @@ export function GeofenceSettingsForm() {
     );
   };
 
-  // Generate single QR code for checkin URL
-  const handleGenerateQR = async () => {
-    setGeneratingQr(true);
-    try {
-      const QRCode = (await import("qrcode")).default;
-      const checkinUrl = `${window.location.origin}/presensi/checkin`;
-      const dataUrl = await QRCode.toDataURL(checkinUrl, {
-        width: 400,
-        margin: 2,
-        color: { dark: "#000000", light: "#ffffff" },
-      });
-      setQrDataUrl(dataUrl);
-      toast.success("QR Code presensi dibuat");
-    } catch {
-      toast.error("Gagal generate QR code");
-    } finally {
-      setGeneratingQr(false);
-    }
-  };
-
-  const handlePrintQR = () => {
-    if (!qrDataUrl) return;
-    const win = window.open("", "_blank");
-    if (win) {
-      win.document.write(`
-        <html>
-        <head><title>QR Code Presensi</title></head>
-        <body style="font-family:sans-serif;text-align:center;padding:40px">
-          <h1 style="font-size:24px;margin-bottom:4px">${settings?.namaLokasi || "Presensi"}</h1>
-          <p style="color:#666;font-size:13px;margin-bottom:24px">Scan QR Code ini untuk Check-in / Check-out</p>
-          <img src="${qrDataUrl}" width="300" height="300" style="border:2px solid #eee;border-radius:12px" />
-          <p style="color:#999;font-size:11px;margin-top:16px">
-            Jam Kerja: ${settings?.jamMasuk || "07:00"} — ${settings?.jamPulang || "16:00"}<br/>
-            Sistem Presensi Digital • ${new Date().getFullYear()}
-          </p>
-        </body>
-        </html>
-      `);
-      win.document.close();
-      win.print();
-    }
+  const toggleDay = (day: string) => {
+    if (!settings) return;
+    setSettings({
+      ...settings,
+      hariKerja: settings.hariKerja.includes(day)
+        ? settings.hariKerja.filter((d) => d !== day)
+        : [...settings.hariKerja, day],
+    });
   };
 
   if (loading) {
@@ -282,112 +260,118 @@ export function GeofenceSettingsForm() {
           </CardContent>
         </Card>
 
-        {/* Jam Kerja & Toggle */}
-        <Card className="border-border/50">
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-semibold flex items-center gap-2">
-              <Clock className="h-4 w-4 text-primary" /> Jam Kerja & Status
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="grid grid-cols-2 gap-2">
-              <div className="space-y-1.5">
-                <Label className="text-xs">Jam Masuk</Label>
-                <Input type="time" value={settings.jamMasuk} onChange={(e) => setSettings({ ...settings, jamMasuk: e.target.value })} className="h-8 text-sm" />
-              </div>
-              <div className="space-y-1.5">
-                <Label className="text-xs">Jam Pulang</Label>
-                <Input type="time" value={settings.jamPulang} onChange={(e) => setSettings({ ...settings, jamPulang: e.target.value })} className="h-8 text-sm" />
-              </div>
-            </div>
-
-            <div className="p-3 rounded-lg border border-border bg-muted/20 space-y-2">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <Shield className="h-4 w-4 text-primary" />
-                  <div>
-                    <p className="text-xs font-semibold">Geofencing</p>
-                    <p className="text-[10px] text-muted-foreground">Validasi lokasi saat presensi</p>
-                  </div>
+        {/* Jam Kerja & Hari Kerja */}
+        <div className="space-y-4">
+          <Card className="border-border/50">
+            <CardHeader className="pb-3">
+              <CardTitle className="text-sm font-semibold flex items-center gap-2">
+                <Clock className="h-4 w-4 text-primary" /> Jam Kerja & Status
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="grid grid-cols-2 gap-2">
+                <div className="space-y-1.5">
+                  <Label className="text-xs">Jam Masuk</Label>
+                  <Input type="time" value={settings.jamMasuk} onChange={(e) => setSettings({ ...settings, jamMasuk: e.target.value })} className="h-8 text-sm" />
                 </div>
-                <button
-                  onClick={() => setSettings({ ...settings, isActive: !settings.isActive })}
-                  className={cn("relative w-10 h-5 rounded-full transition-colors cursor-pointer", settings.isActive ? "bg-primary" : "bg-muted-foreground/30")}
-                >
-                  <div className={cn("absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-white transition-transform shadow-sm", settings.isActive && "translate-x-5")} />
-                </button>
+                <div className="space-y-1.5">
+                  <Label className="text-xs">Jam Pulang</Label>
+                  <Input type="time" value={settings.jamPulang} onChange={(e) => setSettings({ ...settings, jamPulang: e.target.value })} className="h-8 text-sm" />
+                </div>
               </div>
-            </div>
 
-            <div className="p-3 rounded-lg bg-blue-500/5 border border-blue-500/20 space-y-1.5">
-              <p className="text-xs font-semibold text-blue-600 dark:text-blue-400">Cara Kerja</p>
-              <ul className="text-[10px] text-muted-foreground space-y-1 list-disc pl-3">
-                <li>Browser meminta izin GPS saat pegawai presensi</li>
-                <li>Jarak dihitung dengan formula Haversine</li>
-                <li>Jika dalam radius {settings.radius}m → presensi valid</li>
-                <li>Jika di luar → presensi ditolak</li>
-              </ul>
-            </div>
+              <div className="p-3 rounded-lg border border-border bg-muted/20 space-y-2">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <Shield className="h-4 w-4 text-primary" />
+                    <div>
+                      <p className="text-xs font-semibold">Geofencing</p>
+                      <p className="text-[10px] text-muted-foreground">Validasi lokasi saat presensi</p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => setSettings({ ...settings, isActive: !settings.isActive })}
+                    className={cn("relative w-10 h-5 rounded-full transition-colors cursor-pointer", settings.isActive ? "bg-primary" : "bg-muted-foreground/30")}
+                  >
+                    <div className={cn("absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-white transition-transform shadow-sm", settings.isActive && "translate-x-5")} />
+                  </button>
+                </div>
+              </div>
 
-            <Button onClick={handleSave} disabled={saving} className="w-full h-9 cursor-pointer">
-              {saving ? <Loader2 className="h-3.5 w-3.5 mr-1.5 animate-spin" /> : <Save className="h-3.5 w-3.5 mr-1.5" />}
-              {saving ? "Menyimpan..." : "Simpan Pengaturan"}
-            </Button>
-          </CardContent>
-        </Card>
+              <div className="p-3 rounded-lg bg-blue-500/5 border border-blue-500/20 space-y-1.5">
+                <p className="text-xs font-semibold text-blue-600 dark:text-blue-400">Cara Kerja</p>
+                <ul className="text-[10px] text-muted-foreground space-y-1 list-disc pl-3">
+                  <li>Browser meminta izin GPS saat pegawai presensi</li>
+                  <li>Jarak dihitung dengan formula Haversine</li>
+                  <li>Jika dalam radius {settings.radius}m → presensi valid</li>
+                  <li>Jika di luar → presensi ditolak</li>
+                </ul>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Hari Kerja */}
+          <Card className="border-border/50">
+            <CardHeader className="pb-3">
+              <CardTitle className="text-sm font-semibold flex items-center gap-2">
+                <CalendarDays className="h-4 w-4 text-primary" /> Hari Kerja
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              <p className="text-xs text-muted-foreground">
+                Pilih hari-hari aktif presensi. Presensi hanya berlaku pada hari yang dipilih.
+              </p>
+
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                {ALL_DAYS.map((day) => {
+                  const isActive = settings.hariKerja.includes(day);
+                  const isWeekend = day === "Sabtu" || day === "Minggu";
+                  return (
+                    <button
+                      key={day}
+                      onClick={() => toggleDay(day)}
+                      className={cn(
+                        "flex items-center gap-2 px-3 py-2.5 rounded-lg border text-xs font-medium transition-all cursor-pointer",
+                        isActive
+                          ? "bg-primary/10 border-primary/30 text-primary shadow-sm"
+                          : "border-border bg-card text-muted-foreground hover:bg-muted/50 hover:text-foreground"
+                      )}
+                    >
+                      <div className={cn(
+                        "flex items-center justify-center h-4 w-4 rounded-md border transition-colors",
+                        isActive
+                          ? "bg-primary border-primary"
+                          : "border-muted-foreground/30"
+                      )}>
+                        {isActive && <Check className="h-3 w-3 text-primary-foreground" />}
+                      </div>
+                      <span>{day}</span>
+                      {isWeekend && (
+                        <Badge variant="outline" className="text-[8px] ml-auto px-1 py-0 border-amber-500/30 text-amber-500">
+                          Weekend
+                        </Badge>
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
+
+              <div className="flex items-center gap-1.5 text-[10px] text-muted-foreground">
+                <CalendarDays className="h-3 w-3" />
+                <span>{settings.hariKerja.length} hari aktif per minggu</span>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
       </div>
 
-      {/* QR Code Generator */}
-      <Card className="border-border/50">
-        <CardHeader className="pb-3">
-          <CardTitle className="text-sm font-semibold flex items-center gap-2">
-            <QrCode className="h-4 w-4 text-primary" /> QR Code Presensi
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <p className="text-xs text-muted-foreground">
-            Generate satu QR code yang digunakan semua pegawai untuk check-in dan check-out. 
-            Tempel QR ini di pintu masuk sekolah.
-          </p>
-
-          <div className="flex items-center gap-2">
-            <Button onClick={handleGenerateQR} disabled={generatingQr} className="h-8 cursor-pointer">
-              {generatingQr ? <Loader2 className="h-3.5 w-3.5 mr-1.5 animate-spin" /> : <QrCode className="h-3.5 w-3.5 mr-1.5" />}
-              Generate QR Code
-            </Button>
-            {qrDataUrl && (
-              <Button variant="outline" onClick={handlePrintQR} className="h-8 cursor-pointer">
-                <Printer className="h-3.5 w-3.5 mr-1.5" /> Print / Cetak
-              </Button>
-            )}
-          </div>
-
-          {/* QR Code Preview */}
-          {qrDataUrl && (
-            <div className="flex flex-col items-center gap-3 p-6 rounded-xl border border-border bg-white dark:bg-card">
-              <img src={qrDataUrl} alt="QR Presensi" className="w-48 h-48 sm:w-56 sm:h-56" />
-              <div className="text-center">
-                <p className="text-sm font-bold">{settings?.namaLokasi}</p>
-                <p className="text-[11px] text-muted-foreground">Scan untuk Check-in / Check-out</p>
-                <p className="text-[10px] text-muted-foreground mt-1">
-                  Jam Kerja: {settings?.jamMasuk} — {settings?.jamPulang}
-                </p>
-              </div>
-            </div>
-          )}
-
-          <div className="p-3 rounded-lg bg-amber-500/5 border border-amber-500/20 space-y-1.5">
-            <p className="text-xs font-semibold text-amber-600 dark:text-amber-400">Alur Presensi</p>
-            <ol className="text-[10px] text-muted-foreground space-y-1 list-decimal pl-3">
-              <li>Pegawai scan QR code dengan HP → buka halaman check-in</li>
-              <li>Sistem verifikasi login & lokasi GPS</li>
-              <li><strong>Scan pertama</strong> = Check-in (jam datang tercatat)</li>
-              <li><strong>Scan kedua</strong> = Check-out (tersedia 5 menit sebelum jam pulang)</li>
-              <li>Jika sudah check-in & check-out → presensi selesai</li>
-            </ol>
-          </div>
-        </CardContent>
-      </Card>
+      {/* Save Button */}
+      <div className="flex justify-end">
+        <Button onClick={handleSave} disabled={saving} className="h-9 px-6 cursor-pointer">
+          {saving ? <Loader2 className="h-3.5 w-3.5 mr-1.5 animate-spin" /> : <Save className="h-3.5 w-3.5 mr-1.5" />}
+          {saving ? "Menyimpan..." : "Simpan Semua Pengaturan"}
+        </Button>
+      </div>
     </div>
   );
 }

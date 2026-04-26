@@ -5,6 +5,7 @@ import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { useSsoCheck } from "@/hooks/use-sso-check";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import {
@@ -46,6 +47,9 @@ export function AppSidebar({ role, userId, pendingCutiCount = 0 }: AppSidebarPro
   const { theme, setTheme } = useTheme();
   const [portalUrl, setPortalUrl] = useState("");
   const [mounted, setMounted] = useState(false);
+
+  // Validate SSO Session
+  useSsoCheck();
 
   useEffect(() => {
     // NEXT_PUBLIC_PORTAL_URL is baked at build time; fallback replaces subdomain for production

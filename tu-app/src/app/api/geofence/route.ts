@@ -42,8 +42,19 @@ export async function PATCH(req: NextRequest) {
         ...(body.jamMasuk !== undefined && { jamMasuk: body.jamMasuk }),
         ...(body.jamPulang !== undefined && { jamPulang: body.jamPulang }),
         ...(body.isActive !== undefined && { isActive: body.isActive }),
+        ...(body.hariKerja !== undefined && { hariKerja: body.hariKerja }),
       },
-      create: { id: "default", ...body },
+      create: { 
+        id: "default",
+        latitude: body.latitude,
+        longitude: body.longitude,
+        radius: body.radius,
+        namaLokasi: body.namaLokasi,
+        jamMasuk: body.jamMasuk,
+        jamPulang: body.jamPulang,
+        isActive: body.isActive ?? true,
+        hariKerja: body.hariKerja ?? ["Senin", "Selasa", "Rabu", "Kamis", "Jumat"],
+      },
     });
 
     return NextResponse.json(settings);

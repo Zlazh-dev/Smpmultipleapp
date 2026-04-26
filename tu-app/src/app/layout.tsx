@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { QueryProvider } from "@/components/query-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { SwRegister } from "@/components/sw-register";
+import { AuthProviders } from "@/components/providers";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
@@ -48,9 +49,11 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <QueryProvider>
-            {children}
-          </QueryProvider>
+          <AuthProviders>
+            <QueryProvider>
+              {children}
+            </QueryProvider>
+          </AuthProviders>
           <Toaster richColors position="top-right" />
         </ThemeProvider>
         <SwRegister />
