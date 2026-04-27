@@ -15,6 +15,7 @@ import {
   ArrowLeft,
   X,
   GraduationCap,
+  UserCircle,
 } from "lucide-react";
 
 const mainItems = [
@@ -31,9 +32,10 @@ const moreItems = [
 
 interface BottomNavProps {
   role: string;
+  userId?: string;
 }
 
-export function BottomNav({ role }: BottomNavProps) {
+export function BottomNav({ role, userId }: BottomNavProps) {
   const pathname = usePathname();
   const [moreOpen, setMoreOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -101,6 +103,25 @@ export function BottomNav({ role }: BottomNavProps) {
                   </Link>
                 );
               })}
+
+              {role === "UMUM" && userId && (
+                <>
+                  <div className="border-t border-border/40 my-1" />
+                  <Link
+                    href={`/pegawai/${userId}`}
+                    onClick={() => setMoreOpen(false)}
+                    className={cn(
+                      "flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors",
+                      pathname.startsWith(`/pegawai/${userId}`)
+                        ? "bg-primary/10 text-primary"
+                        : "text-muted-foreground hover:bg-muted/50 hover:text-foreground"
+                    )}
+                  >
+                    <UserCircle className="h-5 w-5" />
+                    Profil Saya
+                  </Link>
+                </>
+              )}
 
               <div className="border-t border-border/40 my-1" />
 

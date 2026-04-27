@@ -86,8 +86,11 @@ docker compose -f docker-compose.prod.yml up -d --build portal tu-app
 # Atau rebuild SEMUA service:
 docker compose -f docker-compose.prod.yml up -d --build
 
-# PENTING: Jika menggunakan Nginx sebagai reverse proxy (smpit-nginx), Anda HARUS merestart Nginx setelah merebuild container agar IP baru terdeteksi:
+# PENTING: Restart Nginx setelah rebuild agar IP baru container terdeteksi:
+# - Lokal (Docker Nginx):
 docker restart smpit-nginx
+# - Produksi (System Nginx):
+sudo systemctl restart nginx
 
 # 3. Jika ada perubahan schema database:
 docker compose -f docker-compose.prod.yml exec portal npx prisma db push

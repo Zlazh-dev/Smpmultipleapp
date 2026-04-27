@@ -32,7 +32,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
       </div>
 
       {/* Bottom nav — mobile only */}
-      <BottomNav role={role} />
+      <BottomNav role={role} userId={user?.id} />
     </div>
   );
 }
