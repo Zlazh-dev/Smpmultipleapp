@@ -6,8 +6,12 @@ RUN apk add --no-cache libc6-compat
 WORKDIR /app
 COPY package.json package-lock.json* ./
 COPY prisma ./prisma/
-# Generate both PostgreSQL (main) and MySQL (RADIG) Prisma clients
-RUN (npm ci || (sleep 5 && npm ci)) && npx prisma generate && npx prisma generate --schema=prisma/radig.prisma
+# Install production deps separately, then full deps for build
+RUN (npm ci --only=production || (sleep 5 && npm ci --only=production)) && \
+    cp -R node_modules /prod_node_modules && \
+    (npm ci || (sleep 5 && npm ci)) && \
+    npx prisma generate && \
+    npx prisma generate --schema=prisma/radig.prisma
 
 # ---- Build ----
 FROM base AS builder
@@ -26,14 +30,17 @@ ENV NEXT_TELEMETRY_DISABLED=1
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
+# Copy production node_modules (includes all prisma CLI transitive deps)
+COPY --from=deps /prod_node_modules ./node_modules
+
 COPY --from=builder /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 COPY --from=builder /app/prisma ./prisma
+# Overlay generated prisma clients
 COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
 COPY --from=builder /app/node_modules/@prisma ./node_modules/@prisma
 COPY --from=builder /app/node_modules/prisma ./node_modules/prisma
-COPY --from=builder /app/node_modules/effect ./node_modules/effect
 RUN mkdir -p node_modules/.bin && ln -sf ../prisma/build/index.js node_modules/.bin/prisma
 
 USER nextjs
