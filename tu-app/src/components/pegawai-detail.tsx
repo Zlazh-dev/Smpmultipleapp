@@ -133,27 +133,29 @@ export function PegawaiDetail({ pegawai, templates = [], isSelf = false, isAdmin
   return (
     <div className="space-y-4">
       {/* Header */}
-      <div className="flex items-start gap-3">
-        <Link href="/pegawai" className="mt-1 p-1.5 rounded-md hover:bg-muted transition-colors">
-          <ArrowLeft className="h-4 w-4" />
-        </Link>
-        <div className="flex-1">
-          <h1 className="text-xl font-bold tracking-tight">{pegawai.namaLengkap}</h1>
-          <div className="flex items-center gap-2 mt-1 text-sm text-muted-foreground">
-            <span className="font-mono text-xs">{pegawai.nip}</span>
-            <span>·</span>
-            <span>{pegawai.jabatan}</span>
-            <span className={cn(
-              "inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium",
-              pegawai.accessLevel === "KHUSUS" ? "bg-purple-500/10 text-purple-600" : "bg-blue-500/10 text-blue-600"
-            )}>{pegawai.accessLevel}</span>
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-start">
+        <div className="flex items-start gap-3 flex-1 min-w-0">
+          <Link href={isAdmin ? "/pegawai" : "/dashboard"} className="mt-1 p-1.5 rounded-md hover:bg-muted transition-colors shrink-0">
+            <ArrowLeft className="h-4 w-4" />
+          </Link>
+          <div className="min-w-0">
+            <h1 className="text-lg sm:text-xl font-bold tracking-tight truncate">{pegawai.namaLengkap}</h1>
+            <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5 mt-1 text-sm text-muted-foreground">
+              <span className="font-mono text-xs">{pegawai.nip}</span>
+              <span className="hidden sm:inline">·</span>
+              <span className="text-xs sm:text-sm">{pegawai.jabatan}</span>
+              <span className={cn(
+                "inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium",
+                pegawai.accessLevel === "KHUSUS" ? "bg-purple-500/10 text-purple-600" : "bg-blue-500/10 text-blue-600"
+              )}>{pegawai.accessLevel}</span>
+            </div>
           </div>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 pl-9 sm:pl-0 shrink-0">
           {templates.length > 0 && (
             <div className="relative">
-              <Button variant="outline" size="sm" className="cursor-pointer" onClick={() => setShowTemplateMenu(!showTemplateMenu)}>
-                <Printer className="mr-1.5 h-3.5 w-3.5" /> Cetak Surat <ChevronDown className="ml-1 h-3 w-3" />
+              <Button variant="outline" size="sm" className="cursor-pointer text-xs sm:text-sm" onClick={() => setShowTemplateMenu(!showTemplateMenu)}>
+                <Printer className="mr-1.5 h-3.5 w-3.5" /> <span className="hidden sm:inline">Cetak </span>Surat <ChevronDown className="ml-1 h-3 w-3" />
               </Button>
               {showTemplateMenu && (
                 <>
@@ -174,7 +176,7 @@ export function PegawaiDetail({ pegawai, templates = [], isSelf = false, isAdmin
               )}
             </div>
           )}
-          <Button variant="outline" size="sm" className="cursor-pointer" onClick={() => setEditOpen(true)}>
+          <Button variant="outline" size="sm" className="cursor-pointer text-xs sm:text-sm" onClick={() => setEditOpen(true)}>
             <Pencil className="mr-1.5 h-3.5 w-3.5" /> Edit
           </Button>
         </div>
@@ -389,7 +391,7 @@ export function PegawaiDetail({ pegawai, templates = [], isSelf = false, isAdmin
             </div>
           ) : docView === "card" ? (
             /* ── Card View with file preview ── */
-            <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
               {pegawai.dokumen.map((doc) => (
                 <div key={doc.id} className="group rounded-xl border border-border/50 overflow-hidden hover:shadow-lg hover:border-primary/30 transition-all duration-200">
                   {/* Preview area — shows actual file content */}
