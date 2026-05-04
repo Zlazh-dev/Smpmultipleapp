@@ -12,15 +12,15 @@ const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"]
 
 export const metadata: Metadata = {
   title: {
-    default: "TU App — SMPIT Asy-Syadzili",
-    template: "%s | TU App",
+    default: "AsyOps — SMPIT Asy-Syadzili",
+    template: "%s | AsyOps",
   },
-  description: "Sistem Administrasi Kepegawaian Tata Usaha SMPIT Asy-Syadzili",
+  description: "Sistem Administrasi Backoffice SMPIT Asy-Syadzili",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
-    title: "TU App",
+    title: "AsyOps",
   },
   icons: {
     icon: "/favicon.ico",
@@ -45,8 +45,7 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ThemeProvider
           attribute="class"
-          defaultTheme="dark"
-          enableSystem
+          defaultTheme="light"
           disableTransitionOnChange
         >
           <AuthProviders>

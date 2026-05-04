@@ -120,8 +120,11 @@ export async function GET(request: Request) {
     maxAge: 30 * 24 * 60 * 60, // 30 days
   });
 
-  // 5. Set the session cookie and redirect to dashboard
-  const response = NextResponse.redirect(`${BASE_URL}/dashboard`);
+  // 5. Set the session cookie and redirect to the correct product
+  //    KHUSUS (admin/TU) → AsyOps home (/dashboard)
+  //    UMUM (Guru)        → AsyTeach home (/teach/home)
+  const destination = pegawai.accessLevel === "KHUSUS" ? "/dashboard" : "/teach/home";
+  const response = NextResponse.redirect(`${BASE_URL}${destination}`);
 
   response.cookies.set(cookieName, sessionToken, {
     httpOnly: true,

@@ -119,23 +119,23 @@ export async function GET(req: NextRequest) {
 
       if (tanggal) {
         const d = new Date(tanggal);
-        d.setHours(0, 0, 0, 0);
-        const next = new Date(d); next.setDate(next.getDate() + 1);
-        where.tanggal = { gte: d, lt: next };
+        d.setUTCHours(0, 0, 0, 0);
+        where.date = d;
         dateLabel = d.toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" });
       }
       if (bulan) {
         const [y, m] = bulan.split("-").map(Number);
         const start = new Date(y, m - 1, 1);
         const end = new Date(y, m, 1);
-        where.tanggal = { gte: start, lt: end };
+        where.date = { gte: start, lt: end };
         dateLabel = start.toLocaleDateString("id-ID", { month: "long", year: "numeric" });
       }
 
-      const data = await db.presensi.findMany({
+      // Read from DailyAttendanceSummary — includes resolved IZIN from cuti
+      const data = await db.dailyAttendanceSummary.findMany({
         where,
         include: { pegawai: { select: { namaLengkap: true, nip: true, jabatan: true } } },
-        orderBy: [{ tanggal: "desc" }, { pegawai: { namaLengkap: "asc" } }],
+        orderBy: [{ date: "desc" }, { pegawai: { namaLengkap: "asc" } }],
       });
 
       const ws = workbook.addWorksheet("Presensi");
@@ -163,17 +163,17 @@ export async function GET(req: NextRequest) {
         { key: "keterangan", width: 24 },
       ];
 
-      data.forEach((p, i) => {
+      data.forEach((s, i) => {
         const row = ws.addRow([
           i + 1,
-          new Date(p.tanggal).toLocaleDateString("id-ID"),
-          p.pegawai.nip,
-          p.pegawai.namaLengkap,
-          p.pegawai.jabatan,
-          p.status,
-          p.keterangan || "-",
+          new Date(s.date).toLocaleDateString("id-ID"),
+          s.pegawai.nip,
+          s.pegawai.namaLengkap,
+          s.pegawai.jabatan,
+          s.status,
+          s.keterangan || "-",
         ]);
-        applyDataStyle(row, 6); // status is column 6
+        applyDataStyle(row, 6);
       });
 
       // Summary row

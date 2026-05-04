@@ -2,20 +2,19 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 /**
- * Portal middleware — simple, no NextAuth wrapper.
+ * AsyHub middleware — simple, no NextAuth wrapper.
  * Auth is handled by NextAuth's authorized() callback in auth.config.ts
  * which is invoked automatically by the NextAuth route handler.
  * 
- * This middleware only handles:
- * 1. Subdomain detection
- * 2. No-cache headers on protected pages
+ * This middleware handles:
+ * 1. Subdomain detection (production)
+ * 2. No-cache headers on protected /hub pages
+ * 3. Legacy /dashboard redirect to /hub
  */
 
 const SUBDOMAIN_URL_MAP: Record<string, string> = {
   tu: process.env.NEXT_PUBLIC_TU_URL || "http://localhost:3001",
   radig: process.env.NEXT_PUBLIC_RADIG_URL || "http://localhost:3002",
-  guru: process.env.NEXT_PUBLIC_GURU_URL || "http://localhost:3003",
-  wali: process.env.NEXT_PUBLIC_WALI_URL || "http://localhost:3004",
 };
 
 export function middleware(request: NextRequest) {
@@ -33,9 +32,19 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(SUBDOMAIN_URL_MAP[subdomain]);
   }
 
-  // No-cache on dashboard pages (prevents back-button after logout)
+  // Legacy /dashboard redirect → /hub
   if (pathname.startsWith("/dashboard")) {
-    // Check session using the correct cookie name from auth.config.ts
+    const newPath = pathname.replace("/dashboard", "/hub");
+    return NextResponse.redirect(new URL(newPath, request.url));
+  }
+
+  // Legacy dead-end routes → /hub
+  if (pathname === "/guru" || pathname === "/wali") {
+    return NextResponse.redirect(new URL("/hub", request.url));
+  }
+
+  // Protect /hub routes (require session)
+  if (pathname.startsWith("/hub")) {
     const hasSession = request.cookies.has("portal.session-token");
 
     if (!hasSession) {

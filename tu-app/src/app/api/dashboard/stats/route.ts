@@ -3,15 +3,16 @@ import { db } from "@/lib/db";
 
 // GET /api/dashboard/stats
 export async function GET() {
-  const [pegawaiCount, totalPresensiToday, cutiPending, dokumenCount] =
+  const today = new Date();
+  today.setUTCHours(0, 0, 0, 0);
+
+  const [pegawaiCount, totalHadirToday, cutiPending, dokumenCount] =
     await Promise.all([
-      db.pegawai.count(),
-      db.presensi.count({
+      db.pegawai.count({ where: { accessLevel: "UMUM" } }),
+      // Read from DailyAttendanceSummary (new CQRS source of truth)
+      db.dailyAttendanceSummary.count({
         where: {
-          tanggal: {
-            gte: new Date(new Date().setHours(0, 0, 0, 0)),
-            lt: new Date(new Date().setHours(23, 59, 59, 999)),
-          },
+          date: today,
           status: "HADIR",
         },
       }),
@@ -21,8 +22,8 @@ export async function GET() {
 
   return NextResponse.json({
     pegawai: pegawaiCount,
-    presensiHariIni: totalPresensiToday,
-    presensiRate: pegawaiCount > 0 ? Math.round((totalPresensiToday / pegawaiCount) * 100) : 0,
+    presensiHariIni: totalHadirToday,
+    presensiRate: pegawaiCount > 0 ? Math.round((totalHadirToday / pegawaiCount) * 100) : 0,
     cutiPending,
     dokumen: dokumenCount,
   });

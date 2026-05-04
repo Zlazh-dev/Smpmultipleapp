@@ -16,6 +16,7 @@ function euclideanDistance(a: number[], b: number[]): number {
 /**
  * POST /api/face/verify
  * Verify a face descriptor against the registered descriptor for a pegawai.
+ * Uses Pegawai.faceDescriptor (synced from FaceEnrollment on approval).
  * Body: { pegawaiId: string, descriptor: number[] }
  */
 export async function POST(request: NextRequest) {
@@ -31,31 +32,36 @@ export async function POST(request: NextRequest) {
 
     const pegawai = await db.pegawai.findUnique({
       where: { id: pegawaiId },
-      select: { id: true, namaLengkap: true, faceDescriptor: true, faceVerified: true },
+      select: { 
+        id: true, 
+        namaLengkap: true, 
+        faceDescriptor: true, 
+        faceVerified: true,
+      },
     });
 
     if (!pegawai) {
       return NextResponse.json({ error: "Pegawai tidak ditemukan" }, { status: 404 });
     }
 
+    // faceDescriptor and faceVerified are synced from FaceEnrollment on approval
     if (!pegawai.faceDescriptor || pegawai.faceDescriptor.length === 0) {
       return NextResponse.json(
         {
           error: "Wajah belum terdaftar",
           notRegistered: true,
-          message: "Kamu harus registrasi wajah dahulu di halaman profil atau hubungi admin.",
+          message: "Kamu harus registrasi wajah dahulu di halaman Profil Saya.",
         },
         { status: 400 }
       );
     }
 
-    // Check if face is verified by admin
     if (!pegawai.faceVerified) {
       return NextResponse.json(
         {
           error: "Wajah belum diverifikasi",
           notVerified: true,
-          message: "Foto wajah kamu sudah diupload tapi belum diverifikasi oleh admin. Hubungi admin untuk verifikasi.",
+          message: "Status pendaftaran wajah kamu belum disetujui admin.",
         },
         { status: 400 }
       );

@@ -29,7 +29,7 @@ export async function loginAction(formData: FormData): Promise<ActionResult> {
     await signIn("credentials", {
       username: parsed.data.username,
       password: parsed.data.password,
-      redirectTo: "/dashboard",
+      redirectTo: "/hub",
     });
     return { success: true };
   } catch (error) {

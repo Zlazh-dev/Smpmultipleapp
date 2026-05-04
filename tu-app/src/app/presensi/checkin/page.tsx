@@ -3,7 +3,9 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { MapPin, Loader2, CheckCircle, XCircle, Clock, LogIn, LogOut, AlertTriangle } from "lucide-react";
+import { MapPin, Loader2, CheckCircle, XCircle, Clock, LogIn, LogOut, AlertTriangle, Camera } from "lucide-react";
+import { useSession } from "next-auth/react";
+import { FaceVerifyDialog } from "@/components/face-verify-dialog";
 import { cn } from "@/lib/utils";
 
 type Status = "idle" | "locating" | "submitting" | "success_in" | "success_out" | "already_done" | "error" | "too_early";
@@ -23,29 +25,38 @@ export default function CheckinPage() {
   const [status, setStatus] = useState<Status>("idle");
   const [result, setResult] = useState<ResultData | null>(null);
   const [time, setTime] = useState(new Date());
+  const [isFaceVerifyOpen, setIsFaceVerifyOpen] = useState(false);
+  const { data: session } = useSession();
 
   useEffect(() => {
     const t = setInterval(() => setTime(new Date()), 1000);
     return () => clearInterval(t);
   }, []);
 
-  const handleCheckin = async () => {
+  const handleCheckin = async (pos?: { latitude: number, longitude: number }) => {
     setStatus("locating");
     setResult(null);
 
     try {
-      // Get GPS
-      const pos = await new Promise<GeolocationPosition>((resolve, reject) => {
-        if (!navigator.geolocation) {
-          reject(new Error("GPS tidak tersedia"));
-          return;
-        }
-        navigator.geolocation.getCurrentPosition(resolve, reject, {
-          enableHighAccuracy: true,
-          timeout: 15000,
-          maximumAge: 0,
+      // Use provided coords (from FaceVerifyDialog) or fallback to GPS
+      let lat = pos?.latitude;
+      let lon = pos?.longitude;
+
+      if (!lat || !lon) {
+        const gpsPos = await new Promise<GeolocationPosition>((resolve, reject) => {
+          if (!navigator.geolocation) {
+            reject(new Error("GPS tidak tersedia"));
+            return;
+          }
+          navigator.geolocation.getCurrentPosition(resolve, reject, {
+            enableHighAccuracy: true,
+            timeout: 15000,
+            maximumAge: 0,
+          });
         });
-      });
+        lat = gpsPos.coords.latitude;
+        lon = gpsPos.coords.longitude;
+      }
 
       setStatus("submitting");
 
@@ -53,8 +64,8 @@ export default function CheckinPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          latitude: pos.coords.latitude,
-          longitude: pos.coords.longitude,
+          latitude: lat,
+          longitude: lon,
         }),
       });
 
@@ -179,8 +190,8 @@ export default function CheckinPage() {
 
           {/* Action Button */}
           <Button
-            onClick={handleCheckin}
-            disabled={isLoading}
+            onClick={() => setIsFaceVerifyOpen(true)}
+            disabled={isLoading || !session?.user?.id}
             className={cn(
               "w-full h-12 text-sm font-semibold cursor-pointer transition-all",
               status === "success_in" || status === "success_out"
@@ -194,11 +205,20 @@ export default function CheckinPage() {
             {isLoading ? (
               <><Loader2 className="h-4 w-4 mr-2 animate-spin" /> Memproses...</>
             ) : status === "idle" ? (
-              <><MapPin className="h-4 w-4 mr-2" /> Presensi Sekarang</>
+              <><Camera className="h-4 w-4 mr-2" /> Presensi Sekarang</>
             ) : (
-              <><MapPin className="h-4 w-4 mr-2" /> Coba Lagi</>
+              <><Camera className="h-4 w-4 mr-2" /> Coba Lagi</>
             )}
           </Button>
+
+          {session?.user?.id && (
+            <FaceVerifyDialog
+              open={isFaceVerifyOpen}
+              onOpenChange={setIsFaceVerifyOpen}
+              userId={session.user.id}
+              onVerified={(coords) => handleCheckin(coords)}
+            />
+          )}
 
           <p className="text-[10px] text-muted-foreground">
             SMPIT Asy-Syadzili • Sistem Presensi Digital

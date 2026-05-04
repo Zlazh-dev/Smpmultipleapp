@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import { PresensiStatus } from "@prisma/client";
+import { resolveDay, upsertDailySummary } from "@/lib/attendance-engine";
 
 // GET /api/presensi?tanggal=2026-04-17
 export async function GET(request: NextRequest) {
@@ -97,6 +98,41 @@ export async function POST(request: NextRequest) {
         pegawai: { select: { namaLengkap: true, nip: true } },
       },
     });
+
+    // ── DUAL-WRITE: New CQRS tables ──
+    try {
+      const now = new Date();
+      let isWithinGeofence: boolean | null = null;
+      if (latitude !== undefined && longitude !== undefined) {
+        const geoSettings = await db.geofenceSettings.findUnique({ where: { id: "default" } });
+        if (geoSettings?.isActive) {
+          const R = 6371000;
+          const dLat = (geoSettings.latitude - latitude) * Math.PI / 180;
+          const dLon = (geoSettings.longitude - longitude) * Math.PI / 180;
+          const a = Math.sin(dLat / 2) ** 2 + Math.cos(latitude * Math.PI / 180) * Math.cos(geoSettings.latitude * Math.PI / 180) * Math.sin(dLon / 2) ** 2;
+          const distance = R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+          isWithinGeofence = distance <= geoSettings.radius;
+        }
+      }
+
+      await db.attendanceRawEvent.create({
+        data: {
+          pegawaiId: resolvedPegawaiId,
+          eventType: "IN",
+          occurredAt: now,
+          latitude: latitude ?? null,
+          longitude: longitude ?? null,
+          isWithinGeofence,
+          verificationMethod: "face",
+          sourceRef: "presensi-manual",
+          bukti,
+        },
+      });
+      const resolved = await resolveDay(resolvedPegawaiId, today);
+      await upsertDailySummary(resolvedPegawaiId, today, resolved);
+    } catch (dualWriteErr) {
+      console.error("Dual-write (manual) error:", dualWriteErr);
+    }
 
     return NextResponse.json(presensi, { status: 201 });
   } catch (error) {

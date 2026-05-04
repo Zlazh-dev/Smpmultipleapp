@@ -32,7 +32,7 @@ services:
       - ./scripts/init-pg.sh:/docker-entrypoint-initdb.d/init-pg.sh:ro
     # NO ports exposed — Docker network only
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER}" ]
       interval: 5s
       timeout: 5s
       retries: 5
@@ -53,7 +53,7 @@ services:
       - mysql_data:/var/lib/mysql
     # NO ports exposed — Docker network only
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}"]
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${MYSQL_ROOT_PASSWORD}" ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -83,6 +83,12 @@ services:
       SYNC_SECRET: ${SYNC_SECRET}
     ports:
       - "127.0.0.1:3000:3000"
+    healthcheck:
+      test: ["CMD-SHELL", "node -e \"const net=require('net');const s=net.connect(3000,'127.0.0.1',()=>{s.destroy();process.exit(0)});s.on('error',()=>process.exit(1))\""]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
     networks:
       - smpit-net
 
@@ -111,6 +117,12 @@ services:
       - "127.0.0.1:3001:3000"
     volumes:
       - tu_uploads:/app/uploads
+    healthcheck:
+      test: ["CMD-SHELL", "node -e \"const net=require('net');const s=net.connect(3000,'127.0.0.1',()=>{s.destroy();process.exit(0)});s.on('error',()=>process.exit(1))\""]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
     networks:
       - smpit-net
 
@@ -169,7 +181,7 @@ services:
       context: ./portal
       dockerfile: Dockerfile
       target: deps
-    profiles: ["tools"]
+    profiles: [ "tools" ]
     depends_on:
       postgres:
         condition: service_healthy
@@ -183,7 +195,7 @@ services:
       context: ./tu-app
       dockerfile: Dockerfile
       target: deps
-    profiles: ["tools"]
+    profiles: [ "tools" ]
     depends_on:
       postgres:
         condition: service_healthy

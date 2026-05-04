@@ -3,10 +3,11 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { ClipboardCheck, Settings, FileSpreadsheet } from "lucide-react";
+import { ClipboardCheck, Settings, FileSpreadsheet, UserCheck } from "lucide-react";
 
 const tabs = [
   { href: "/presensi", label: "Presensi", icon: ClipboardCheck, exact: true },
+  { href: "/presensi/validasi-wajah", label: "Validasi Wajah", icon: UserCheck },
   { href: "/presensi/pengaturan", label: "Pengaturan", icon: Settings },
   { href: "/presensi/laporan", label: "Laporan", icon: FileSpreadsheet },
 ];

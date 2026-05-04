@@ -51,6 +51,13 @@ model Pegawai {
   cuti           Cuti[]
   dokumen        Dokumen[]
   folders        EfilingFolder[]
+  
+  // New CQRS Relations
+  attendanceRawEvents      AttendanceRawEvent[]
+  dailyAttendanceSummaries DailyAttendanceSummary[]
+  performedAuditLogs       AttendanceAuditLog[]
+  faceEnrollment           FaceEnrollment?
+
   createdAt      DateTime   @default(now())
   updatedAt      DateTime   @updatedAt
 
@@ -75,6 +82,131 @@ model Presensi {
   @@index([tanggal])
 }
 
+// ==========================================
+// CQRS ATTENDANCE MODELS (Revised)
+// ==========================================
+
+enum AttendanceStatus {
+  HADIR
+  IZIN
+  SAKIT
+  ALFA
+  LIBUR
+}
+
+enum AttendanceEventType {
+  IN
+  OUT
+}
+
+enum FaceEnrollmentStatus {
+  SUBMITTED
+  APPROVED
+  REJECTED
+}
+
+/// How the final daily status was resolved
+enum ResolutionSource {
+  RAW_EVENT        // Derived from check-in/out events
+  LEAVE_APPROVAL   // Derived from approved Cuti record
+  AUTO_ABSENT      // System marked ALFA (no event, working day)
+  MANUAL_OVERRIDE  // Admin changed status manually
+  SYSTEM_RECOMPUTE // System recalculated from raw data
+  CALENDAR         // Non-working day / holiday
+}
+
+enum AuditActionType {
+  MANUAL_OVERRIDE
+  SYSTEM_RECOMPUTE
+}
+
+/// Immutable log of a single check-in or check-out physical action.
+/// Never updated or deleted — append-only for audit integrity.
+/// The unique constraint on [pegawaiId, eventType, occurredAt] prevents
+/// duplicate events from retry-safe ingestion (idempotency guard).
+model AttendanceRawEvent {
+  id                 String              @id @default(cuid())
+  pegawaiId          String
+  eventType          AttendanceEventType
+  occurredAt         DateTime            // UTC moment of the physical event
+  latitude           Float?
+  longitude          Float?
+  isWithinGeofence   Boolean?            // null = not checked, true/false = result
+  verificationMethod String?             // "gps", "face", "qr", "manual"
+  faceVerified       Boolean?            // null = not attempted, true/false = result
+  sourceRef          String?             // Device/session identifier for tracing
+  bukti              String?             // Photo/QR URL
+  keterangan         String?
+  createdAt          DateTime            @default(now())
+
+  pegawai            Pegawai             @relation(fields: [pegawaiId], references: [id], onDelete: Cascade)
+
+  @@unique([pegawaiId, eventType, occurredAt]) // Idempotency guard
+  @@index([pegawaiId, occurredAt])
+  @@index([occurredAt])
+}
+
+/// The resolved daily attendance outcome — one row per employee per calendar date.
+/// Created live (unfinalized), locked by the EOD finalization job.
+model DailyAttendanceSummary {
+  id               String           @id @default(cuid())
+  pegawaiId        String
+  date             DateTime         @db.Date   // Business date (date-only, no time component)
+  status           AttendanceStatus
+  resolutionSource ResolutionSource            // Explains HOW this status was determined
+  checkInTime      DateTime?                   // UTC timestamp of first IN event
+  checkOutTime     DateTime?                   // UTC timestamp of last OUT event
+  isFinalized      Boolean          @default(false)
+  finalizedAt      DateTime?                   // UTC moment when finalization locked this record
+  keterangan       String?
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+
+  pegawai          Pegawai                     @relation(fields: [pegawaiId], references: [id], onDelete: Cascade)
+  auditLogs        AttendanceAuditLog[]
+
+  @@unique([pegawaiId, date])
+  @@index([date])
+  @@index([status])
+  @@index([isFinalized])
+}
+
+/// EXCEPTION-ONLY calendar for holidays and special non-working days.
+/// This is NOT a full calendar. If a date is NOT in this table, the resolution
+/// engine falls back to GeofenceSettings.hariKerja (default: Mon-Fri).
+/// Only dates that OVERRIDE the default weekly pattern need entries here.
+model WorkingDayCalendar {
+  id           String   @id @default(cuid())
+  date         DateTime @unique @db.Date  // Business date
+  isWorkingDay Boolean  @default(false)   // false = holiday; true = special working day (e.g. Saturday event)
+  description  String?                    // e.g. "Libur Nasional", "Hari Raya", "Sabtu Kerja"
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+/// Append-only ledger of all manual overrides and system recomputes
+/// on finalized DailyAttendanceSummary records.
+model AttendanceAuditLog {
+  id                 String                 @id @default(cuid())
+  summaryId          String
+  performedByAdminId String                 // Pegawai.id of the KHUSUS admin who did it
+  previousStatus     AttendanceStatus
+  newStatus          AttendanceStatus
+  actionType         AuditActionType
+  reason             String                 // Mandatory justification
+  notes              String?                // Free-text additional context
+  metadata           Json?                  // Structured context (e.g. original event IDs, cuti ref)
+  createdAt          DateTime               @default(now())
+
+  summary            DailyAttendanceSummary @relation(fields: [summaryId], references: [id], onDelete: Cascade)
+  performedBy        Pegawai                @relation(fields: [performedByAdminId], references: [id])
+
+  @@index([summaryId])
+  @@index([performedByAdminId])
+  @@index([createdAt])
+}
+// ==========================================
+
 model Cuti {
   id             String         @id @default(cuid())
   pegawaiId      String
@@ -93,6 +225,7 @@ model Cuti {
 
   @@index([pegawaiId])
   @@index([status])
+  @@index([pegawaiId, tanggalMulai, tanggalSelesai]) // Resolution engine date-range lookups
 }
 
 model Dokumen {
@@ -188,4 +321,24 @@ model ProfilSekolah {
   longitude       Float    @default(112.7521)
   logo            String?                          // Base64 or file path
   updatedAt       DateTime @updatedAt
+}
+
+model FaceEnrollment {
+  id               String               @id @default(cuid())
+  pegawaiId        String               @unique
+  status           FaceEnrollmentStatus
+  approvedPhotoUrl String?              // File path (e.g. "uploads/faces/xxx_approved.jpg")
+  pendingPhotoUrl  String?              // File path (e.g. "uploads/faces/xxx_pending.jpg")
+  faceDescriptor   Float[]              // 128-dim descriptor submitted with the photo
+  rejectionReason  String?
+  reviewedBy       String?
+  submittedAt      DateTime             @default(now())
+  approvedAt       DateTime?
+  rejectedAt       DateTime?
+  createdAt        DateTime             @default(now())
+  updatedAt        DateTime             @updatedAt
+
+  pegawai          Pegawai              @relation(fields: [pegawaiId], references: [id], onDelete: Cascade)
+
+  @@index([status])
 }

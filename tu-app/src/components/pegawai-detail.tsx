@@ -7,13 +7,14 @@ import { cn } from "@/lib/utils";
 import {
   ArrowLeft, User, FileText, Upload, Pencil, Download, Trash2,
   ScrollText, Calendar, Clock, Printer, ChevronDown, LayoutGrid, List, Plus,
+  CheckCircle, ShieldAlert,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { PrintPreview } from "@/components/print-preview";
 import { PegawaiFormSheet } from "@/components/pegawai-form-sheet";
 import { SKFormSheet, type SkData } from "@/components/sk-form-sheet";
-import { FaceRegistration } from "@/components/face-registration";
+import { Badge } from "@/components/ui/badge";
 
 interface SkRiwayat {
   noSK: string; tanggal: string; jenis: string;
@@ -251,15 +252,31 @@ export function PegawaiDetail({ pegawai, templates = [], isSelf = false, isAdmin
                 </div>
               </div>
             </div>
-            {/* Face Registration */}
-            <FaceRegistration
-              pegawaiId={pegawai.id}
-              hasFace={pegawai.faceDescriptor && pegawai.faceDescriptor.length > 0}
-              facePhoto={pegawai.facePhoto}
-              faceVerified={pegawai.faceVerified ?? false}
-              isSelf={isSelf}
-              isAdmin={isAdmin}
-            />
+            {/* Face Enrollment Status (read-only) */}
+            <div className="space-y-1">
+              <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-2">Face Recognition</h3>
+              <div className="rounded-lg border border-border/50 p-4 space-y-3">
+                {pegawai.faceVerified ? (
+                  <div className="flex items-center gap-2">
+                    <CheckCircle className="h-4 w-4 text-emerald-500" />
+                    <span className="text-sm text-emerald-600 dark:text-emerald-400 font-medium">Wajah terverifikasi</span>
+                  </div>
+                ) : pegawai.faceDescriptor && pegawai.faceDescriptor.length > 0 ? (
+                  <div className="flex items-center gap-2">
+                    <Clock className="h-4 w-4 text-amber-500" />
+                    <span className="text-sm text-amber-600 dark:text-amber-400 font-medium">Menunggu verifikasi admin</span>
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-2">
+                    <ShieldAlert className="h-4 w-4 text-muted-foreground" />
+                    <span className="text-sm text-muted-foreground">Wajah belum terdaftar</span>
+                  </div>
+                )}
+                <p className="text-xs text-muted-foreground">
+                  {isSelf ? "Kelola pendaftaran wajah di menu Profil Saya." : isAdmin ? "Kelola validasi di menu Presensi → Validasi Wajah." : ""}
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       )}

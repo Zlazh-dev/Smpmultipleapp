@@ -73,3 +73,64 @@ export function compareFaceDescriptors(
 
 /** Match threshold */
 export const FACE_MATCH_THRESHOLD = 0.6;
+
+/**
+ * Validate face quality for enrollment (Phase 1).
+ * Checks for exactly 1 face, size, and centering.
+ */
+export async function checkFaceQuality(
+  input: HTMLVideoElement
+): Promise<{ isValid: boolean; message: string; feedbackCode: string }> {
+  if (!input || input.readyState < 2) {
+    return { isValid: false, message: "Kamera sedang memuat...", feedbackCode: "loading" };
+  }
+
+  try {
+    const faceapi = await import("face-api.js");
+
+    // Detect all faces to check count
+    const detections = await faceapi.detectAllFaces(
+      input,
+      new faceapi.TinyFaceDetectorOptions({ inputSize: 320, scoreThreshold: 0.5 })
+    );
+
+    if (detections.length === 0) {
+      return { isValid: false, message: "Wajah tidak terdeteksi.", feedbackCode: "no_face" };
+    }
+    if (detections.length > 1) {
+      return { isValid: false, message: "Pastikan hanya wajah Anda yang terlihat.", feedbackCode: "multiple_faces" };
+    }
+
+    const face = detections[0];
+    const box = face.box;
+    const videoWidth = input.videoWidth;
+    const videoHeight = input.videoHeight;
+
+    // Check size (face should be at least 30% of the video height and max 80%)
+    const faceHeightPct = box.height / videoHeight;
+    if (faceHeightPct < 0.3) {
+      return { isValid: false, message: "Dekatkan wajah Anda ke kamera.", feedbackCode: "too_far" };
+    }
+    if (faceHeightPct > 0.8) {
+      return { isValid: false, message: "Mundurkan wajah sedikit.", feedbackCode: "too_close" };
+    }
+
+    // Check centering
+    const faceCenterX = box.x + box.width / 2;
+    const faceCenterY = box.y + box.height / 2;
+    const frameCenterX = videoWidth / 2;
+    const frameCenterY = videoHeight / 2;
+
+    const xOffset = Math.abs(faceCenterX - frameCenterX) / videoWidth;
+    const yOffset = Math.abs(faceCenterY - frameCenterY) / videoHeight;
+
+    // Tolerance of 15% from the center
+    if (xOffset > 0.15 || yOffset > 0.15) {
+      return { isValid: false, message: "Geser wajah ke tengah lingkaran.", feedbackCode: "not_centered" };
+    }
+
+    return { isValid: true, message: "Sempurna! Silakan jepret.", feedbackCode: "ready" };
+  } catch (err) {
+    return { isValid: false, message: "Sedang memproses...", feedbackCode: "processing" };
+  }
+}

@@ -1,0 +1,38 @@
+server {
+    listen 80;
+    server_name portal.smpitasy-syadzili.sch.id;
+
+    add_header X-Frame-Options SAMEORIGIN always;
+    add_header X-Content-Type-Options nosniff always;
+    add_header Referrer-Policy strict-origin-when-cross-origin always;
+
+    # Timeout — cegah 502 saat Next.js SSR lambat
+    proxy_connect_timeout 10s;
+    proxy_send_timeout    120s;
+    proxy_read_timeout    120s;
+
+    # Static assets Next.js — cache lama di browser
+    location /_next/static/ {
+        proxy_pass http://127.0.0.1:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        add_header Cache-Control "public, max-age=31536000, immutable";
+    }
+
+    location / {
+        proxy_pass http://127.0.0.1:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_cache_bypass $http_upgrade;
+        proxy_buffering off;
+
+        # Retry otomatis jika 502/503
+        proxy_next_upstream error timeout http_502 http_503;
+        proxy_next_upstream_tries 2;
+    }
+}

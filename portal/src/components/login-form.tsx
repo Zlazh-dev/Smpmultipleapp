@@ -36,7 +36,7 @@ export function LoginForm() {
         <span className="font-light">Selamat Datang</span>
       </h1>
       <p className="login-animate login-delay-300 text-muted-foreground">
-        Masuk ke Portal SMPIT Asy-Syadzili
+        Masuk ke AsyHub — SMPIT Asy-Syadzili
       </p>
 
       {/* Error alert */}
@@ -118,7 +118,7 @@ export function LoginForm() {
 
       {/* Footer */}
       <p className="login-animate login-delay-800 text-center text-xs text-muted-foreground mt-2">
-        SMPIT Asy-Syadzili &copy; {new Date().getFullYear()} &middot; Portal Akademik
+        SMPIT Asy-Syadzili &copy; {new Date().getFullYear()} &middot; AsyHub
       </p>
     </div>
   );

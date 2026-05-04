@@ -1,0 +1,29 @@
+tunnel: 8bce1b86-ba05-4ce7-a94d-523d6068c4c2
+credentials-file: /etc/cloudflared/8bce1b86-ba05-4ce7-a94d-523d6068c4c2.json
+
+# Paksa pakai 127.0.0.1 (IPv4) bukan localhost (yang resolve ke ::1/IPv6)
+# Semua traffic lewat nginx (port 80) supaya timeout & retry bisa dihandle
+ingress:
+  - hostname: smpitasy-syadzili.sch.id
+    service: http://127.0.0.1:80
+  - hostname: portal.smpitasy-syadzili.sch.id
+    service: http://127.0.0.1:80
+  - hostname: radig.smpitasy-syadzili.sch.id
+    service: http://127.0.0.1:80
+  - hostname: tu.smpitasy-syadzili.sch.id
+    service: http://127.0.0.1:80
+  - hostname: console.smpitasy-syadzili.sch.id
+    service: ssh://localhost:2222
+  - service: http_status:404
+
+originRequest:
+  connectTimeout: 10s
+  tlsTimeout: 10s
+  tcpKeepAlive: 30s
+  keepAliveConnections: 10
+  keepAliveTimeout: 90s
+  httpHostHeader: ""
+  originServerName: ""
+  noTLSVerify: false
+  disableChunkedEncoding: false
+  proxyType: ""

@@ -71,10 +71,10 @@ function Nav() {
       }`}
     >
       <div className="text-white font-medium tracking-wider text-sm uppercase">
-        Portal
+        AsyHub
       </div>
       <div className="hidden md:flex items-center gap-8">
-        {["Dashboard", "Tata Usaha", "Rapor Digital"].map((item) => (
+        {["Hub", "AsyTeach", "AsyOps"].map((item) => (
           <span
             key={item}
             className="text-white/60 text-xs uppercase tracking-[0.2em] hover:text-white transition-colors duration-300 cursor-default"
@@ -357,18 +357,18 @@ export function LandingPage() {
             </p>
             <div data-hero-line1 className="overflow-hidden">
               <h1 className="font-serif text-[clamp(2.5rem,8vw,7rem)] leading-[0.9] text-white tracking-tight">
-                Portal Akademik
+                AsyHub
               </h1>
             </div>
             <div data-hero-line2 className="overflow-hidden">
               <h1 className="font-serif text-[clamp(2.5rem,8vw,7rem)] leading-[0.9] text-white/40 tracking-tight italic">
-                Terpadu
+                Identity & Access
               </h1>
             </div>
 
             <div data-hero-subtitle className="mt-10 flex items-center gap-6">
               <span className="text-white/40 text-sm max-w-xs leading-relaxed">
-                Sistem terintegrasi untuk pengelolaan data guru, siswa, rapor digital, dan administrasi sekolah.
+                Pusat identitas dan akses terpadu untuk seluruh aplikasi SMPIT Asy-Syadzili.
               </span>
               <div className="w-12 h-[1px] bg-white/20" />
             </div>
@@ -403,11 +403,11 @@ export function LandingPage() {
             <div>
               <h2 data-about-heading className="font-serif text-[clamp(1.8rem,4vw,3.5rem)] leading-[1.15] text-white tracking-tight mb-8">
                 Kami adalah{" "}
-                <span className="italic text-white/50">Portal Akademik</span>{" "}
+                <span className="italic text-white/50">AsyHub</span>{" "}
                 SMPIT Asy-Syadzili yang menghubungkan seluruh ekosistem sekolah.
               </h2>
               <p data-about-desc className="text-white/40 text-sm leading-relaxed max-w-sm">
-                Mengelola data guru, siswa, rapor digital, presensi face recognition, dan administrasi sekolah dalam satu platform terpadu.
+                Login sekali, akses semua aplikasi. Kelola identitas, keamanan, dan hak akses dari satu tempat.
               </p>
             </div>
           </div>
@@ -515,7 +515,7 @@ export function LandingPage() {
                 data-hover="true"
               >
                 <span className="text-lg md:text-xl font-medium">
-                  Masuk ke Portal
+                  Masuk ke AsyHub
                 </span>
                 <svg
                   className="w-5 h-5 group-hover:translate-x-2 transition-transform duration-300"

@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { LoginForm } from "@/components/login-form";
 
 export const metadata: Metadata = {
-  title: "Masuk — Portal SMPIT Asy-Syadzili",
-  description: "Masuk ke Portal SMPIT Asy-Syadzili untuk mengakses aplikasi sekolah.",
+  title: "Masuk — AsyHub",
+  description: "Masuk ke AsyHub untuk mengakses aplikasi SMPIT Asy-Syadzili.",
 };
 
 export default function LoginPage() {
@@ -40,11 +40,11 @@ export default function LoginPage() {
                 </div>
                 <div>
                   <p className="text-white font-semibold text-sm">SMPIT Asy-Syadzili</p>
-                  <p className="text-white/60 text-xs">Portal Akademik Terpadu</p>
+                  <p className="text-white/60 text-xs">AsyHub — Identity & Access</p>
                 </div>
               </div>
               <p className="text-white/80 text-sm leading-relaxed">
-                Platform terintegrasi untuk pengelolaan data guru, siswa, rapor digital, dan administrasi sekolah secara digital.
+                Pusat identitas dan akses aplikasi SMPIT Asy-Syadzili. Login sekali, akses semua aplikasi sekolah.
               </p>
             </div>
           </div>

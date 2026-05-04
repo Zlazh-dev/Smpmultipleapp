@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getCurrentUser } from "@/lib/current-user";
 import { db } from "@/lib/db";
+import { resolveDay, upsertDailySummary } from "@/lib/attendance-engine";
 
 // Haversine distance (meters)
 function haversineDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
@@ -23,10 +24,12 @@ export async function POST(req: NextRequest) {
     // Get geofence settings
     const geoSettings = await db.geofenceSettings.findUnique({ where: { id: "default" } });
 
-    // Geofence check (if active and coordinates provided)
+    // Compute geofence result for raw event metadata
+    let isWithinGeofence: boolean | null = null;
     if (geoSettings?.isActive && latitude !== undefined && longitude !== undefined) {
       const distance = haversineDistance(geoSettings.latitude, geoSettings.longitude, latitude, longitude);
-      if (distance > geoSettings.radius) {
+      isWithinGeofence = distance <= geoSettings.radius;
+      if (!isWithinGeofence) {
         return NextResponse.json({
           error: `Anda di luar area sekolah (${Math.round(distance)}m). Maks: ${geoSettings.radius}m`,
           type: "GEOFENCE_ERROR",
@@ -56,6 +59,27 @@ export async function POST(req: NextRequest) {
         },
         include: { pegawai: { select: { namaLengkap: true } } },
       });
+
+      // ── DUAL-WRITE: New CQRS tables ──
+      try {
+        await db.attendanceRawEvent.create({
+          data: {
+            pegawaiId: user.id,
+            eventType: "IN",
+            occurredAt: now,
+            latitude: latitude ?? null,
+            longitude: longitude ?? null,
+            isWithinGeofence,
+            verificationMethod: latitude ? "gps" : "qr",
+            sourceRef: "checkin-page",
+          },
+        });
+        const resolved = await resolveDay(user.id, today);
+        await upsertDailySummary(user.id, today, resolved);
+      } catch (dualWriteErr) {
+        // Log but do not fail the primary check-in
+        console.error("Dual-write (IN) error:", dualWriteErr);
+      }
 
       return NextResponse.json({
         type: "CHECK_IN",
@@ -102,6 +126,26 @@ export async function POST(req: NextRequest) {
       },
       include: { pegawai: { select: { namaLengkap: true } } },
     });
+
+    // ── DUAL-WRITE: New CQRS tables ──
+    try {
+      await db.attendanceRawEvent.create({
+        data: {
+          pegawaiId: user.id,
+          eventType: "OUT",
+          occurredAt: now,
+          latitude: latitude ?? null,
+          longitude: longitude ?? null,
+          isWithinGeofence,
+          verificationMethod: latitude ? "gps" : "qr",
+          sourceRef: "checkin-page",
+        },
+      });
+      const resolved = await resolveDay(user.id, today);
+      await upsertDailySummary(user.id, today, resolved);
+    } catch (dualWriteErr) {
+      console.error("Dual-write (OUT) error:", dualWriteErr);
+    }
 
     return NextResponse.json({
       type: "CHECK_OUT",

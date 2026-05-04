@@ -26,16 +26,16 @@ const playfair = Playfair_Display({
 
 export const metadata: Metadata = {
   title: {
-    default: "Portal SMPIT Asy-Syadzili",
-    template: "%s — Portal SMPIT Asy-Syadzili",
+    default: "AsyHub — SMPIT Asy-Syadzili",
+    template: "%s — AsyHub",
   },
   description:
-    "Portal terpadu Sekolah Menengah Pertama Islam Terpadu Asy-Syadzili — Akses cepat ke semua aplikasi sekolah: TU, Waka Kurikulum, Guru, dan Wali Santri.",
+    "AsyHub — Pusat identitas dan akses aplikasi SMPIT Asy-Syadzili. Login, kelola akun, dan akses semua aplikasi sekolah.",
   keywords: [
     "SMPIT",
     "Asy-Syadzili",
     "sekolah",
-    "portal",
+    "AsyHub",
     "pendidikan",
     "Islam",
     "terpadu",
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#059669" },
+    { media: "(prefers-color-scheme: light)", color: "#71C9CE" },
     { media: "(prefers-color-scheme: dark)", color: "#0f1f1a" },
   ],
   width: "device-width",
@@ -70,8 +70,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         <ThemeProvider
           attribute="class"
-          defaultTheme="dark"
-          enableSystem
+          defaultTheme="light"
           disableTransitionOnChange
         >
           <AuthProviders>

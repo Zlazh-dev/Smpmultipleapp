@@ -1,0 +1,27 @@
+server {
+    listen 80;
+    server_name radig.smpitasy-syadzili.sch.id;
+
+    add_header X-Frame-Options SAMEORIGIN always;
+    add_header X-Content-Type-Options nosniff always;
+
+    client_max_body_size 64M;
+
+    # Timeout lebih panjang untuk PHP generate rapor
+    proxy_connect_timeout 10s;
+    proxy_send_timeout    300s;
+    proxy_read_timeout    300s;
+
+    location / {
+        proxy_pass http://127.0.0.1:8080;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+
+        # Retry otomatis jika 502/503
+        proxy_next_upstream error timeout http_502 http_503;
+        proxy_next_upstream_tries 2;
+    }
+}
