@@ -171,13 +171,29 @@ document.addEventListener('DOMContentLoaded', function () {
 
 function hapusKegiatan(id) {
     Swal.fire({
-        title: 'Anda Yakin?',
-        text: "Kegiatan ini akan dihapus permanen, termasuk semua target dimensi dan data asesmen yang terhubung!",
+        title: 'Konfirmasi Hapus Kegiatan',
+        html: `<div class="text-start">
+            <div class="alert alert-danger py-2 mb-3">
+                <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                <strong>Menghapus kegiatan ini akan berdampak pada:</strong>
+            </div>
+            <ul class="mb-3">
+                <li><strong>Asesmen Siswa</strong> — Seluruh penilaian asesmen P5 <span class="badge bg-danger">dihapus permanen</span></li>
+                <li><strong>Target Dimensi</strong> — Dimensi profil yang ditargetkan <span class="badge bg-danger">dihapus permanen</span></li>
+                <li><strong>Kelas Terlibat</strong> — Relasi kelas ke kegiatan ini <span class="badge bg-danger">dihapus</span></li>
+                <li><strong>Tim Penilai</strong> — Daftar guru penilai <span class="badge bg-danger">dihapus</span></li>
+                <li><strong>Mapel Terlibat</strong> — Relasi mapel ke kegiatan <span class="badge bg-danger">dihapus</span></li>
+            </ul>
+            <div class="alert alert-warning py-2"><i class="bi bi-shield-exclamation me-2"></i><strong>Tindakan ini tidak dapat dibatalkan!</strong></div>
+        </div>`,
         icon: 'warning',
+        width: '500px',
         showCancelButton: true,
         confirmButtonColor: '#d33',
-        confirmButtonText: 'Ya, Hapus!',
-        cancelButtonText: 'Batal'
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: '<i class="bi bi-trash me-1"></i> Ya, Hapus!',
+        cancelButtonText: 'Batal',
+        focusCancel: true
     }).then((result) => {
         if (result.isConfirmed) {
             window.location.href = 'kokurikuler_aksi.php?aksi=hapus&id=' + id;

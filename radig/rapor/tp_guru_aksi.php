@@ -122,6 +122,12 @@ switch ($aksi) {
     //======================================================================
     case 'hapus':
         $id_tp = (int)$_GET['id_tp'];
+        // Hapus data anak terlebih dahulu (FK safety)
+        $stmt_ptp = mysqli_prepare($koneksi, "DELETE FROM penilaian_tp WHERE id_tp = ?");
+        mysqli_stmt_bind_param($stmt_ptp, "i", $id_tp); mysqli_stmt_execute($stmt_ptp);
+        $stmt_tpk = mysqli_prepare($koneksi, "DELETE FROM tp_kelas WHERE id_tp = ?");
+        mysqli_stmt_bind_param($stmt_tpk, "i", $id_tp); mysqli_stmt_execute($stmt_tpk);
+
         $query = "DELETE FROM tujuan_pembelajaran WHERE id_tp = ? AND id_guru_pembuat = ?";
         $stmt = mysqli_prepare($koneksi, $query);
         mysqli_stmt_bind_param($stmt, "ii", $id_tp, $id_guru);
@@ -149,9 +155,25 @@ switch ($aksi) {
         }
 
         $ids_sanitized = array_map('intval', $_POST['tp_ids']);
-        $placeholders = implode(',', array_fill(0, count($ids_sanitized), '?'));
-        
-        $query = "DELETE FROM tujuan_pembelajaran WHERE id_tp IN ($placeholders) AND id_guru_pembuat = ?";
+        // Hapus data anak terlebih dahulu (FK safety)
+        $placeholders_clean = implode(',', array_fill(0, count($ids_sanitized), '?'));
+        // penilaian_tp
+        $stmt_ptp = mysqli_prepare($koneksi, "DELETE FROM penilaian_tp WHERE id_tp IN ($placeholders_clean)");
+        $types_clean = str_repeat('i', count($ids_sanitized));
+        $params_clean = array_merge([$types_clean], $ids_sanitized);
+        $refs_clean = [];
+        foreach($params_clean as $key => $value) { $refs_clean[$key] = &$params_clean[$key]; }
+        call_user_func_array('mysqli_stmt_bind_param', array_merge([$stmt_ptp], $refs_clean));
+        mysqli_stmt_execute($stmt_ptp);
+        // tp_kelas
+        $stmt_tpk = mysqli_prepare($koneksi, "DELETE FROM tp_kelas WHERE id_tp IN ($placeholders_clean)");
+        $params_clean2 = array_merge([$types_clean], $ids_sanitized);
+        $refs_clean2 = [];
+        foreach($params_clean2 as $key => $value) { $refs_clean2[$key] = &$params_clean2[$key]; }
+        call_user_func_array('mysqli_stmt_bind_param', array_merge([$stmt_tpk], $refs_clean2));
+        mysqli_stmt_execute($stmt_tpk);
+
+        $query = "DELETE FROM tujuan_pembelajaran WHERE id_tp IN ($placeholders_clean) AND id_guru_pembuat = ?";
         $stmt = mysqli_prepare($koneksi, $query);
         
         $types = str_repeat('i', count($ids_sanitized)) . 'i';

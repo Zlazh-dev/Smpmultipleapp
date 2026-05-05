@@ -60,7 +60,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $q_tahun_ajaran = mysqli_query($koneksi, "SELECT id_tahun_ajaran FROM tahun_ajaran WHERE status='Aktif'");
         $id_tahun_ajaran = mysqli_fetch_assoc($q_tahun_ajaran)['id_tahun_ajaran'];
-        
+        // Hapus detail rapor terlebih dahulu (FK constraint)
+        $q_delete_akademik = mysqli_prepare($koneksi, "DELETE FROM rapor_detail_akademik WHERE id_rapor IN (SELECT id_rapor FROM rapor WHERE id_siswa = ? AND id_tahun_ajaran = ? AND semester = ?)");
+        mysqli_stmt_bind_param($q_delete_akademik, "iii", $id_siswa, $id_tahun_ajaran, $semester_aktif);
+        mysqli_stmt_execute($q_delete_akademik);
+
+        $q_delete_ekskul_detail = mysqli_prepare($koneksi, "DELETE FROM rapor_detail_ekskul WHERE id_rapor IN (SELECT id_rapor FROM rapor WHERE id_siswa = ? AND id_tahun_ajaran = ? AND semester = ?)");
+        mysqli_stmt_bind_param($q_delete_ekskul_detail, "iii", $id_siswa, $id_tahun_ajaran, $semester_aktif);
+        mysqli_stmt_execute($q_delete_ekskul_detail);
+
+        // Hapus rapor induk
         $q_delete_rapor = mysqli_prepare($koneksi, "DELETE FROM rapor WHERE id_siswa = ? AND id_tahun_ajaran = ? AND semester = ?");
         mysqli_stmt_bind_param($q_delete_rapor, "iii", $id_siswa, $id_tahun_ajaran, $semester_aktif);
         mysqli_stmt_execute($q_delete_rapor);

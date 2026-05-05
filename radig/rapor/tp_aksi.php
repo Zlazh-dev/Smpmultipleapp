@@ -121,7 +121,15 @@ elseif ($aksi == 'hapus') {
 
     // Validasi: Admin bisa hapus semua, Guru hanya bisa hapus miliknya
     if ($_SESSION['role'] == 'admin' || ($data_tp && $data_tp['id_guru_pembuat'] == $id_guru_login)) {
-        // Karena ada ON DELETE CASCADE di database, data di `tp_kelas` akan ikut terhapus
+        // Hapus data anak terlebih dahulu (jaga-jaga jika DB tidak punya ON DELETE CASCADE)
+        $stmt_del_ptp = mysqli_prepare($koneksi, "DELETE FROM penilaian_tp WHERE id_tp = ?");
+        mysqli_stmt_bind_param($stmt_del_ptp, "i", $id_tp);
+        mysqli_stmt_execute($stmt_del_ptp);
+
+        $stmt_del_tpk = mysqli_prepare($koneksi, "DELETE FROM tp_kelas WHERE id_tp = ?");
+        mysqli_stmt_bind_param($stmt_del_tpk, "i", $id_tp);
+        mysqli_stmt_execute($stmt_del_tpk);
+
         $stmt_hapus = mysqli_prepare($koneksi, "DELETE FROM tujuan_pembelajaran WHERE id_tp=?");
         mysqli_stmt_bind_param($stmt_hapus, "i", $id_tp);
         mysqli_stmt_execute($stmt_hapus);

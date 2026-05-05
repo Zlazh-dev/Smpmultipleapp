@@ -592,10 +592,30 @@ $(document).ready(function(){
 // Fungsi Hapus GURU
 function hapusGuru(id) {
     Swal.fire({
-        title: 'Anda yakin?', 
-        text: "Data guru/admin ini akan dihapus secara permanen!", 
-        icon: 'warning', showCancelButton: true, confirmButtonColor: '#d33', 
-        cancelButtonColor: '#3085d6', confirmButtonText: 'Ya, hapus!', cancelButtonText: 'Batal'
+        title: 'Konfirmasi Hapus Pengguna',
+        html: `<div class="text-start">
+            <div class="alert alert-danger py-2 mb-3">
+                <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                <strong>Menghapus pengguna ini akan berdampak pada:</strong>
+            </div>
+            <ul class="mb-3">
+                <li><strong>Data Penilaian</strong> — Semua penilaian & nilai siswa milik guru ini akan <span class="badge bg-danger">dihapus permanen</span></li>
+                <li><strong>Ekstrakurikuler</strong> — Ekskul yang dibina akan dihapus beserta peserta, penilaian & kehadiran <span class="badge bg-danger">dihapus permanen</span></li>
+                <li><strong>Tujuan Pembelajaran</strong> — TP yang dibuat guru ini akan <span class="badge bg-danger">dihapus permanen</span></li>
+                <li><strong>Penugasan Mengajar</strong> — Seluruh penugasan guru akan <span class="badge bg-danger">dihapus</span></li>
+                <li><strong>Catatan Wali Kelas</strong> — Catatan yang ditulis guru akan <span class="badge bg-danger">dihapus</span></li>
+                <li><strong>Wali Kelas & Siswa</strong> — Kelas & siswa yang diampu akan dilepas <span class="badge bg-warning text-dark">dikosongkan</span></li>
+            </ul>
+            <div class="alert alert-warning py-2"><i class="bi bi-shield-exclamation me-2"></i><strong>Tindakan ini tidak dapat dibatalkan!</strong></div>
+        </div>`,
+        icon: 'warning',
+        width: '550px',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: '<i class="bi bi-trash me-1"></i> Ya, Hapus!',
+        cancelButtonText: 'Batal',
+        focusCancel: true
     }).then((result) => {
         if (result.isConfirmed) {
             window.location.href = 'pengguna_aksi.php?aksi=hapus&id=' + id;
@@ -606,10 +626,30 @@ function hapusGuru(id) {
 // Fungsi Hapus SISWA
 function hapusSiswa(id) {
     Swal.fire({
-        title: 'Anda yakin?', 
-        text: "Data siswa ini akan dihapus permanen, termasuk semua nilai terkait!", 
-        icon: 'warning', showCancelButton: true, confirmButtonColor: '#d33', 
-        cancelButtonColor: '#3085d6', confirmButtonText: 'Ya, hapus!', cancelButtonText: 'Batal'
+        title: 'Konfirmasi Hapus Siswa',
+        html: `<div class="text-start">
+            <div class="alert alert-danger py-2 mb-3">
+                <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                <strong>Menghapus siswa ini akan berdampak pada:</strong>
+            </div>
+            <ul class="mb-3">
+                <li><strong>Rapor</strong> — Seluruh data rapor & detail nilai rapor <span class="badge bg-danger">dihapus permanen</span></li>
+                <li><strong>Penilaian</strong> — Semua detail nilai siswa <span class="badge bg-danger">dihapus permanen</span></li>
+                <li><strong>Ekstrakurikuler</strong> — Keanggotaan ekskul beserta penilaian & kehadiran <span class="badge bg-danger">dihapus permanen</span></li>
+                <li><strong>Kokurikuler</strong> — Data asesmen kokurikuler <span class="badge bg-danger">dihapus permanen</span></li>
+                <li><strong>Catatan Wali Kelas</strong> — Catatan dari wali kelas <span class="badge bg-danger">dihapus</span></li>
+                <li><strong>Mutasi</strong> — Data mutasi masuk/keluar <span class="badge bg-danger">dihapus</span></li>
+            </ul>
+            <div class="alert alert-warning py-2"><i class="bi bi-shield-exclamation me-2"></i><strong>Tindakan ini tidak dapat dibatalkan!</strong></div>
+        </div>`,
+        icon: 'warning',
+        width: '550px',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: '<i class="bi bi-trash me-1"></i> Ya, Hapus!',
+        cancelButtonText: 'Batal',
+        focusCancel: true
     }).then((result) => {
         if (result.isConfirmed) {
             window.location.href = 'siswa_aksi.php?aksi=hapus&id=' + id;
@@ -673,9 +713,28 @@ $(document).ready(function() {
     $('#btn-bulk-delete-guru').on('click', function() {
         const count = $checkboxesGuru.filter(':checked').length;
         Swal.fire({
-            title: `Anda yakin?`, text: `Anda akan menghapus ${count} guru/admin secara permanen.`,
-            icon: 'warning', showCancelButton: true, confirmButtonColor: '#d33', 
-            cancelButtonColor: '#3085d6', confirmButtonText: 'Ya, Hapus!', cancelButtonText: 'Batal'
+            title: `Hapus ${count} Pengguna?`,
+            html: `<div class="text-start">
+                <div class="alert alert-danger py-2 mb-3">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                    <strong>${count} pengguna beserta SEMUA data terkait akan dihapus:</strong>
+                </div>
+                <ul class="mb-2">
+                    <li>Semua penilaian & nilai siswa</li>
+                    <li>Ekstrakurikuler yang dibina (peserta, nilai, kehadiran)</li>
+                    <li>Tujuan Pembelajaran yang dibuat</li>
+                    <li>Penugasan mengajar & catatan wali kelas</li>
+                </ul>
+                <div class="alert alert-warning py-2"><i class="bi bi-shield-exclamation me-2"></i><strong>Tindakan ini tidak dapat dibatalkan!</strong></div>
+            </div>`,
+            icon: 'warning',
+            width: '500px',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: '<i class="bi bi-trash me-1"></i> Ya, Hapus Semua!',
+            cancelButtonText: 'Batal',
+            focusCancel: true
         }).then((result) => { if (result.isConfirmed) { $('#form-bulk-delete-guru').submit(); } });
     });
     updateActionBarGuru();
@@ -698,9 +757,28 @@ $(document).ready(function() {
     $('#btn-bulk-delete-siswa').on('click', function() {
         const count = $checkboxesSiswa.filter(':checked').length;
         Swal.fire({
-            title: `Anda yakin?`, text: `Anda akan menghapus ${count} siswa secara permanen.`,
-            icon: 'warning', showCancelButton: true, confirmButtonColor: '#d33', 
-            cancelButtonColor: '#3085d6', confirmButtonText: 'Ya, Hapus!', cancelButtonText: 'Batal'
+            title: `Hapus ${count} Siswa?`,
+            html: `<div class="text-start">
+                <div class="alert alert-danger py-2 mb-3">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                    <strong>${count} siswa beserta SEMUA data terkait akan dihapus:</strong>
+                </div>
+                <ul class="mb-2">
+                    <li>Rapor & detail nilai rapor</li>
+                    <li>Semua penilaian & detail nilai</li>
+                    <li>Keanggotaan ekskul (penilaian & kehadiran)</li>
+                    <li>Asesmen kokurikuler & data mutasi</li>
+                </ul>
+                <div class="alert alert-warning py-2"><i class="bi bi-shield-exclamation me-2"></i><strong>Tindakan ini tidak dapat dibatalkan!</strong></div>
+            </div>`,
+            icon: 'warning',
+            width: '500px',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: '<i class="bi bi-trash me-1"></i> Ya, Hapus Semua!',
+            cancelButtonText: 'Batal',
+            focusCancel: true
         }).then((result) => { if (result.isConfirmed) { $('#form-bulk-delete-siswa').submit(); } });
     });
     updateActionBarSiswa();

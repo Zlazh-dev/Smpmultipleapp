@@ -153,10 +153,19 @@ if ($aksi == 'tambah') {
     // [MODIFIKASI] Cek dari mana redirect berasal
     $id_kelas_redirect = isset($_GET['id_kelas']) ? (int)$_GET['id_kelas'] : 0; 
 
-    // Hapus data terkait (sesuai file Anda & SQL)
+    // Hapus data terkait — urutan penting untuk FK constraints!
+    // 1. Rapor cascade: detail dulu, lalu induk
+    mysqli_query($koneksi, "DELETE FROM rapor_detail_akademik WHERE id_rapor IN (SELECT id_rapor FROM rapor WHERE id_siswa = $id_siswa)");
+    mysqli_query($koneksi, "DELETE FROM rapor_detail_ekskul WHERE id_rapor IN (SELECT id_rapor FROM rapor WHERE id_siswa = $id_siswa)");
+    mysqli_query($koneksi, "DELETE FROM rapor WHERE id_siswa = $id_siswa");
+    // 2. Penilaian
     mysqli_query($koneksi, "DELETE FROM penilaian_detail_nilai WHERE id_siswa = $id_siswa");
     mysqli_query($koneksi, "DELETE FROM catatan_guru_wali WHERE id_siswa = $id_siswa");
+    // 3. Ekskul cascade: penilaian & kehadiran dulu, lalu peserta
+    mysqli_query($koneksi, "DELETE FROM ekskul_penilaian WHERE id_peserta_ekskul IN (SELECT id_peserta_ekskul FROM ekskul_peserta WHERE id_siswa = $id_siswa)");
+    mysqli_query($koneksi, "DELETE FROM ekskul_kehadiran WHERE id_peserta_ekskul IN (SELECT id_peserta_ekskul FROM ekskul_peserta WHERE id_siswa = $id_siswa)");
     mysqli_query($koneksi, "DELETE FROM ekskul_peserta WHERE id_siswa = $id_siswa");
+    // 4. Kokurikuler & Mutasi
     mysqli_query($koneksi, "DELETE FROM kokurikuler_asesmen WHERE id_siswa = $id_siswa");
     mysqli_query($koneksi, "DELETE FROM mutasi_keluar WHERE id_siswa = $id_siswa");
     mysqli_query($koneksi, "DELETE FROM mutasi_masuk WHERE id_siswa = $id_siswa");
@@ -193,10 +202,19 @@ if ($aksi == 'tambah') {
 
     $id_list = implode(',', array_map('intval', $siswa_ids));
     
-    // Hapus data terkait (sesuai file Anda & SQL)
+    // Hapus data terkait — urutan penting untuk FK constraints!
+    // 1. Rapor cascade: detail dulu, lalu induk
+    mysqli_query($koneksi, "DELETE FROM rapor_detail_akademik WHERE id_rapor IN (SELECT id_rapor FROM rapor WHERE id_siswa IN ($id_list))");
+    mysqli_query($koneksi, "DELETE FROM rapor_detail_ekskul WHERE id_rapor IN (SELECT id_rapor FROM rapor WHERE id_siswa IN ($id_list))");
+    mysqli_query($koneksi, "DELETE FROM rapor WHERE id_siswa IN ($id_list)");
+    // 2. Penilaian
     mysqli_query($koneksi, "DELETE FROM penilaian_detail_nilai WHERE id_siswa IN ($id_list)");
     mysqli_query($koneksi, "DELETE FROM catatan_guru_wali WHERE id_siswa IN ($id_list)");
+    // 3. Ekskul cascade: penilaian & kehadiran dulu, lalu peserta
+    mysqli_query($koneksi, "DELETE FROM ekskul_penilaian WHERE id_peserta_ekskul IN (SELECT id_peserta_ekskul FROM ekskul_peserta WHERE id_siswa IN ($id_list))");
+    mysqli_query($koneksi, "DELETE FROM ekskul_kehadiran WHERE id_peserta_ekskul IN (SELECT id_peserta_ekskul FROM ekskul_peserta WHERE id_siswa IN ($id_list))");
     mysqli_query($koneksi, "DELETE FROM ekskul_peserta WHERE id_siswa IN ($id_list)");
+    // 4. Kokurikuler & Mutasi
     mysqli_query($koneksi, "DELETE FROM kokurikuler_asesmen WHERE id_siswa IN ($id_list)");
     mysqli_query($koneksi, "DELETE FROM mutasi_keluar WHERE id_siswa IN ($id_list)");
     mysqli_query($koneksi, "DELETE FROM mutasi_masuk WHERE id_siswa IN ($id_list)");

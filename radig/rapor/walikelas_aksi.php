@@ -483,7 +483,7 @@ elseif ($aksi == 'simpan_data') {
                 mysqli_stmt_execute($stmt_update);
             } else {
                 // Insert
-                mysqli_stmt_bind_param($stmt_insert, "iiiiiiiss", $id_siswa_int, $id_kelas, $id_tahun_ajaran, $semester_aktif_int, $sakit, $izin, $alpha, $catatan, 'Draft');
+                mysqli_stmt_bind_param($stmt_insert, "iiiiiiis", $id_siswa_int, $id_kelas, $id_tahun_ajaran, $semester_aktif_int, $sakit, $izin, $alpha, $catatan);
                 mysqli_stmt_execute($stmt_insert);
             }
         }

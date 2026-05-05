@@ -374,13 +374,32 @@ if ($aksi == 'tambah') {
     
     mysqli_begin_transaction($koneksi);
     try {
-        // Hapus data anak terlebih dahulu
+        // Hapus data anak terlebih dahulu (urutan penting untuk FK constraints!)
+        // === PENILAIAN cascade ===
         mysqli_query($koneksi, "DELETE FROM penilaian_detail_nilai WHERE id_penilaian IN (SELECT id_penilaian FROM penilaian WHERE id_guru IN ($id_list))");
         mysqli_query($koneksi, "DELETE FROM penilaian_tp WHERE id_penilaian IN (SELECT id_penilaian FROM penilaian WHERE id_guru IN ($id_list))");
         mysqli_query($koneksi, "DELETE FROM penilaian WHERE id_guru IN ($id_list)");
+
+        // === EKSTRAKURIKULER cascade ===
+        mysqli_query($koneksi, "DELETE FROM ekskul_kehadiran WHERE id_peserta_ekskul IN (SELECT id_peserta_ekskul FROM ekskul_peserta WHERE id_ekskul IN (SELECT id_ekskul FROM ekstrakurikuler WHERE id_pembina IN ($id_list)))");
+        mysqli_query($koneksi, "DELETE FROM ekskul_penilaian WHERE id_peserta_ekskul IN (SELECT id_peserta_ekskul FROM ekskul_peserta WHERE id_ekskul IN (SELECT id_ekskul FROM ekstrakurikuler WHERE id_pembina IN ($id_list)))");
+        mysqli_query($koneksi, "DELETE FROM ekskul_peserta WHERE id_ekskul IN (SELECT id_ekskul FROM ekstrakurikuler WHERE id_pembina IN ($id_list))");
+        mysqli_query($koneksi, "DELETE FROM ekskul_tujuan WHERE id_ekskul IN (SELECT id_ekskul FROM ekstrakurikuler WHERE id_pembina IN ($id_list))");
+        mysqli_query($koneksi, "DELETE FROM ekstrakurikuler WHERE id_pembina IN ($id_list)");
+
+        // === Direct children ===
         mysqli_query($koneksi, "DELETE FROM catatan_guru_wali WHERE id_guru_wali IN ($id_list)");
         mysqli_query($koneksi, "DELETE FROM guru_mengajar WHERE id_guru IN ($id_list)");
+        mysqli_query($koneksi, "DELETE FROM tujuan_pembelajaran WHERE id_guru_pembuat IN ($id_list)");
+        mysqli_query($koneksi, "DELETE FROM kokurikuler_tim_penilai WHERE id_guru IN ($id_list)");
 
+        // === Optional references (SET NULL) ===
+        mysqli_query($koneksi, "UPDATE kelas SET id_wali_kelas = NULL WHERE id_wali_kelas IN ($id_list)");
+        mysqli_query($koneksi, "UPDATE siswa SET id_guru_wali = NULL WHERE id_guru_wali IN ($id_list)");
+        mysqli_query($koneksi, "UPDATE kokurikuler_kegiatan SET id_koordinator = NULL WHERE id_koordinator IN ($id_list)");
+        mysqli_query($koneksi, "UPDATE kokurikuler_asesmen SET id_guru_penilai = NULL WHERE id_guru_penilai IN ($id_list)");
+
+        // === Hapus guru ===
         mysqli_query($koneksi, "DELETE FROM guru WHERE id_guru IN ($id_list)");
         $jumlah_terhapus = mysqli_affected_rows($koneksi);
 

@@ -79,6 +79,8 @@ elseif ($aksi == 'update') {
         mysqli_stmt_execute($stmt);
         
         // Update anak tabel: Hapus dulu, lalu insert ulang
+        // Hapus asesmen terlebih dahulu (FK constraint: kokurikuler_asesmen → kokurikuler_target_dimensi)
+        mysqli_query($koneksi, "DELETE FROM kokurikuler_asesmen WHERE id_target IN (SELECT id_target FROM kokurikuler_target_dimensi WHERE id_kegiatan=$id_kegiatan)");
         mysqli_query($koneksi, "DELETE FROM kokurikuler_target_dimensi WHERE id_kegiatan=$id_kegiatan");
         if (!empty($dimensi_terpilih)) {
             $stmt_d = mysqli_prepare($koneksi, "INSERT INTO kokurikuler_target_dimensi (id_kegiatan, nama_dimensi) VALUES (?, ?)");

@@ -171,14 +171,28 @@ document.addEventListener('DOMContentLoaded', function () {
 // Fungsi Hapus dengan SweetAlert
 function hapusEkskul(id) {
     Swal.fire({
-        title: 'Anda yakin?',
-        text: "Ekskul ini akan dihapus. Semua data peserta dan nilai yang terhubung juga akan terhapus secara permanen!",
+        title: 'Konfirmasi Hapus Ekskul',
+        html: `<div class="text-start">
+            <div class="alert alert-danger py-2 mb-3">
+                <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                <strong>Menghapus ekskul ini akan berdampak pada:</strong>
+            </div>
+            <ul class="mb-3">
+                <li><strong>Peserta Ekskul</strong> — Semua anggota ekskul <span class="badge bg-danger">dihapus</span></li>
+                <li><strong>Penilaian Ekskul</strong> — Seluruh nilai peserta <span class="badge bg-danger">dihapus permanen</span></li>
+                <li><strong>Kehadiran Ekskul</strong> — Data kehadiran peserta <span class="badge bg-danger">dihapus permanen</span></li>
+                <li><strong>Tujuan Pembelajaran</strong> — Tujuan ekskul ini <span class="badge bg-danger">dihapus</span></li>
+            </ul>
+            <div class="alert alert-warning py-2"><i class="bi bi-shield-exclamation me-2"></i><strong>Tindakan ini tidak dapat dibatalkan!</strong></div>
+        </div>`,
         icon: 'warning',
+        width: '500px',
         showCancelButton: true,
         confirmButtonColor: '#d33',
-        cancelButtonColor: '#3085d6',
-        confirmButtonText: 'Ya, Hapus!',
-        cancelButtonText: 'Batal'
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: '<i class="bi bi-trash me-1"></i> Ya, Hapus!',
+        cancelButtonText: 'Batal',
+        focusCancel: true
     }).then((result) => {
         if (result.isConfirmed) {
             window.location.href = 'admin_ekskul_aksi.php?aksi=hapus&id=' + id;

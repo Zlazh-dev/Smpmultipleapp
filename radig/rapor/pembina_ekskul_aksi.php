@@ -59,10 +59,15 @@ switch ($aksi) {
         $result_cek = mysqli_stmt_get_result($q_cek);
 
         if (mysqli_num_rows($result_cek) > 0) {
+            // Hapus penilaian terkait tujuan ini terlebih dahulu (FK constraint)
+            $stmt_del_penilaian = mysqli_prepare($koneksi, "DELETE FROM ekskul_penilaian WHERE id_tujuan_ekskul = ?");
+            mysqli_stmt_bind_param($stmt_del_penilaian, "i", $id_tujuan);
+            mysqli_stmt_execute($stmt_del_penilaian);
+
             $stmt = mysqli_prepare($koneksi, "DELETE FROM ekskul_tujuan WHERE id_tujuan_ekskul = ?");
             mysqli_stmt_bind_param($stmt, "i", $id_tujuan);
             if(mysqli_stmt_execute($stmt)) {
-                $_SESSION['pesan'] = "Tujuan pembelajaran berhasil dihapus.";
+                $_SESSION['pesan'] = "Tujuan pembelajaran beserta data penilaian terkait berhasil dihapus.";
             } else {
                 $_SESSION['pesan'] = "Gagal menghapus tujuan.";
             }
