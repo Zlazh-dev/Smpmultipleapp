@@ -113,6 +113,7 @@ services:
       TU_DEFAULT_PASSWORD: ${TU_DEFAULT_PASSWORD}
       SSO_JWT_SECRET: ${SSO_JWT_SECRET}
       NEXT_PUBLIC_PORTAL_URL: ${PORTAL_URL}
+      CRON_SECRET: ${CRON_SECRET}
     ports:
       - "127.0.0.1:3001:3000"
     volumes:

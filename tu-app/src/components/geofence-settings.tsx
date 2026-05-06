@@ -285,8 +285,8 @@ export function GeofenceSettingsForm() {
                   <div className="flex items-center gap-2">
                     <Shield className="h-4 w-4 text-primary" />
                     <div>
-                      <p className="text-xs font-semibold">Geofencing</p>
-                      <p className="text-[10px] text-muted-foreground">Validasi lokasi saat presensi</p>
+                      <p className="text-xs font-semibold">Sistem Presensi</p>
+                      <p className="text-[10px] text-muted-foreground">Master switch check-in, finalisasi & laporan</p>
                     </div>
                   </div>
                   <button
@@ -296,15 +296,20 @@ export function GeofenceSettingsForm() {
                     <div className={cn("absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-white transition-transform shadow-sm", settings.isActive && "translate-x-5")} />
                   </button>
                 </div>
+                {!settings.isActive && (
+                  <div className="text-[10px] text-amber-600 dark:text-amber-400 bg-amber-500/10 rounded-md p-2 border border-amber-500/20">
+                    ⚠️ Sistem dinonaktifkan — check-in/check-out ditolak, finalisasi harian dilewati.
+                  </div>
+                )}
               </div>
 
               <div className="p-3 rounded-lg bg-blue-500/5 border border-blue-500/20 space-y-1.5">
                 <p className="text-xs font-semibold text-blue-600 dark:text-blue-400">Cara Kerja</p>
                 <ul className="text-[10px] text-muted-foreground space-y-1 list-disc pl-3">
-                  <li>Browser meminta izin GPS saat pegawai presensi</li>
-                  <li>Jarak dihitung dengan formula Haversine</li>
-                  <li>Jika dalam radius {settings.radius}m → presensi valid</li>
-                  <li>Jika di luar → presensi ditolak</li>
+                  <li>Aktifkan untuk mengizinkan pegawai melakukan check-in/check-out</li>
+                  <li>Sistem otomatis menandai ALFA bagi yang tidak hadir (finalisasi harian)</li>
+                  <li>GPS geofencing memvalidasi lokasi dalam radius {settings.radius}m</li>
+                  <li>Nonaktifkan untuk menangguhkan semua proses presensi</li>
                 </ul>
               </div>
             </CardContent>

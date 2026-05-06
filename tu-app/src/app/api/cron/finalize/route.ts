@@ -37,6 +37,18 @@ export async function POST(req: NextRequest) {
 
   try {
     const now = new Date();
+
+    // ── System Toggle: Skip if presensi system is deactivated ──
+    const geoSettings = await db.geofenceSettings.findUnique({ where: { id: "default" } });
+    if (geoSettings && !geoSettings.isActive) {
+      return NextResponse.json({
+        success: true,
+        paused: true,
+        message: "Sistem presensi sedang nonaktif. Finalisasi dilewati.",
+        timestamp: now.toISOString(),
+      });
+    }
+
     const results: Array<{
       date: string;
       finalized: number;

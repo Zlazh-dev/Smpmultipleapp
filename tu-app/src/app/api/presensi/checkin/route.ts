@@ -24,6 +24,14 @@ export async function POST(req: NextRequest) {
     // Get geofence settings
     const geoSettings = await db.geofenceSettings.findUnique({ where: { id: "default" } });
 
+    // ── System Toggle: Block if presensi system is deactivated ──
+    if (geoSettings && !geoSettings.isActive) {
+      return NextResponse.json({
+        error: "Sistem presensi sedang dinonaktifkan oleh administrator.",
+        type: "SYSTEM_INACTIVE",
+      }, { status: 403 });
+    }
+
     // Compute geofence result for raw event metadata
     let isWithinGeofence: boolean | null = null;
     if (geoSettings?.isActive && latitude !== undefined && longitude !== undefined) {

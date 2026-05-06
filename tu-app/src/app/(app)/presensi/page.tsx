@@ -2,6 +2,7 @@ import { db } from "@/lib/db";
 import { Badge } from "@/components/ui/badge";
 import { PresensiTable } from "@/components/presensi-table";
 import { getCurrentUser } from "@/lib/current-user";
+import Link from "next/link";
 
 export const dynamic = "force-dynamic";
 
@@ -14,6 +15,11 @@ export default async function PresensiPage({ searchParams }: PageProps) {
   if (!user) return null;
 
   const isKhusus = user.accessLevel === "KHUSUS";
+
+  // Check if presensi system is active
+  const geoSettings = await db.geofenceSettings.findUnique({ where: { id: "default" } });
+  const isSystemActive = geoSettings?.isActive ?? true;
+
   const params = await searchParams;
   const today = new Date();
   const filterDate = params.tanggal ? new Date(params.tanggal) : today;
@@ -119,6 +125,26 @@ export default async function PresensiPage({ searchParams }: PageProps) {
           </p>
         </div>
       </div>
+
+      {/* System Inactive Banner */}
+      {!isSystemActive && (
+        <div className="rounded-lg border border-amber-500/30 bg-amber-500/10 p-3 animate-fade-in-up">
+          <div className="flex items-start gap-2">
+            <span className="text-amber-500 text-lg leading-none">⚠️</span>
+            <div className="flex-1 min-w-0">
+              <p className="text-xs font-semibold text-amber-700 dark:text-amber-400">Sistem Presensi Nonaktif</p>
+              <p className="text-[10px] text-amber-600/80 dark:text-amber-400/70 mt-0.5">
+                Check-in/check-out dan finalisasi otomatis sedang dinonaktifkan oleh administrator.
+              </p>
+              {isKhusus && (
+                <Link href="/presensi/pengaturan" className="text-[10px] text-primary font-semibold hover:underline mt-1 inline-block">
+                  Buka Pengaturan →
+                </Link>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Status Summary Cards */}
       <div className="grid grid-cols-4 gap-2 animate-fade-in-up">
