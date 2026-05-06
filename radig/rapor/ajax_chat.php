@@ -1,6 +1,11 @@
 <?php
 session_start();
 include 'koneksi.php';
+require_once __DIR__ . '/libs/csrf.php';
+// Verify CSRF only for state-changing POST requests
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    csrf_verify();
+}
 
 // Pastikan ada user yang login
 if (!isset($_SESSION['role'])) {

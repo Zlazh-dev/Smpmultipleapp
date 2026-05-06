@@ -70,8 +70,51 @@ if (isset($koneksi)) {
     <!-- CSS untuk Select2 -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
+    <meta name="csrf-token" content="<?= htmlspecialchars(csrf_token()) ?>">
     
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+    // Global CSRF token for all AJAX requests
+    const CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').content;
+    
+    // Auto-inject CSRF token into all jQuery $.ajax calls
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            if (settings.type && settings.type.toUpperCase() === 'POST') {
+                if (settings.data instanceof FormData) {
+                    settings.data.append('_csrf_token', CSRF_TOKEN);
+                } else if (typeof settings.data === 'string') {
+                    settings.data += '&_csrf_token=' + encodeURIComponent(CSRF_TOKEN);
+                } else {
+                    settings.data = settings.data || {};
+                    settings.data._csrf_token = CSRF_TOKEN;
+                }
+            }
+        }
+    });
+    
+    // Patch native fetch() to auto-inject CSRF token
+    const _originalFetch = window.fetch;
+    window.fetch = function(url, options = {}) {
+        const method = (options.method || 'GET').toUpperCase();
+        if (method === 'POST') {
+            if (options.body instanceof FormData) {
+                options.body.append('_csrf_token', CSRF_TOKEN);
+            } else if (options.body instanceof URLSearchParams) {
+                options.body.append('_csrf_token', CSRF_TOKEN);
+            } else if (typeof options.body === 'string') {
+                options.body += '&_csrf_token=' + encodeURIComponent(CSRF_TOKEN);
+            }
+            // Also add token to GET-style URLs for fetch POST
+            if (typeof url === 'string' && url.includes('?')) {
+                url += '&_csrf_token=' + encodeURIComponent(CSRF_TOKEN);
+            } else if (typeof url === 'string') {
+                url += '?_csrf_token=' + encodeURIComponent(CSRF_TOKEN);
+            }
+        }
+        return _originalFetch.call(this, url, options);
+    };
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     

@@ -4,6 +4,11 @@
 // ==========================================================
 session_start();
 include 'koneksi.php';
+require_once __DIR__ . '/libs/csrf.php';
+// Verify CSRF for POST requests (AJAX handlers)
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    csrf_verify();
+}
 
 // Validasi Login
 if (!isset($_SESSION['role']) || !in_array($_SESSION['role'], ['guru', 'admin'])) {
