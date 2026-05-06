@@ -650,10 +650,10 @@ if (isset($_SESSION['admin_asal_id'])) {
             <?php endif; ?>
 
             <li class="logout-link">
-                 <a href="logout.php">
-                    <i class="bi bi-box-arrow-left"></i>
-                    <strong>Logout</strong>
-                    <small>Keluar dari aplikasi</small>
+                 <a href="https://portal.smpitasy-syadzili.sch.id/hub">
+                    <i class="bi bi-house-door-fill"></i>
+                    <strong>Portal</strong>
+                    <small>Kembali ke Portal</small>
                 </a>
             </li>
         </ul>
@@ -725,7 +725,7 @@ if (isset($_SESSION['admin_asal_id'])) {
                             <li><a class="dropdown-item" href="<?php echo $link_profil; ?>"><i class="bi bi-person-gear me-2 text-primary"></i> Pengaturan Profil</a></li>
                             <li class="d-sm-none"><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#pengembangModal"><i class="bi bi-info-circle me-2 text-info"></i> Info Pengembang</a></li>
                             <li><hr class="dropdown-divider my-2"></li>
-                            <li><a class="dropdown-item text-danger" href="logout.php"><i class="bi bi-box-arrow-right me-2"></i> Keluar Aplikasi</a></li>
+                            <li><a class="dropdown-item" href="https://portal.smpitasy-syadzili.sch.id/hub"><i class="bi bi-house-door-fill me-2 text-primary"></i> Kembali ke Portal</a></li>
                         </ul>
                     </div>
                 </div>
