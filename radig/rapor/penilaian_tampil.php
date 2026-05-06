@@ -518,6 +518,7 @@ mysqli_stmt_bind_param($stmt, "iiii", $id_kelas, $id_mapel, $id_guru_login, $sem
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <form action="penilaian_aksi.php?aksi=import_nilai_batch" method="POST" enctype="multipart/form-data">
+    <?= csrf_field() ?>
                 <div class="modal-body">
                     <input type="hidden" name="id_kelas" value="<?php echo $id_kelas; ?>">
                     <input type="hidden" name="id_mapel" value="<?php echo $id_mapel; ?>">
@@ -577,7 +578,7 @@ mysqli_stmt_bind_param($stmt, "iiii", $id_kelas, $id_mapel, $id_guru_login, $sem
                             <td class="text-center">
                                 <div class="btn-group" role="group">
                                     <a href="penilaian_input_nilai.php?id_penilaian=<?php echo $data['id_penilaian']; ?>" class="btn btn-success btn-sm" title="Input atau Lihat Nilai Siswa"><i class="bi bi-input-cursor-text me-1"></i> Input Nilai</a>
-                                    <a href="penilaian_aksi.php?aksi=hapus_penilaian&id_penilaian=<?php echo $data['id_penilaian']; ?>" class="btn btn-outline-danger btn-sm btn-hapus" data-nama="<?php echo htmlspecialchars($data['nama_penilaian']); ?>" title="Hapus Penilaian Ini"><i class="bi bi-trash-fill"></i></a>
+                                    <a href="penilaian_aksi.php?aksi=hapus_penilaian&id_penilaian=<?php echo $data['id_penilaian']; ?>&_csrf_token=<?= urlencode(csrf_token()) ?>" class="btn btn-outline-danger btn-sm btn-hapus" data-nama="<?php echo htmlspecialchars($data['nama_penilaian']); ?>" title="Hapus Penilaian Ini"><i class="bi bi-trash-fill"></i></a>
                                 </div>
                             </td>
                         </tr>

@@ -176,6 +176,7 @@ $kkm = $kkm_input_db ? (int)$kkm_input_db['nilai_pengaturan'] : 75; // Default k
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <form action="penilaian_aksi.php?aksi=import_nilai" method="POST" enctype="multipart/form-data">
+    <?= csrf_field() ?>
                 <div class="modal-body">
                     <input type="hidden" name="id_penilaian" value="<?php echo $id_penilaian; ?>">
                     <p>Pilih file template Excel yang sudah diisi nilai siswa. Pastikan format sesuai dengan template yang diunduh.</p>
@@ -199,6 +200,7 @@ $kkm = $kkm_input_db ? (int)$kkm_input_db['nilai_pengaturan'] : 75; // Default k
             <span class="badge bg-info">Batas Tuntas (KKM): <?php echo $kkm; ?></span>
         </div>
         <form action="penilaian_aksi.php?aksi=simpan_nilai" method="POST">
+    <?= csrf_field() ?>
             <input type="hidden" name="id_penilaian" value="<?php echo $id_penilaian; ?>">
             <div class="card-body p-0">
                 <div class="table-responsive">

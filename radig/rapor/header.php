@@ -8,6 +8,14 @@ if (session_status() == PHP_SESSION_NONE) {
 header("Cache-Control: no-cache, no-store, must-revalidate, private");
 header("Pragma: no-cache");
 header("Expires: 0");
+
+// Security headers
+header("X-Frame-Options: SAMEORIGIN");
+header("X-Content-Type-Options: nosniff");
+header("Referrer-Policy: strict-origin-when-cross-origin");
+
+// Load CSRF protection helper
+require_once __DIR__ . '/libs/csrf.php';
 if (!isset($_SESSION['role'])) {
     $portal_url = getenv('PORTAL_URL') ?: 'http://portal.localhost';
     header("location:" . $portal_url . "/login?pesan=belum_login");
@@ -494,7 +502,7 @@ if (isset($_SESSION['admin_asal_id'])) {
             <div class="impersonate-text">
                 Mode Penyamaran Aktif
             </div>
-            <a href="admin_aksi.php?aksi=kembali" class="btn-impersonate-back">
+            <a href="admin_aksi.php?aksi=kembali&_csrf_token=<?= urlencode(csrf_token()) ?>" class="btn-impersonate-back">
                 <i class="bi bi-arrow-left-circle-fill me-1"></i> KEMBALI ADMIN
             </a>
         </div>

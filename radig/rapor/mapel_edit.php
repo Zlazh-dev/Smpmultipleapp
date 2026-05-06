@@ -75,6 +75,7 @@ if (!$data) {
         </div>
         <div class="card-body p-4">
             <form action="mapel_aksi.php?aksi=update" method="POST" class="needs-validation" novalidate>
+    <?= csrf_field() ?>
                 <input type="hidden" name="id_mapel" value="<?php echo $data['id_mapel']; ?>">
 
                 <div class="row">

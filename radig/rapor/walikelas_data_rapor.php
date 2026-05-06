@@ -124,6 +124,7 @@ if ($id_kelas) {
 
     <?php if ($id_kelas && $q_siswa && mysqli_num_rows($q_siswa) > 0) : ?>
         <form action="walikelas_aksi.php?aksi=simpan_data" method="POST">
+    <?= csrf_field() ?>
             <div class="card shadow-sm">
                 <div class="card-body">
 

@@ -193,6 +193,7 @@ $daftar_tahun_ajaran = mysqli_fetch_all($query_ta, MYSQLI_ASSOC);
                         <!-- TAB 1: IDENTITAS SEKOLAH -->
                         <div class="tab-pane fade show active" id="content-sekolah" role="tabpanel">
                             <form action="pengaturan_aksi.php?aksi=update_sekolah" method="POST">
+    <?= csrf_field() ?>
                                 <div class="form-section-title"><i class="bi bi-info-circle"></i>Data Pokok</div>
                                 <div class="row g-3 mb-4">
                                     <div class="col-12">
@@ -257,6 +258,7 @@ $daftar_tahun_ajaran = mysqli_fetch_all($query_ta, MYSQLI_ASSOC);
                         <!-- TAB 2: PEJABAT -->
                         <div class="tab-pane fade" id="content-pejabat" role="tabpanel">
                             <form action="pengaturan_aksi.php?aksi=update_pejabat" method="POST">
+    <?= csrf_field() ?>
                                 <div class="form-section-title"><i class="bi bi-pen"></i>Pejabat Penandatangan Rapor</div>
                                 <div class="alert alert-light border-start border-primary border-4 text-muted mb-4">
                                     <small><i class="bi bi-info-circle-fill me-1"></i> Data ini akan muncul di bagian tanda tangan pada halaman terakhir rapor.</small>
@@ -284,6 +286,7 @@ $daftar_tahun_ajaran = mysqli_fetch_all($query_ta, MYSQLI_ASSOC);
                         <!-- TAB 3: TA & TANGGAL -->
                         <div class="tab-pane fade" id="content-ta" role="tabpanel">
                             <form action="pengaturan_aksi.php?aksi=update_pengaturan" method="POST">
+    <?= csrf_field() ?>
                                 <input type="hidden" name="pengaturan[fase_aktif]" value="D">
                                 
                                 <div class="form-section-title"><i class="bi bi-sliders"></i>Parameter Akademik</div>
@@ -338,7 +341,7 @@ $daftar_tahun_ajaran = mysqli_fetch_all($query_ta, MYSQLI_ASSOC);
                                                     </td>
                                                     <td class="text-center">
                                                         <?php if ($ta['status'] == 'Tidak Aktif'): ?>
-                                                            <a href="pengaturan_aksi.php?aksi=aktifkan_ta&id=<?php echo $ta['id_tahun_ajaran']; ?>" class="btn btn-sm btn-outline-primary rounded-pill px-3">Aktifkan</a>
+                                                            <a href="pengaturan_aksi.php?aksi=aktifkan_ta&id=<?php echo $ta['id_tahun_ajaran']; ?>&_csrf_token=<?= urlencode(csrf_token()) ?>" class="btn btn-sm btn-outline-primary rounded-pill px-3">Aktifkan</a>
                                                         <?php else: ?>
                                                             <button class="btn btn-sm btn-primary rounded-pill px-3" disabled><i class="bi bi-check-lg"></i></button>
                                                         <?php endif; ?>
@@ -354,6 +357,7 @@ $daftar_tahun_ajaran = mysqli_fetch_all($query_ta, MYSQLI_ASSOC);
                                         <div class="card-body">
                                             <h6 class="fw-bold mb-3">Tambah Tahun Ajaran Baru</h6>
                                             <form action="pengaturan_aksi.php?aksi=tambah_ta" method="POST">
+    <?= csrf_field() ?>
                                                 <div class="mb-3">
                                                     <label class="form-label">Format: YYYY/YYYY</label>
                                                     <input type="text" class="form-control" name="tahun_ajaran" placeholder="Contoh: 2026/2027" required>
@@ -371,6 +375,7 @@ $daftar_tahun_ajaran = mysqli_fetch_all($query_ta, MYSQLI_ASSOC);
                             
                             <!-- 1. Tampilan Dasar (Kertas & Warna) -->
                             <form action="pengaturan_aksi.php?aksi=update_pengaturan" method="POST">
+    <?= csrf_field() ?>
                                 <div class="form-section-title"><i class="bi bi-layout-text-window-reverse"></i>Layout & Warna</div>
                                 <div class="row g-4 mb-4">
                                     <div class="col-md-4">
@@ -452,6 +457,7 @@ $daftar_tahun_ajaran = mysqli_fetch_all($query_ta, MYSQLI_ASSOC);
                             <!-- 2. Pengaturan KOP Surat (DI SINI SAYA TAMBAHKAN FITURNYA) -->
                             <!-- Menggunakan aksi 'simpan_kop' yang sudah diperbarui di backend -->
                             <form action="pengaturan_aksi.php?aksi=simpan_kop" method="POST" enctype="multipart/form-data">
+    <?= csrf_field() ?>
                                 <div class="form-section-title"><i class="bi bi-image"></i>Kustomisasi KOP Surat</div>
                                 
                                 <!-- === FITUR BARU: TOGGLE TANPA KOP === -->
@@ -534,6 +540,7 @@ $daftar_tahun_ajaran = mysqli_fetch_all($query_ta, MYSQLI_ASSOC);
 
                             <!-- 3. Watermark -->
                             <form action="pengaturan_aksi.php?aksi=simpan_watermark" method="POST" enctype="multipart/form-data">
+    <?= csrf_field() ?>
                                 <input type="hidden" name="watermark_lama" value="<?php echo htmlspecialchars($watermark_sekarang); ?>">
                                 <div class="form-section-title"><i class="bi bi-droplet"></i>Watermark Halaman</div>
                                 
@@ -589,6 +596,7 @@ $daftar_tahun_ajaran = mysqli_fetch_all($query_ta, MYSQLI_ASSOC);
                 </div>
                 <div class="side-card-body text-center">
                     <form action="pengaturan_aksi.php?aksi=update_logo" method="POST" enctype="multipart/form-data">
+    <?= csrf_field() ?>
                         <div class="mb-3 img-preview-container bg-light" style="min-height: 160px;">
                             <?php if (!empty($sekolah['logo_sekolah']) && file_exists('uploads/' . $sekolah['logo_sekolah'])): ?>
                                 <img src="uploads/<?php echo htmlspecialchars($sekolah['logo_sekolah']); ?>" alt="Logo Sekolah" class="img-preview">

@@ -243,6 +243,7 @@ if (!empty($daftar_ekskul)) {
         <?php else: ?>
 
             <form id="formPenilaian" action="pembina_penilaian_aksi.php?aksi=simpan_penilaian" method="POST">
+    <?= csrf_field() ?>
                 <input type="hidden" name="id_ekskul" value="<?= $id_ekskul_terpilih; ?>">
                 <input type="hidden" name="semester" value="<?= $semester_aktif; ?>">
 
@@ -332,6 +333,7 @@ if (!empty($daftar_ekskul)) {
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
             </div>
             <form action="pembina_penilaian_aksi.php?aksi=impor_excel" method="POST" enctype="multipart/form-data">
+    <?= csrf_field() ?>
                 <input type="hidden" name="id_ekskul" value="<?= $id_ekskul_terpilih ?>">
                 <input type="hidden" name="semester" value="<?= $semester_aktif ?>">
                 <div class="modal-body py-4">

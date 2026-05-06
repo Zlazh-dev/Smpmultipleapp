@@ -3,6 +3,8 @@
 session_start(); 
 
 include 'koneksi.php';
+require_once __DIR__ . '/libs/csrf.php';
+csrf_verify();
 
 // Cek hak akses guru
 if (!isset($_SESSION['role']) || $_SESSION['role'] != 'guru') {

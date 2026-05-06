@@ -89,13 +89,14 @@ $daftar_ekskul = mysqli_fetch_all($result_ekskul, MYSQLI_ASSOC);
                             if (mysqli_num_rows($q_tujuan1) > 0) {
                                 while ($tujuan = mysqli_fetch_assoc($q_tujuan1)) {
                                     echo '<div class="tujuan-item"><span>' . htmlspecialchars($tujuan['deskripsi_tujuan']) . '</span>';
-                                    echo '<a href="pembina_ekskul_aksi.php?aksi=hapus_tujuan&id='.$tujuan['id_tujuan_ekskul'].'" class="btn btn-sm btn-outline-danger" onclick="return confirm(\'Yakin ingin menghapus tujuan ini?\')"><i class="bi bi-trash"></i></a></div>';
+                                    echo '<a href="pembina_ekskul_aksi.php?aksi=hapus_tujuan&id='.$tujuan['id_tujuan_ekskul'].'&_csrf_token=<?= urlencode(csrf_token()) ?>" class="btn btn-sm btn-outline-danger" onclick="return confirm(\'Yakin ingin menghapus tujuan ini?\')"><i class="bi bi-trash"></i></a></div>';
                                 }
                             } else {
                                 echo '<p class="text-muted fst-italic">Belum ada tujuan untuk semester 1.</p>';
                             }
                             ?>
                             <form action="pembina_ekskul_aksi.php?aksi=tambah_tujuan" method="POST" class="mt-3">
+    <?= csrf_field() ?>
                                 <input type="hidden" name="id_ekskul" value="<?php echo $id_ekskul; ?>">
                                 <input type="hidden" name="semester" value="1">
                                 <div class="input-group">
@@ -111,13 +112,14 @@ $daftar_ekskul = mysqli_fetch_all($result_ekskul, MYSQLI_ASSOC);
                             if (mysqli_num_rows($q_tujuan2) > 0) {
                                 while ($tujuan = mysqli_fetch_assoc($q_tujuan2)) {
                                     echo '<div class="tujuan-item"><span>' . htmlspecialchars($tujuan['deskripsi_tujuan']) . '</span>';
-                                    echo '<a href="pembina_ekskul_aksi.php?aksi=hapus_tujuan&id='.$tujuan['id_tujuan_ekskul'].'" class="btn btn-sm btn-outline-danger" onclick="return confirm(\'Yakin ingin menghapus tujuan ini?\')"><i class="bi bi-trash"></i></a></div>';
+                                    echo '<a href="pembina_ekskul_aksi.php?aksi=hapus_tujuan&id='.$tujuan['id_tujuan_ekskul'].'&_csrf_token=<?= urlencode(csrf_token()) ?>" class="btn btn-sm btn-outline-danger" onclick="return confirm(\'Yakin ingin menghapus tujuan ini?\')"><i class="bi bi-trash"></i></a></div>';
                                 }
                             } else {
                                 echo '<p class="text-muted fst-italic">Belum ada tujuan untuk semester 2.</p>';
                             }
                             ?>
                             <form action="pembina_ekskul_aksi.php?aksi=tambah_tujuan" method="POST" class="mt-3">
+    <?= csrf_field() ?>
                                 <input type="hidden" name="id_ekskul" value="<?php echo $id_ekskul; ?>">
                                 <input type="hidden" name="semester" value="2">
                                 <div class="input-group">

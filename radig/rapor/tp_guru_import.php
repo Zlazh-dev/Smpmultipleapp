@@ -115,6 +115,7 @@ if ($_SESSION['role'] != 'guru') {
                     <p class="text-muted">Setelah selesai mengisi, simpan file Anda. Kemudian, unggah file tersebut di area di bawah ini.</p>
                     
                     <form action="tp_guru_import_aksi.php" method="POST" enctype="multipart/form-data" id="uploadForm">
+    <?= csrf_field() ?>
                         <div class="drop-zone" id="dropZone">
                             <i class="bi bi-cloud-arrow-up drop-zone-icon"></i>
                             <p class="drop-zone-prompt mt-3 mb-1">Seret file Excel ke sini, atau <strong>klik untuk memilih file</strong></p>

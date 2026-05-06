@@ -1,6 +1,8 @@
 <?php
 session_start();
 include 'koneksi.php';
+require_once __DIR__ . '/libs/csrf.php';
+csrf_verify();
 
 // Ambil data yang dikirim dari form modal
 $mapping_data = $_POST['mapping'] ?? null;

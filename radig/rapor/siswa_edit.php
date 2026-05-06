@@ -67,6 +67,7 @@ if ($id_tahun_ajaran_aktif > 0) {
             <h5 class="mb-0"><i class="bi bi-pencil-square me-2" style="color: var(--primary-color);"></i>Formulir Data Siswa</h5>
         </div>
         <form action="siswa_aksi.php?aksi=update" method="POST" class="needs-validation" novalidate>
+    <?= csrf_field() ?>
             <input type="hidden" name="id_siswa" value="<?php echo $data['id_siswa']; ?>">
             
             <div class="card-body p-4">

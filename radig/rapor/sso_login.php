@@ -32,7 +32,9 @@ if (!$sso_secret) {
     $sso_secret = getenv('NEXTAUTH_SECRET');
 }
 if (!$sso_secret) {
-    $sso_secret = 'dev-sso-secret';
+    error_log('FATAL: SSO_JWT_SECRET and NEXTAUTH_SECRET are both missing. SSO login is disabled.');
+    header("location:" . $portal_url . "/login?pesan=sso_misconfigured");
+    exit;
 }
 
 $parts = explode('.', $token);
@@ -158,6 +160,7 @@ if (!$guru) {
             $siswa = mysqli_fetch_assoc($result);
 
             // SSO login as siswa
+            session_regenerate_id(true);
             $_SESSION['id_siswa'] = $siswa['id_siswa'];
             $_SESSION['nama_siswa'] = $siswa['nama_lengkap'];
             $_SESSION['role'] = 'siswa';
@@ -196,6 +199,9 @@ if (!$guru) {
 }
 
 // ── Create PHP session for guru/admin ──
+// Regenerate session ID to prevent session fixation attacks
+session_regenerate_id(true);
+
 $_SESSION['id_guru'] = $guru['id_guru'];
 $_SESSION['nama_guru'] = $guru['nama_guru'];
 $_SESSION['role'] = $guru['role'];

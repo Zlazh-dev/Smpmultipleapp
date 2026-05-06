@@ -559,6 +559,7 @@ if (isset($koneksi)) {
                 </div>
                 <div class="modal-body pt-4">
                     <form action="proses_login.php" method="POST">
+    <?= csrf_field() ?>
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="username" name="username" placeholder="NIP/NISN" required>
                             <label for="username">Username (NIP / NISN)</label>

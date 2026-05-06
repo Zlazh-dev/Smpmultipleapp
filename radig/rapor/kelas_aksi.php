@@ -1,6 +1,8 @@
 <?php
 session_start();
 include 'koneksi.php';
+require_once __DIR__ . '/libs/csrf.php';
+csrf_verify();
 
 // Menambah batas eksekusi untuk proses berat seperti import/salin
 ini_set('memory_limit', '512M');

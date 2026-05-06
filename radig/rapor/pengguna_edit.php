@@ -199,6 +199,7 @@ while ($row = mysqli_fetch_assoc($result_tidak_aktif)) {
 
     <div class="card shadow-sm">
         <form action="pengguna_aksi.php?aksi=update" method="POST" class="needs-validation" novalidate>
+    <?= csrf_field() ?>
             <input type="hidden" name="id_guru" value="<?php echo $data['id_guru']; ?>">
             
             <div class="card-header bg-light">

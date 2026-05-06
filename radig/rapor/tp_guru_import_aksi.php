@@ -1,6 +1,8 @@
 <?php
 session_start();
 include 'koneksi.php';
+require_once __DIR__ . '/libs/csrf.php';
+csrf_verify();
 require 'vendor/autoload.php'; // Path ke autoload.php dari Composer
 
 use PhpOffice\PhpSpreadsheet\IOFactory;

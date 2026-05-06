@@ -72,6 +72,7 @@ $nama_kelas = $data_kelas['nama_kelas'];
         </div>
         <div class="card-body p-4">
             <form action="siswa_aksi.php?aksi=tambah" method="POST" class="needs-validation" novalidate>
+    <?= csrf_field() ?>
                 <input type="hidden" name="id_kelas" value="<?php echo $id_kelas; ?>">
                 
                 <div class="row">

@@ -216,7 +216,7 @@ $tampilkan_mode_mapel = true;
                             <a href="mapel_edit.php?id=<?php echo $data['id_mapel']; ?>" class="btn btn-outline-secondary btn-sm flex-fill">
                                 <i class="bi bi-pencil-fill me-1"></i> Edit
                             </a>
-                            <a href="mapel_aksi.php?aksi=hapus&id=<?php echo $data['id_mapel']; ?>" class="btn btn-outline-danger btn-sm flex-fill btn-hapus">
+                            <a href="mapel_aksi.php?aksi=hapus&id=<?php echo $data['id_mapel']; ?>&_csrf_token=<?= urlencode(csrf_token()) ?>" class="btn btn-outline-danger btn-sm flex-fill btn-hapus">
                                 <i class="bi bi-trash-fill me-1"></i> Hapus
                             </a>
                         </div>

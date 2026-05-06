@@ -11,6 +11,7 @@ $id_mapel = isset($_GET['id_mapel']) ? (int)$_GET['id_mapel'] : 0;
     <div class="card shadow-sm">
         <div class="card-body">
             <form action="tp_aksi.php?aksi=tambah_admin" method="POST">
+    <?= csrf_field() ?>
                 <input type="hidden" name="id_mapel" value="<?php echo $id_mapel; ?>">
                 
                 <div class="mb-3">

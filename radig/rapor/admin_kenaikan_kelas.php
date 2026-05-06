@@ -161,6 +161,7 @@ if (!empty($nama_kelas_pilihan) && !empty($tingkat_akhir_patterns)) {
         <?php if ($id_kelas_pilihan > 0): ?>
         <!-- PERUBAHAN: Hapus onsubmit, tambahkan ID form, ubah action button type -->
         <form action="admin_aksi.php?aksi=proses_kenaikan_siswa" method="POST" id="formProsesKenaikan">
+    <?= csrf_field() ?>
             <input type="hidden" name="id_kelas_lama" value="<?php echo $id_kelas_pilihan; ?>">
 
             <div class="card shadow-sm">

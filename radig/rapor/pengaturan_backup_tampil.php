@@ -325,6 +325,7 @@ rsort($backup_files);
         <div class="col-md-6 col-lg-3">
             <div class="card db-tool-card p-4">
                 <form action="pengaturan_aksi.php" method="POST" enctype="multipart/form-data" id="form-migrasi">
+    <?= csrf_field() ?>
                     <input type="hidden" name="aksi" value="migrasi_via_file">
                     <div class="db-icon-box bg-primary bg-opacity-10 text-primary">
                         <i class="bi bi-database-fill-up"></i>
@@ -343,6 +344,7 @@ rsort($backup_files);
         <div class="col-md-6 col-lg-3">
             <div class="card db-tool-card p-4">
                 <form action="pengaturan_aksi.php" method="POST" enctype="multipart/form-data" id="form-restore">
+    <?= csrf_field() ?>
                     <input type="hidden" name="aksi" value="lakukan_restore_total">
                     <div class="db-icon-box bg-danger bg-opacity-10 text-danger">
                         <i class="bi bi-shield-lock-fill"></i>

@@ -112,6 +112,7 @@ while($row = mysqli_fetch_assoc($q_kelas_terpilih)){
             <h5 class="mb-0"><i class="bi bi-check2-square me-2" style="color: var(--primary-color);"></i>Pilih Kelas Penugasan</h5>
         </div>
         <form action="tp_guru_aksi.php?aksi=tugaskan_tp" method="POST">
+    <?= csrf_field() ?>
             <input type="hidden" name="id_tp" value="<?php echo $id_tp; ?>">
             <div class="card-body p-4">
                 

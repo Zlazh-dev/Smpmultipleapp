@@ -79,6 +79,7 @@ $q_guru = mysqli_query($koneksi, "SELECT id_guru, nama_guru FROM guru WHERE role
         </div>
         <div class="card-body p-4">
             <form action="admin_ekskul_aksi.php?aksi=update" method="POST" class="needs-validation" novalidate>
+    <?= csrf_field() ?>
                 <input type="hidden" name="id_ekskul" value="<?php echo $data_ekskul['id_ekskul']; ?>">
                 
                 <div class="mb-3">

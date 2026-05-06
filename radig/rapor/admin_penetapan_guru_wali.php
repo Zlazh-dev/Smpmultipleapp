@@ -142,6 +142,7 @@ while ($row = mysqli_fetch_assoc($result_guru_wali_info)) {
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="atur" role="tabpanel">
                     <form action="proses_penetapan_guru_wali.php" method="POST">
+    <?= csrf_field() ?>
                         <input type="hidden" name="id_ta_redirect" value="<?php echo $id_ta_terpilih; ?>">
                         <div class="alert alert-info">
                             <b>Cara Penggunaan:</b> Buka daftar kelas di bawah, centang siswa yang ingin dialokasikan, lalu pilih guru dari dropdown di bagian bawah dan klik "Tetapkan".

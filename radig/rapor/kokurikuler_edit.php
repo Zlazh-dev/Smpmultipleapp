@@ -134,6 +134,7 @@ while($row = mysqli_fetch_assoc($result_kelas_terpilih)) {
 
     <div class="card shadow-sm">
         <form action="kokurikuler_aksi.php?aksi=update" method="POST" id="formKokurikuler">
+    <?= csrf_field() ?>
             <input type="hidden" name="id_kegiatan" value="<?php echo $id_kegiatan; ?>">
             <div class="card-body p-4 p-md-5">
                 <div class="row g-5">

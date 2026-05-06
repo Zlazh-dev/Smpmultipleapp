@@ -1,6 +1,8 @@
 <?php
 session_start();
 include 'koneksi.php';
+require_once __DIR__ . '/libs/csrf.php';
+csrf_verify();
 
 // Cek apakah pengguna sudah login
 if (!isset($_SESSION['role'])) {

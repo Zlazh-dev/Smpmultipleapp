@@ -131,6 +131,7 @@ foreach ($tp_data as $tp) {
                 </div>
             <?php else: ?>
                 <form action="tp_guru_aksi.php" method="post" id="form-bulk-action">
+    <?= csrf_field() ?>
                     <!-- Aksi dinamis (hapus_massal atau tugaskan_massal) -->
                     <input type="hidden" name="aksi" id="bulk_action_input" value="">
                     
@@ -208,6 +209,7 @@ foreach ($tp_data as $tp) {
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form action="tp_guru_aksi.php" method="POST">
+    <?= csrf_field() ?>
                 <input type="hidden" name="aksi" value="tugaskan_tp">
                 <input type="hidden" name="id_tp" id="modal_id_tp" value="">
                 

@@ -53,6 +53,7 @@ if ($_SESSION['role'] != 'admin') {
         </div>
         <div class="card-body p-4">
             <form action="mapel_aksi.php?aksi=tambah" method="POST" class="needs-validation" novalidate>
+    <?= csrf_field() ?>
                 <div class="row">
                     <div class="col-md-4 mb-3">
                         <label for="kode_mapel" class="form-label fw-bold">Kode Mapel</label>

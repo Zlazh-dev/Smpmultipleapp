@@ -257,6 +257,7 @@ if ($id_kegiatan_pilih > 0 && !empty($id_kelas_pilih)) {
     <?php if ($id_kegiatan_pilih > 0 && !empty($id_kelas_pilih) && !empty($daftar_siswa)): ?>
         
         <form action="kokurikuler_aksi.php?aksi=simpan_asesmen" method="POST" id="formPenilaian">
+    <?= csrf_field() ?>
             <input type="hidden" name="id_kegiatan" value="<?php echo $id_kegiatan_pilih; ?>">
             <input type="hidden" name="id_kelas_redirect" value="<?php echo htmlspecialchars($id_kelas_pilih); ?>">
 

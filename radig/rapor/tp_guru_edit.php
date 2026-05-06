@@ -68,6 +68,7 @@ $id_tahun_ajaran_aktif = $d_ta_aktif['id_tahun_ajaran'] ?? 0;
             <h5 class="mb-0"><i class="bi bi-pencil-square me-2" style="color: var(--primary-color);"></i>Formulir Edit Tujuan Pembelajaran</h5>
         </div>
         <form action="tp_guru_aksi.php?aksi=update" method="POST" class="needs-validation" novalidate>
+    <?= csrf_field() ?>
             <input type="hidden" name="id_tp" value="<?php echo $data_tp['id_tp']; ?>">
             <div class="card-body p-4">
                 <div class="row">

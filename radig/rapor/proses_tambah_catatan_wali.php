@@ -1,6 +1,8 @@
 <?php
 session_start();
 include 'koneksi.php';
+require_once __DIR__ . '/libs/csrf.php';
+csrf_verify();
 
 if ($_SESSION['role'] != 'guru' || $_SERVER['REQUEST_METHOD'] != 'POST') {
     die("Akses tidak diizinkan.");

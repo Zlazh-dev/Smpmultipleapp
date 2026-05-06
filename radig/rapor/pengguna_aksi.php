@@ -1,6 +1,8 @@
 <?php
 session_start();
 include 'koneksi.php';
+require_once __DIR__ . '/libs/csrf.php';
+csrf_verify();
 
 // Keamanan dasar: hanya admin yang boleh akses file ini
 if (!isset($_SESSION['role']) || $_SESSION['role'] != 'admin') { 

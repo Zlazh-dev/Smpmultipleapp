@@ -52,6 +52,7 @@ if (!$data_tp) {
             <h5 class="mb-0"><i class="bi bi-pencil-square me-2" style="color: var(--primary-color);"></i>Formulir Edit TP</h5>
         </div>
         <form action="tp_admin_aksi.php?aksi=update" method="POST">
+    <?= csrf_field() ?>
             <input type="hidden" name="id_tp" value="<?php echo $data_tp['id_tp']; ?>">
             <input type="hidden" name="id_mapel_redirect" value="<?php echo $data_tp['id_mapel']; ?>">
 

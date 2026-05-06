@@ -1,6 +1,8 @@
 <?php
 session_start();
 include 'koneksi.php';
+require_once __DIR__ . '/libs/csrf.php';
+csrf_verify();
 
 // Memanggil autoloader Composer di awal agar bisa digunakan di semua aksi
 // (Penting untuk PHPSpreadsheet jika nanti dipakai di bagian import)

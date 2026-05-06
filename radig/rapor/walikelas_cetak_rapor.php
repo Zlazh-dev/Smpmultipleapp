@@ -93,8 +93,10 @@ if ($id_kelas > 0) {
                     </button>
                     
                     <!-- Form tersembunyi untuk submit -->
-                    <form id="form-finalisasi" action="walikelas_aksi.php?aksi=finalisasi_semua" method="POST" class="d-none"></form>
-                    <form id="form-batal" action="walikelas_aksi.php?aksi=batalkan_finalisasi_semua" method="POST" class="d-none"></form>
+                    <form id="form-finalisasi" action="walikelas_aksi.php?aksi=finalisasi_semua" method="POST" class="d-none">
+    <?= csrf_field() ?></form>
+                    <form id="form-batal" action="walikelas_aksi.php?aksi=batalkan_finalisasi_semua" method="POST" class="d-none">
+    <?= csrf_field() ?></form>
                 </div>
 
                 <div class="col-lg-7">

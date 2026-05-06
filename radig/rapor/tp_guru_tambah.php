@@ -55,6 +55,7 @@ $id_tahun_ajaran_aktif = $d_ta_aktif['id_tahun_ajaran'] ?? 0;
     <div class="card shadow-sm">
         <div class="card-body p-4 p-md-5">
             <form action="tp_guru_aksi.php?aksi=tambah" method="POST">
+    <?= csrf_field() ?>
                 <input type="hidden" name="id_tahun_ajaran" value="<?php echo $id_tahun_ajaran_aktif; ?>">
                 <div class="row g-5">
                     

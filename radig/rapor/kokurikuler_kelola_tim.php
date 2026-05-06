@@ -104,6 +104,7 @@ while($row = mysqli_fetch_assoc($result_tim)) {
     <?php else: ?>
 
         <form action="kokurikuler_aksi.php?aksi=simpan_tim" method="POST" id="formTim">
+    <?= csrf_field() ?>
             <input type="hidden" name="id_kegiatan" value="<?php echo $id_kegiatan; ?>">
             
             <div class="row">

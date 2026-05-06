@@ -5,6 +5,8 @@ ini_set('max_execution_time', '300'); // 5 menit
 
 session_start();
 include 'koneksi.php';
+require_once __DIR__ . '/libs/csrf.php';
+csrf_verify();
 
 // --- PERBAIKAN: Otomatis ubah error mysqli menjadi Exceptions ---
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);

@@ -152,6 +152,7 @@ while ($p = mysqli_fetch_assoc($q_peserta)) {
     </div>
 
     <form action="walikelas_aksi.php?aksi=simpan_pendaftaran_ekskul" method="POST">
+    <?= csrf_field() ?>
         <input type="hidden" name="id_kelas" value="<?php echo $id_kelas; ?>">
         <div class="card shadow-sm">
             <div class="card-header bg-light">
@@ -221,7 +222,7 @@ while ($p = mysqli_fetch_assoc($q_peserta)) {
                                             </button>
 
                                             <!-- [BARU] Tombol Hapus Paksa -->
-                                            <a href="walikelas_aksi.php?aksi=hapus_peserta_ekskul&id_siswa=<?php echo $id_siswa; ?>&id_ekskul=<?php echo $id_ekskul; ?>" 
+                                            <a href="walikelas_aksi.php?aksi=hapus_peserta_ekskul&id_siswa=<?php echo $id_siswa; ?>&id_ekskul=<?php echo $id_ekskul; ?>&_csrf_token=<?= urlencode(csrf_token()) ?>" 
                                                class="btn btn-danger btn-action-mini"
                                                onclick="konfirmasiHapus(event, this.href, '<?php echo addslashes($siswa['nama_lengkap']); ?>', '<?php echo addslashes($ekskul['nama_ekskul']); ?>')"
                                                title="Hapus Peserta & Nilai (Reset)">

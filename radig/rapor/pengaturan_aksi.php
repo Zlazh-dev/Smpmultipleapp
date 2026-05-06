@@ -10,6 +10,8 @@
 
 session_start();
 include 'koneksi.php';
+require_once __DIR__ . '/libs/csrf.php';
+csrf_verify();
 
 // ----------------------------------------------------------------------------------
 // [PART 1] VALIDASI KEAMANAN & KONFIGURASI SERVER

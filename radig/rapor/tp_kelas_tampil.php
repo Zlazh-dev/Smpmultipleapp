@@ -81,6 +81,7 @@ while ($row = mysqli_fetch_assoc($result_tp)) {
             <div id="collapse-<?php echo $id_mapel; ?>" class="accordion-collapse collapse" data-bs-parent="#accordionMapel">
                 <div class="accordion-body">
                     <form action="tp_kelas_aksi.php" method="POST">
+    <?= csrf_field() ?>
                         <input type="hidden" name="id_kelas" value="<?php echo $id_kelas; ?>">
                         <input type="hidden" name="id_mapel" value="<?php echo $id_mapel; ?>">
 

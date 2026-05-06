@@ -233,6 +233,7 @@ if (isset($_GET['search_siswa']) || isset($_GET['page_siswa'])) {
 
                             <!-- Form Bulk Delete Guru -->
                             <form id="form-bulk-delete-guru" action="pengguna_aksi.php?aksi=hapus_banyak" method="POST">
+    <?= csrf_field() ?>
                                 <div id="guru-list" class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
                                     <?php
                                     // Query Guru
@@ -349,6 +350,7 @@ if (isset($_GET['search_siswa']) || isset($_GET['page_siswa'])) {
 
                             <!-- Form Bulk Delete Siswa -->
                             <form id="form-bulk-delete-siswa" action="siswa_aksi.php?aksi=hapus_banyak" method="POST">
+    <?= csrf_field() ?>
                                 <div id="siswa-list" class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
                                     <?php
                                     // Query Siswa
@@ -467,6 +469,7 @@ if (isset($_GET['search_siswa']) || isset($_GET['page_siswa'])) {
                                 <div class="step-content w-100">
                                     <h5>Unggah File Template</h5>
                                     <form action="pengguna_aksi.php?aksi=import" method="POST" enctype="multipart/form-data" id="form-import-guru">
+    <?= csrf_field() ?>
                                         <label for="file-input-guru" class="drop-zone" id="drop-zone-guru">
                                             <div class="drop-zone-prompt"><i class="bi bi-cloud-arrow-up-fill fs-1 text-muted"></i><p class="mt-2"><b>Seret file ke sini</b> atau klik untuk memilih</p><small class="text-muted">Hanya file .xlsx yang diizinkan</small></div>
                                             <div class="file-details" id="file-details-guru" style="display: none;"></div>
@@ -494,6 +497,7 @@ if (isset($_GET['search_siswa']) || isset($_GET['page_siswa'])) {
                                 <div class="step-content w-100">
                                     <h5>Unggah File Template</h5>
                                     <form action="siswa_aksi.php?aksi=import_lengkap" method="POST" enctype="multipart/form-data" id="form-import-siswa">
+    <?= csrf_field() ?>
                                         <label for="file-input-siswa" class="drop-zone" id="drop-zone-siswa">
                                             <div class="drop-zone-prompt"><i class="bi bi-cloud-arrow-up-fill fs-1 text-muted"></i><p class="mt-2"><b>Seret file ke sini</b> atau klik untuk memilih</p><small class="text-muted">Hanya file .xlsx yang diizinkan</small></div>
                                             <div class="file-details" id="file-details-siswa" style="display: none;"></div>

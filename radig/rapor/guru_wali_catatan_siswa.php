@@ -175,6 +175,7 @@ $query_catatan = mysqli_query($koneksi, "
                 </div>
                 <div class="card-body">
                     <form action="proses_tambah_catatan_wali.php" method="POST">
+    <?= csrf_field() ?>
                         <input type="hidden" name="id_siswa" value="<?php echo $id_siswa; ?>">
                         <input type="hidden" name="id_guru_wali" value="<?php echo $id_guru_login; ?>">
                         <div class="mb-3">
@@ -234,6 +235,7 @@ $query_catatan = mysqli_query($koneksi, "
                                             
                                             <!-- TOMBOL HAPUS -->
                                             <form action="proses_hapus_catatan_wali.php" method="POST" onsubmit="return confirm('Anda yakin ingin menghapus catatan ini?');" style="margin: 0;">
+    <?= csrf_field() ?>
                                                 <input type="hidden" name="id_catatan" value="<?php echo $catatan['id_catatan']; ?>">
                                                 <input type="hidden" name="id_siswa" value="<?php echo $id_siswa; ?>">
                                                 <button type="submit" class="btn btn-outline-danger btn-sm py-0 px-1" title="Hapus catatan">

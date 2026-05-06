@@ -127,6 +127,7 @@ if (!$siswa) {
 
     <!-- Form Data Siswa -->
     <form action="walikelas_aksi.php?aksi=update_siswa" method="POST" enctype="multipart/form-data">
+    <?= csrf_field() ?>
         <input type="hidden" name="id_siswa" value="<?php echo $siswa['id_siswa']; ?>">
         <!-- Input hidden foto lama untuk logic fallback di aksi -->
         <input type="hidden" name="foto_siswa_lama" value="<?php echo htmlspecialchars($siswa['foto_siswa'] ?? ''); ?>">

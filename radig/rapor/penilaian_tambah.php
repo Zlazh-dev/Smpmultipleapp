@@ -149,6 +149,7 @@ $res_kelas_lain = mysqli_stmt_get_result($stmt_kls);
     <div class="card shadow-sm">
         <div class="card-body p-4">
             <form action="penilaian_aksi.php?aksi=tambah_penilaian" method="POST" id="form-penilaian-batch">
+    <?= csrf_field() ?>
                 <!-- Input Hidden ID Kelas & ID Mapel -->
                 <input type="hidden" name="id_kelas" value="<?php echo $id_kelas; ?>">
                 <input type="hidden" name="id_mapel" value="<?php echo $id_mapel; ?>">

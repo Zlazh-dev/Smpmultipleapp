@@ -101,6 +101,7 @@ $daftar_kelas = mysqli_fetch_all($result_kelas, MYSQLI_ASSOC);
 
     <div class="card shadow-sm">
         <form action="kokurikuler_aksi.php?aksi=tambah" method="POST" id="formKokurikuler">
+    <?= csrf_field() ?>
             <div class="card-body p-4 p-md-5">
                 <div class="row g-5">
                     <div class="col-lg-5">

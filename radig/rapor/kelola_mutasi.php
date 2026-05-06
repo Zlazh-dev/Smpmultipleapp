@@ -148,6 +148,7 @@ $query_kelas_list = mysqli_query($koneksi, "SELECT id_kelas, nama_kelas FROM kel
                 <div class="tab-pane fade <?php if($aksi=='kelola') echo 'show active';?>" id="mutasi-keluar">
                     <?php if ($aksi == 'kelola'): ?>
                     <form action="mutasi_aksi.php?aksi=proses_keluar" method="POST">
+    <?= csrf_field() ?>
                         <input type="hidden" name="id_siswa" value="<?php echo $id_siswa; ?>">
                         <p>Gunakan form ini untuk mengubah status siswa dan mencatat informasi kepindahannya.</p>
                         <div class="row g-3">
@@ -164,6 +165,7 @@ $query_kelas_list = mysqli_query($koneksi, "SELECT id_kelas, nama_kelas FROM kel
                 </div>
                 <div class="tab-pane fade <?php if($aksi=='masuk') echo 'show active';?>" id="mutasi-masuk">
                     <form action="mutasi_aksi.php?aksi=proses_masuk" method="POST">
+    <?= csrf_field() ?>
                         <p>Gunakan form ini untuk mendaftarkan siswa <strong>pindahan baru</strong> ke sekolah. Data siswa akan dibuat dan ditandai sebagai <strong>Aktif</strong>.</p>
                         <div class="row g-3">
                             <div class="col-12"><hr><h6 class="text-muted">DATA PRIBADI</h6></div>

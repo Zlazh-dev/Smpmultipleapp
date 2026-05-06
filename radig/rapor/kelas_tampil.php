@@ -204,6 +204,7 @@ $result_kelas = mysqli_stmt_get_result($stmt);
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form action="kelas_aksi.php?aksi=salin_kelas" method="POST">
+    <?= csrf_field() ?>
                 <div class="modal-body">
                     <!-- Alert Info -->
                     <div class="alert alert-warning small">
@@ -268,6 +269,7 @@ $result_kelas = mysqli_stmt_get_result($stmt);
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form action="kelas_aksi.php?aksi=import_kelas" method="POST" enctype="multipart/form-data">
+    <?= csrf_field() ?>
                 <div class="modal-body">
                     <div class="alert alert-info">
                         <strong>Petunjuk:</strong>

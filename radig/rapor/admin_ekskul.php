@@ -115,6 +115,7 @@ $q_ekskul = mysqli_query($koneksi, "
                 </div>
                 <div class="card-body p-4">
                     <form action="admin_ekskul_aksi.php?aksi=tambah" method="POST" class="needs-validation" novalidate>
+    <?= csrf_field() ?>
                         <div class="mb-3">
                             <label for="nama_ekskul" class="form-label fw-bold">Nama Ekstrakurikuler</label>
                             <input type="text" name="nama_ekskul" id="nama_ekskul" class="form-control" placeholder="Contoh: Pramuka" required>

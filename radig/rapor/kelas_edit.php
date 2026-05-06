@@ -86,6 +86,7 @@ $jenjang = $sekolah['jenjang'] ?? 'SMP'; // Default ke SMP jika tidak ada data
             <h5 class="mb-0"><i class="bi bi-pencil-square me-2" style="color: var(--primary-color);"></i>Formulir Edit Kelas</h5>
         </div>
         <form action="kelas_aksi.php?aksi=update" method="POST" class="needs-validation" novalidate>
+    <?= csrf_field() ?>
             <input type="hidden" name="id_kelas" value="<?php echo $data['id_kelas']; ?>">
             <div class="card-body p-4">
                 <div class="row">

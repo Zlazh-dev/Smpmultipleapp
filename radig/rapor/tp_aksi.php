@@ -1,6 +1,8 @@
 <?php
 session_start();
 include 'koneksi.php';
+require_once __DIR__ . '/libs/csrf.php';
+csrf_verify();
 
 if (!isset($_SESSION['role'])) {
     die("Akses ditolak. Silakan login terlebih dahulu.");

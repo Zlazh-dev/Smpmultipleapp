@@ -1,6 +1,8 @@
 <?php
 session_start();
 include 'koneksi.php';
+require_once __DIR__ . '/libs/csrf.php';
+csrf_verify();
 
 if (!isset($_POST['simpan']) || $_SESSION['role'] != 'admin') {
     header("Location: dashboard.php");
