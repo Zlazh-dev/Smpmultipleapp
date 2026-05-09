@@ -295,7 +295,7 @@ if (isset($_GET['search_siswa']) || isset($_GET['page_siswa'])) {
                                                 <div class="mt-3 border-top pt-3">
                                                     <span class="badge text-bg-light text-muted"><i class="bi bi-lock me-1"></i>Dikelola dari Portal</span>
                                                     <?php if (!$is_self) : ?>
-                                                    <a href="admin_aksi.php?aksi=login_sebagai_guru&id_target=<?php echo $data['id_guru']; ?>" class="btn btn-outline-warning btn-sm" data-bs-toggle="tooltip" title="Login sebagai <?php echo htmlspecialchars($data['nama_guru']); ?>"><i class="bi bi-person-fill-gear"></i></a>
+                                                    <a href="admin_aksi.php?aksi=login_sebagai_guru&id_target=<?php echo $data['id_guru']; ?>&_csrf_token=<?php echo urlencode(csrf_token()); ?>" class="btn btn-outline-warning btn-sm" data-bs-toggle="tooltip" title="Login sebagai <?php echo htmlspecialchars($data['nama_guru']); ?>"><i class="bi bi-person-fill-gear"></i></a>
                                                     <?php endif; ?>
                                                 </div>
                                             </div>
@@ -400,7 +400,7 @@ if (isset($_GET['search_siswa']) || isset($_GET['page_siswa'])) {
                                                 </div>
                                                 <div class="mt-3 border-top pt-3">
                                                     <a href="siswa_edit.php?id=<?php echo $data['id_siswa']; ?>" class="btn btn-outline-secondary btn-sm" data-bs-toggle="tooltip" title="Edit Siswa"><i class="bi bi-pencil-fill me-1"></i> Edit</a>
-                                                    <a href="admin_aksi.php?aksi=login_sebagai_siswa&id_target=<?php echo $data['id_siswa']; ?>" class="btn btn-outline-warning btn-sm" data-bs-toggle="tooltip" title="Login sebagai <?php echo htmlspecialchars($data['nama_lengkap']); ?>"><i class="bi bi-person-fill-gear"></i></a>
+                                                    <a href="admin_aksi.php?aksi=login_sebagai_siswa&id_target=<?php echo $data['id_siswa']; ?>&_csrf_token=<?php echo urlencode(csrf_token()); ?>" class="btn btn-outline-warning btn-sm" data-bs-toggle="tooltip" title="Login sebagai <?php echo htmlspecialchars($data['nama_lengkap']); ?>"><i class="bi bi-person-fill-gear"></i></a>
                                                     <a href="#" onclick="hapusSiswa(<?php echo $data['id_siswa']; ?>)" class="btn btn-outline-danger btn-sm" data-bs-toggle="tooltip" title="Hapus Siswa"><i class="bi bi-trash-fill me-1"></i> Hapus</a>
                                                 </div>
                                             </div>
