@@ -545,7 +545,7 @@ if (isset($_SESSION['admin_asal_id'])) {
             <div class="impersonate-text">
                 Mode Penyamaran Aktif
             </div>
-            <a href="admin_aksi.php?aksi=kembali&_csrf_token=<?= urlencode(csrf_token()) ?>" class="btn-impersonate-back">
+            <a href="admin_aksi.php?aksi=kembali&_csrf_token=' . urlencode(csrf_token()) . '" class="btn-impersonate-back">
                 <i class="bi bi-arrow-left-circle-fill me-1"></i> KEMBALI ADMIN
             </a>
         </div>

@@ -226,7 +226,8 @@ elseif ($aksi == 'simpan_asesmen') {
     }
 
     $_SESSION['pesan'] = json_encode(['icon' => 'success', 'title' => 'Tersimpan', 'text' => 'Penilaian berhasil disimpan.']);
-    header("location: kokurikuler_input.php?kegiatan=" . $id_kegiatan . "&kelas=" . $_POST['id_kelas']);
+    $id_kelas_redirect = isset($_POST['id_kelas']) ? $_POST['id_kelas'] : '';
+    header("location: kokurikuler_input.php?kegiatan=" . $id_kegiatan . "&kelas=" . $id_kelas_redirect);
     exit();
 }
 
