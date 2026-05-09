@@ -426,7 +426,7 @@ function konfirmasiHapus(id) {
         cancelButtonText: 'Batal'
     }).then((result) => {
         if (result.isConfirmed) {
-            window.location.href = 'tp_guru_aksi.php?aksi=hapus&id_tp=' + id;
+            window.location.href = 'tp_guru_aksi.php?aksi=hapus&id_tp=' + id + '&_csrf_token=' + encodeURIComponent(CSRF_TOKEN);
         }
     })
 }

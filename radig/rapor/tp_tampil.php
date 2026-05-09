@@ -146,7 +146,7 @@ function konfirmasiHapus(id_tp, id_mapel) {
         cancelButtonText: 'Batal'
     }).then((result) => {
         if (result.isConfirmed) {
-            window.location.href = `tp_admin_aksi.php?aksi=hapus&id_tp=${id_tp}&id_mapel_redirect=${id_mapel}`;
+            window.location.href = `tp_admin_aksi.php?aksi=hapus&id_tp=${id_tp}&id_mapel_redirect=${id_mapel}&_csrf_token=${encodeURIComponent(CSRF_TOKEN)}`;
         }
     })
 }

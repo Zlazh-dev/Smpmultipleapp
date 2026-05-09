@@ -270,7 +270,7 @@ function hapusSiswa(idSiswa, idKelas, namaSiswa) {
                     Swal.showLoading();
                 }
             });
-            window.location.href = 'siswa_aksi.php?aksi=hapus&id=' + idSiswa + '&id_kelas=' + idKelas;
+            window.location.href = 'siswa_aksi.php?aksi=hapus&id=' + idSiswa + '&id_kelas=' + idKelas + '&_csrf_token=' + encodeURIComponent(CSRF_TOKEN);
         }
     })
 }

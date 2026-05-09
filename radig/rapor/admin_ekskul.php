@@ -196,7 +196,7 @@ function hapusEkskul(id) {
         focusCancel: true
     }).then((result) => {
         if (result.isConfirmed) {
-            window.location.href = 'admin_ekskul_aksi.php?aksi=hapus&id=' + id;
+            window.location.href = 'admin_ekskul_aksi.php?aksi=hapus&id=' + id + '&_csrf_token=' + encodeURIComponent(CSRF_TOKEN);
         }
     })
 }

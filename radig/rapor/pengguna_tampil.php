@@ -622,7 +622,7 @@ function hapusGuru(id) {
         focusCancel: true
     }).then((result) => {
         if (result.isConfirmed) {
-            window.location.href = 'pengguna_aksi.php?aksi=hapus&id=' + id;
+            window.location.href = 'pengguna_aksi.php?aksi=hapus&id=' + id + '&_csrf_token=' + encodeURIComponent(CSRF_TOKEN);
         }
     })
 }
@@ -656,7 +656,7 @@ function hapusSiswa(id) {
         focusCancel: true
     }).then((result) => {
         if (result.isConfirmed) {
-            window.location.href = 'siswa_aksi.php?aksi=hapus&id=' + id;
+            window.location.href = 'siswa_aksi.php?aksi=hapus&id=' + id + '&_csrf_token=' + encodeURIComponent(CSRF_TOKEN);
         }
     })
 }

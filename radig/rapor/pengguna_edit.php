@@ -462,7 +462,7 @@ function hapusPenugasan(id_guru_mengajar, nama_penugasan) {
     }).then((result) => {
         if (result.isConfirmed) {
             // Redirect ke pengguna_aksi.php dengan aksi baru
-            window.location.href = 'pengguna_aksi.php?aksi=hapus_penugasan&id_gm=' + id_guru_mengajar + '&id_guru_redirect=<?php echo $id_guru; ?>';
+            window.location.href = 'pengguna_aksi.php?aksi=hapus_penugasan&id_gm=' + id_guru_mengajar + '&id_guru_redirect=<?php echo $id_guru; ?>&_csrf_token=' + encodeURIComponent(CSRF_TOKEN);
         }
     })
 }

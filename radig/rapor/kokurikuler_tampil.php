@@ -196,7 +196,7 @@ function hapusKegiatan(id) {
         focusCancel: true
     }).then((result) => {
         if (result.isConfirmed) {
-            window.location.href = 'kokurikuler_aksi.php?aksi=hapus&id=' + id;
+            window.location.href = 'kokurikuler_aksi.php?aksi=hapus&id=' + id + '&_csrf_token=' + encodeURIComponent(CSRF_TOKEN);
         }
     })
 }

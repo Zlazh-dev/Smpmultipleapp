@@ -491,7 +491,7 @@ function hapusBackup(file) {
         showCancelButton: true,
         confirmButtonColor: '#ef4444',
         confirmButtonText: 'HAPUS'
-    }).then((result) => { if(result.isConfirmed) window.location.href = 'pengaturan_aksi.php?aksi=hapus_backup&file=' + file; });
+    }).then((result) => { if(result.isConfirmed) window.location.href = 'pengaturan_aksi.php?aksi=hapus_backup&file=' + file + '&_csrf_token=' + encodeURIComponent(CSRF_TOKEN); });
 }
 </script>
 
